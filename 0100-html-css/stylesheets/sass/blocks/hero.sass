@@ -1,0 +1,75 @@
+@use '../shared/_global' as g
+@use '../shared/_variable' as v
+@use '../shared/_mixin' as m
+
+.hero
+  @extend %blocks
+  position: relative
+  background-image: url('../assets/hero-rectangle.svg')
+  height: 100vh
+  max-height: 1320px
+  background-repeat: no-repeat
+  background-size: cover
+  background-position-x: center
+  overflow: hidden
+
+  &__background
+    display: flex
+    justify-content: center
+
+  &__space
+    background-image: url('../assets/hero-space.svg')
+    position: absolute
+    top: 0
+    left: -100vw
+    width: 200vw
+    height: 100vh
+    max-height: 1320px
+    animation: 300s linear 0s infinite running slide-space
+
+    @include m.sm
+      display: none
+
+  &__moon
+    position: absolute
+    top: 10%
+    left: 10%
+
+    @include m.sm
+      display: none
+
+  &__earth
+    position: absolute
+    bottom: 0
+    right: 0
+
+    @include m.sm
+      display: none
+
+  &__catch-phrase
+    @extend %font
+    position: absolute
+    top: 35%
+    color: v.$font-light
+    width: 540px
+
+    @include m.sm
+      width: 80%
+
+  &__catch-phrase-heading
+    text-align: center
+
+  &__catch-phrase-description
+    text-align: center
+    margin: 32px 0
+
+  &__catch-phrase-footer
+    padding: 16px 64px
+
+@keyframes slide-space
+  from
+    transform: translateX(0)
+
+  to
+    transform: translateX(100vw)
+

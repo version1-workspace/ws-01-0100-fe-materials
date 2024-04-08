@@ -1,0 +1,13 @@
+{
+  "name": "0100-html-css",
+  "version": "1.0.0",
+  "main": "index.html",
+  "author": "version.2017.1.0@gmail.com (https://github.com/version-1)",
+  "scripts": {
+    "compile": "sass stylesheets/sass/index.sass stylesheets/style.css -w"
+  },
+  "devDependencies": {
+    "sass": "^1.55.0"
+  },
+  "license": "ISC"
+}

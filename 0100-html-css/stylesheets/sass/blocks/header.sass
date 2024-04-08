@@ -1,0 +1,57 @@
+@use '../shared/_global' as g
+@use '../shared/_variable' as v
+@use '../shared/_mixin' as m
+
+.header
+  @extend %font
+  box-sizing: border-box
+  display: flex
+  align-items: center
+  justify-content: space-between
+  width: 100%
+  position: absolute
+  z-index: v.$z-index-header
+  color: v.$font-light
+  padding: 16px
+
+  &__right
+    display: flex
+    align-items: center
+
+  &__logo
+    display: flex
+    align-items: center
+
+  &__logo-image
+    width: 50px
+
+  &__logo-title
+    font-size: 24px
+    margin: 0
+
+  &__menu
+    list-style-type: none
+    display: flex
+    margin: 0
+    margin-right: 16px
+
+    @include m.sm
+      display: none
+
+  &__menu-item
+    margin-right: 16px
+
+  &__actions
+    display: flex
+    min-width: 280px
+    @include m.sm
+      min-width: auto
+
+  &__action
+    flex: 1
+    padding: 8px
+
+  &__action--hide-only-sp
+    @include m.sm
+      display: none
+
