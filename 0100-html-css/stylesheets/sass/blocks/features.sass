@@ -43,10 +43,15 @@
       width: 100%
 
   &__feature-image
+    cursor: pointer
     border-radius: 8px
     width: 768px
     height: 480px
     box-shadow: 1px 1px 8px 4px v.$shadow-color
+    transition: 0.3s
+
+    &:hover
+      @extend %hover-default
 
     @include m.sm
       width: 100%

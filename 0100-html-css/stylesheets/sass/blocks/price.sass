@@ -38,6 +38,7 @@
       min-width: 100%
 
   &__plan
+    cursor: pointer
     box-sizing: border-box
     width: 360px
     padding: 32px
@@ -46,6 +47,10 @@
     border: 1px solid v.$border-color-light
     background: v.$background-color
     box-shadow: 1px 1px 8px 4px v.$shadow-color-light
+    transition: 0.3s
+
+    &:hover
+      @extend %hover-default
 
     @include m.sm
       width: 100%

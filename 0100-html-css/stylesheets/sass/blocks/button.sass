@@ -1,9 +1,16 @@
 @use '../shared/_variable' as v
+@use '../shared/_global' as g
+
 .button
+  cursor: pointer
   border: 0
   padding: 12px 16px
   border-radius: 8px
   width: 100%
+  transition: 0.3s
+
+  &:hover
+    @extend %hover-default
 
 .button--primary
   background: v.$primary-color
