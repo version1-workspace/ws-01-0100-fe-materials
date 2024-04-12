@@ -1,10 +1,9 @@
-# ws-01-0100-fe-materials
+# HTML/CSS(BEM, Sass) 課題
 
-デモ: https://version1-real-todo.netlify.app/
+デモ: https://version1-workspace.github.io/ws-01-0100-fe-materials/0100-html-css/index.html
 
-HTML, CSS(SASS), SMACSSとレスポンシブコーディングを勉強するためのリポジトリです。
-上記デモサイトをみながらなるべく同じサイトができるようにコーディングをしてもらいます。
-
+HTML, CSS(SASS), BEMとレスポンシブコーディングを勉強するためのリポジトリです。
+上記デモサイトをみながらなるべく同じサイトができるようにコーディングをして下さい。
 
 ## 課題で身に着けること
 
@@ -19,11 +18,11 @@ HTML, CSS(SASS), SMACSSとレスポンシブコーディングを勉強するた
 
 ### 1. ドキュメント/記事を読んで必要な知識を理解する
 
-#### SMACSSについて
+#### BEMについて
 
-リンク参照:
-- [CSSスタイルガイドのSMACSSを勉強してみたまとめ](https://ver-1-0.net/2017/12/10/learn-smacss)
+参照:
 - [脱ビギナーのためのCSS入門](https://speakerdeck.com/jjoo/tuo-biginafalsetamefalsecssru-men)
+- [BEM](https://getbem.com/)
 
 公式ドキュメント:
 
@@ -45,42 +44,30 @@ https://getbem.com/
 - [SASS](https://www.webdesignleaves.com/pr/css/css_basic_08.html)
 - [Dart Sass](https://sass-lang.com/dart-sass)
 
-#### Npmについて
+#### npmについて
 
 - [便利なパッケージ管理ツール！npmとは【初心者向け】](https://techacademy.jp/magazine/16105)
+- [【初心者向け】NPMとpackage.jsonを概念的に理解する](https://qiita.com/righteous/items/e5448cb2e7e11ab7d477)
+- [そろそろ適当に npm install するのを卒業する](https://zenn.dev/ikuraikura/articles/71b917ab11ae690e3cd7)
+- [NPM](https://docs.npmjs.com/about-npm)
 
-### 2. 課題を始める前にリポジトリ をフォーク
+### 1. ファイルの中身を確認して課題を開始
 
-- [GitHubフォークのやり方](https://version-1workspace.gitbook.io/github/how-to-fork)
-
-### 3. フォークしてリポジトリ をクローンして課題をスタート
-
-Gitが初めての方は下記を参照ください。
-
-- [プログラミングを学ぶ前に始めるGit入門](https://version-1workspace.gitbook.io/git/)
-
-### 4. クローンしたファイルの中身を確認して課題を開始
 ```
-cd 0100-html-css
 npm install
 npm run compile // sassの変更を検知してコンパイルするnodeサーバを起動
 ```
 
-※ node のバージョンは 16 以上であることを推奨しています。
+※ node のバージョンは 21 以上であることを推奨しています。
 
 nodeサーバが起動している間は、sassの変更が自動で反映されるようになっています。
-また使用するHTMLファイルはindex.htmlだけでその他必要なsassファイルはすでに配置済みです。
-1.で読んだSMACSSのドキュメントを元にどのようにファイルが分割されて配置されているか意識しながら、
-所定の場所に必要なスタイルを付けたして行ってください。
 
-いきなり全部をやろうとすると処理が難しくなるので、自分で理解できる範囲まで作業を分割してコーディングを進めてください。
-
+いきなり全てをやろうとすると処理が難しくなるので、自分で理解できる範囲まで作業を分割してコーディングを進めてください。
 
 1. サイドバーのコーディング
 2. ヘッダーのコーディング
 3. コンテンツ部分のコーディング
 4. フッター部分のコーディング
-
 
 と順番を決めたら、
 次はサイドバーの**「ロゴの部分をコーディングする」**という様に可能な限り作業を分割して実装を進められると効率よく実装が進められるかと思います。
@@ -89,7 +76,7 @@ nodeサーバが起動している間は、sassの変更が自動で反映され
 
 ### 5. github pagesにてサイトを公開
 
-作業が終わったら変更をコミット&pushしてリモートリポジトリ に変更を反映させます。
+作業が終わったら変更をコミット& push してリモートリポジトリ に変更を反映させます。
 masterへの変更が終わったら下記手順でサイトをgithub ページ上に公開してください。
 
 https://docs.github.com/ja/pages/getting-started-with-github-pages/creating-a-github-pages-site
@@ -101,21 +88,14 @@ https://docs.github.com/ja/pages/getting-started-with-github-pages/creating-a-gi
 この課題ではVSCodeのプラグインでのSassのコンパイルは必要ありません。
 Live Sass Compilerなどを入れている方はプラグインの機能をOFFにして課題に取り組むようお願いします。
 
-### FontAwesomeについて
-
-雛形のhtmlでFontAwesomeというアイコンを表示できるライブラリを読み込んでいるので実装の時に使うアイコンはすべて、
-こちらを使用してください。使用しているアイコンの名前や表示の仕方はデモサイト上でブラウザの検証ツールを使って確認してください。
-
-参考記事: https://saruwakakun.com/html-css/basic/font-awesome
-
 ### Google Fontについて
 
 無料で使えるフォントファイルライブラリのGoogleFontもデフォルトで読み込む様な設定をしています。
-base.sassでフォントファミリーは指定しているので新たに自分でフォントファミリを指定する必要はありません。
+フォント指定する場合は、 stylesheets/sass/shared/_global.sass の %font を extend 指定してください。
 
 ### 画像について
 
-実装の際に使用する画像はネット上で公開されている画像でも自分の好きな画像でも構いません。
-レイアウトが崩れなければよいので、適当な画像を使用してください。
+実装の際に使用する画像は assets/ フォルダに全て格納されています。
+HTML 内で適当なパスを指定して課題を進めて下さい。
 
 

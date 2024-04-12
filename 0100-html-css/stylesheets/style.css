@@ -1,7 +1,3 @@
-.body, .hero {
-  box-sizing: border-box;
-}
-
 .footer, .review, .price, .features, .header, .hero__catch-phrase {
   color: #2e2e2e;
   font-family: "Inter", "Noto Sans JP", sans-serif;
@@ -11,6 +7,7 @@
 }
 
 .hero {
+  box-sizing: border-box;
   position: relative;
   background-image: url("../assets/hero-rectangle.svg");
   height: 100vh;
@@ -90,6 +87,7 @@
   }
 }
 .body {
+  box-sizing: border-box;
   position: relative;
   margin: 0;
 }
@@ -252,7 +250,6 @@
 .price__body {
   display: flex;
   justify-content: center;
-  box-sizing: border-box;
 }
 .price__table {
   display: flex;
