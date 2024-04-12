@@ -1,0 +1,68 @@
+@use '../shared/_global' as g
+@use '../shared/_variable' as v
+@use '../shared/_mixin' as m
+
+.review
+  @extend %font
+  padding: 0 128px
+  margin-bottom: 400px
+
+  @include m.sm
+    padding: 0
+
+  &__title
+    text-align: center
+    font-size: 18px
+
+  &__body
+    margin-top: 128px
+    padding: 0 128px
+    display: flex
+    justify-content: space-evenly
+
+    @include m.sm
+      padding: 0
+      flex-wrap: wrap
+
+  &__col
+    margin-right: 32px
+    width: 280px
+
+    @include m.sm
+      padding: 16px
+      margin: auto
+      margin-bottom: 32px
+
+  &__avatar
+    width: 64px
+    height: 64px
+    border-radius: 50%
+    margin-bottom: 16px
+
+  &__profile
+    display: flex
+    justify-content: center
+    flex-direction: column
+    align-items: center
+    margin: 32px 0
+
+  &__avatar-image
+    width: 100%
+    height: 100%
+    border-radius: 50%
+
+  &__name-text
+    margin: 0
+    font-weight: bold
+    font-size: 16px
+    text-align: center
+
+  &__footer
+    margin: 128px 0
+    display: flex
+    justify-content: center
+
+  &__footer-button
+    width: 360px
+
+
