@@ -115,7 +115,7 @@ class List {
    * XXX: filter関数は使わずにfor文、while文を活用して実装しましょう
    *
    * @param {Number} target
-   * @return {Number[]}
+   * @return {List}
    */
   filter(target) {
     const res = new List([])
