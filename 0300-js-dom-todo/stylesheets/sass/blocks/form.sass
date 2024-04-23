@@ -1,12 +1,20 @@
 @use '../shared/_variable.sass' as v
 
 .form
-  padding: 16px
+  padding: 8px 16px
+  margin-bottom: 32px
   border: 1px solid v.$border-color
   border-radius: 8px
 
   &__input
-    padding: 16px
+    flex: 1
+    padding: 8px 16px
+
+  &__input--name
+    flex: 4
+
+  &__input-group
+    display: flex
 
   &__input-field
     box-sizing: border-box
@@ -31,6 +39,6 @@
   &__input-label
     display: block
     font-size: 12px
-    margin-bottom: 8px
+    margin-bottom: 4px
 
 
