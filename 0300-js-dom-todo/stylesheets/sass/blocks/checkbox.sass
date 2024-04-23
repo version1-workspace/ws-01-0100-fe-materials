@@ -1,0 +1,22 @@
+@use '../shared/_variable.sass' as v
+
+.checkbox
+  display: block
+  border-radius: 50%
+  border: 1px solid #c6c6c6
+  padding: 4px
+  height: 16px
+  width: 16px
+  cursor: pointer
+  color: v.$font-color-light
+  display: flex
+  justify-content: center
+  align-items: center
+
+.checkbox--checked
+  background: v.$primary-color
+
+.checkbox__input
+  border: 0
+  appearance: none
+  position: absolute

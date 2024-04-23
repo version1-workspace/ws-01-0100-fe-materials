@@ -1,0 +1,19 @@
+@use '../shared/_variable.sass' as v
+
+.button
+  border: 0
+  cursor: pointer
+  border-radius: 8px
+  background: white
+  padding: 8px 16px
+  min-width: 200px
+
+  &--primary
+    background: v.$primary-color
+    color: v.$font-color-light
+
+  &--danger
+    background: v.$danger-color
+    color: v.$font-color-light
+
+

@@ -1,0 +1,60 @@
+@use '../shared/_variable.sass' as v
+
+.list
+  padding: 32px
+  &__container
+    list-style: none
+    padding: 0
+
+  &__setting
+    padding: 16px
+    display: flex
+    justify-content: flex-end
+
+  &__header
+    display: flex
+    align-items: center
+    border-bottom: 1px solid v.$border-color
+
+  &__header-item
+    flex: 1
+    padding: 16px
+    border-right: 1px solid v.$border-color
+    font-size: 12px
+    &:last-child
+      border-right: 0
+
+  &__header-item--name
+    flex: 4
+
+  &__item
+    display: flex
+    align-items: center
+    width: 100%
+    border-bottom: 1px solid v.$border-color
+    transition: opacity 0.8s
+
+    &--completed-dismissing
+      opacity: 0
+
+  &__item-col
+    box-sizing: border-box
+    flex: 1
+    padding: 16px
+    border-right: 1px solid v.$border-color
+
+  &__item-col--name
+    cursor: pointer
+    flex: 4
+
+  &__item-col--deadline
+    cursor: pointer
+
+  &__item-col--checkbox
+    display: flex
+    justify-content: center
+
+  &__item-col--actions
+    font-size: 12px
+    display: flex
+    justify-content: center
