@@ -1,0 +1,17 @@
+{
+  "name": "0300-js-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "sass -s compressed stylesheets/sass/index.sass:stylesheets/style.css",
+    "compile:css": "sass -w -s compressed stylesheets/sass/index.sass:stylesheets/style.css",
+    "deploy": "bash deploy.sh"
+  },
+  "devDependencies": {
+    "sass": "^1.57.1"
+  },
+  "author": "",
+  "license": "ISC"
+}
