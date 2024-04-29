@@ -1,0 +1,13 @@
+:root {
+  --border-color: #f0f0f0;
+  --primary-color: #7a72ff;
+
+  --font-color-light: #fefefe;
+  --font-weak-text: #c6c6c6;
+
+  --icon-color: #666;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
