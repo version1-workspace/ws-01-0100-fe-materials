@@ -105,7 +105,6 @@ const buildColumns = () => {
 }
 
 function renderTask(target, task, { onEditName, onEditDeadline, onComplete, onDelete }) {
-  const li = document.createElement('li')
   const taskContainer = div('list__item')
 
   const columns = buildColumns()
@@ -131,9 +130,10 @@ function renderTask(target, task, { onEditName, onEditDeadline, onComplete, onDe
   }))
 
   Object.values(columns).forEach((column) => taskContainer.appendChild(column))
-  li.appendChild(taskContainer)
+  const row = div('list__row')
+  row.appendChild(taskContainer)
 
-  target.appendChild(li)
+  target.appendChild(row)
 }
 
 function onSubmitTask(container) {
