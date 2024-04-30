@@ -1,5 +1,5 @@
 
-# 01-0300-JS-DOM-TODO
+# HTML, CSS(SASS), JavaScript DOM操作の課題
 
 このリポジトリ はHTML, CSS(SASS), JavaScriptの練習用リポジトリです。
 

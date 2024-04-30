@@ -1,4 +1,4 @@
-## js-practice
+## JavaScript 基本課題
 
 JavaScript練習用のリポジトリ です。
 
