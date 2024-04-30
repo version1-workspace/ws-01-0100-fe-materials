@@ -4,8 +4,6 @@ export default class AppDate {
       return
     }
 
-    debugger
-
     const [year, month, day] = dateString.split('-').map((str) => parseInt(str, 10))
     return new AppDate(new Date(year, month - 1, day))
   }

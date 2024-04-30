@@ -29,7 +29,7 @@ export default function Form({ data, onChange, onSubmit }) {
           <DateInput
             className={styles.inputField}
             type="date"
-            value={data.deadline.toString()}
+            value={data.deadline?.toString()}
             placeholder="タスク名を入力"
             onChange={(e) => onChange({ deadline: AppDate.parse(e.target.value) })}
           />

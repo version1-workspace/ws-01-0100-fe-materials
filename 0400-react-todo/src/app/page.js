@@ -27,7 +27,7 @@ const todos = [
 export default function Home() {
   const [form, setForm] = useState({
     name: "",
-    deadline: new Date(),
+    deadline: new AppDate().getDateInXMonth(1),
   });
   const [setting, setSetting] = useState({
     showCompleted: false,
@@ -46,7 +46,7 @@ export default function Home() {
     const error = validate(task);
     if (error) {
       alert(error);
-      return false
+      return false;
     }
 
     const _task = {
@@ -76,10 +76,14 @@ export default function Home() {
 
     setData(tasks);
 
-    return tasks
+    return tasks;
   };
 
   const onDelete = (task) => {
+    if (!confirm("このタスクを削除しますか？")) {
+      return;
+    }
+
     const tasks = data.filter((row) => task.id !== row.id);
 
     setData(tasks);
