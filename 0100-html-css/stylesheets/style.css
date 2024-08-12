@@ -14,20 +14,16 @@
 .hero {
   box-sizing: border-box;
   position: relative;
-  background-image: url("../assets/hero-rectangle.svg");
   height: 100vh;
   max-height: 1320px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-x: center;
   overflow: hidden;
+  background-image: linear-gradient(to right bottom, rgba(6, 0, 86, 0.6) 0%, #060056 50%, #060056 100%);
 }
 .hero__background {
   display: flex;
   justify-content: center;
 }
 .hero__space {
-  background-image: url("../assets/hero-space.svg");
   position: absolute;
   top: 0;
   left: -100vw;
@@ -41,25 +37,26 @@
     display: none;
   }
 }
-.hero__moon {
+.hero__small-stars {
   position: absolute;
-  top: 10%;
-  left: 10%;
+  background-image: url(../assets/small-stars.svg);
+  height: 100%;
+  width: 200%;
+  left: -100%;
+  animation: 300s linear 0s infinite running slide-space;
 }
-@media (max-width: 576px) {
-  .hero__moon {
-    display: none;
-  }
-}
-.hero__earth {
+.hero__star {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  top: 40%;
+  right: 220px;
+  width: 776px;
+  height: auto;
 }
-@media (max-width: 576px) {
-  .hero__earth {
-    display: none;
-  }
+.hero__star-light {
+  position: absolute;
+  transform: rotate(135deg);
+  right: -220px;
+  width: 1600px;
 }
 .hero__catch-phrase {
   position: absolute;

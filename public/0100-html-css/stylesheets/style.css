@@ -6,23 +6,24 @@
   font-style: normal;
 }
 
+.price__plan:hover, .features__feature-image:hover, .button:hover {
+  transform: scale(1.02);
+  opacity: 0.8;
+}
+
 .hero {
   box-sizing: border-box;
   position: relative;
-  background-image: url("../assets/hero-rectangle.svg");
   height: 100vh;
   max-height: 1320px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-x: center;
   overflow: hidden;
+  background-image: linear-gradient(to right bottom, rgba(6, 0, 86, 0.6) 0%, #060056 50%, #060056 100%);
 }
 .hero__background {
   display: flex;
   justify-content: center;
 }
 .hero__space {
-  background-image: url("../assets/hero-space.svg");
   position: absolute;
   top: 0;
   left: -100vw;
@@ -36,25 +37,26 @@
     display: none;
   }
 }
-.hero__moon {
+.hero__small-stars {
   position: absolute;
-  top: 10%;
-  left: 10%;
+  background-image: url(../assets/small-stars.svg);
+  height: 100%;
+  width: 200%;
+  left: -100%;
+  animation: 300s linear 0s infinite running slide-space;
 }
-@media (max-width: 576px) {
-  .hero__moon {
-    display: none;
-  }
-}
-.hero__earth {
+.hero__star {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  top: 40%;
+  right: 220px;
+  width: 776px;
+  height: auto;
 }
-@media (max-width: 576px) {
-  .hero__earth {
-    display: none;
-  }
+.hero__star-light {
+  position: absolute;
+  transform: rotate(135deg);
+  right: -220px;
+  width: 1600px;
 }
 .hero__catch-phrase {
   position: absolute;
@@ -152,12 +154,13 @@
 }
 
 .button {
+  cursor: pointer;
   border: 0;
   padding: 12px 16px;
   border-radius: 8px;
   width: 100%;
+  transition: 0.3s;
 }
-
 .button--primary {
   background: #7A72FF;
   color: white;
@@ -220,10 +223,12 @@
   }
 }
 .features__feature-image {
+  cursor: pointer;
   border-radius: 8px;
   width: 768px;
   height: 480px;
   box-shadow: 1px 1px 8px 4px #eee;
+  transition: 0.3s;
 }
 @media (max-width: 576px) {
   .features__feature-image {
@@ -273,6 +278,7 @@
   }
 }
 .price__plan {
+  cursor: pointer;
   box-sizing: border-box;
   width: 360px;
   padding: 32px;
@@ -281,6 +287,7 @@
   border: 1px solid #f9f9f9;
   background: #fefefe;
   box-shadow: 1px 1px 8px 4px #f9f9f9;
+  transition: 0.3s;
 }
 @media (max-width: 576px) {
   .price__plan {

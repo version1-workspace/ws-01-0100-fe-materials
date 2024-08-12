@@ -5,20 +5,16 @@
 .hero
   box-sizing: border-box
   position: relative
-  background-image: url('../assets/hero-rectangle.svg')
   height: 100vh
   max-height: 1320px
-  background-repeat: no-repeat
-  background-size: cover
-  background-position-x: center
   overflow: hidden
+  background-image: linear-gradient(to right bottom, #06005699 0%, #060056 50%, #060056 100%)
 
   &__background
     display: flex
     justify-content: center
 
   &__space
-    background-image: url('../assets/hero-space.svg')
     position: absolute
     top: 0
     left: -100vw
@@ -30,21 +26,26 @@
     @include m.sm
       display: none
 
-  &__moon
+  &__small-stars
     position: absolute
-    top: 10%
-    left: 10%
+    background-image: url(../assets/small-stars.svg)
+    height: 100%
+    width: 200%
+    left: -100%
+    animation: 300s linear 0s infinite running slide-space
 
-    @include m.sm
-      display: none
-
-  &__earth
+  &__star
     position: absolute
-    bottom: 0
-    right: 0
+    top: 40%
+    right: 220px
+    width: 776px
+    height: auto
 
-    @include m.sm
-      display: none
+  &__star-light
+    position: absolute
+    transform: rotate(135deg)
+    right: -220px
+    width: 1600px
 
   &__catch-phrase
     @extend %font
