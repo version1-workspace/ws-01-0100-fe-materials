@@ -1,0 +1,31 @@
+.form {
+  padding: 8px 16px;
+  margin-bottom: 32px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.formGroup {
+  display: flex;
+}
+
+.inputForm {
+  flex: 1;
+  padding: 8px 16px;
+}
+
+.inputFormName {
+  flex: 4;
+}
+
+.inputLabel {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.formFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+}
