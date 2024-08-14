@@ -13,7 +13,7 @@ https://menta.work/plan/1608/4274
 2. [JavaScript 課題](./0200-js-base)
 3. [TODO アプリ (HTML/CSS, JS) 課題](./0300-js-todo)
 4. [TODO アプリ (React) 課題](./0400-react-todo)
-5. [TODO アプリ(Next.js) 課題](./0500-next-todo)
+5. [TODO アプリ(Next.js, Context API, HTTP) 課題](./0500-next-todo)
 6. [TypeScript 課題](./0600-ts-base)
 7. [Web API (Nest.js) 課題](./0700-nest-web-api)
 
