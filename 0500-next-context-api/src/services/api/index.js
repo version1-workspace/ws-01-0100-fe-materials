@@ -47,7 +47,7 @@ const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
 
 const client = new Client({
   baseURL: `${baseURL}/api/v1`,
-  timeout: 1000,
+  timeout: 10000,
   withCredentials: true,
   headers: { Authorization: getAccessToken() }
 })

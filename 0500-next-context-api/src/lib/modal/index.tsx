@@ -2,23 +2,9 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import Modal, { ContainerConfig } from "./components";
 
-interface Content {
-  content: ReactNode;
-}
-
-interface IModalContext {
-  show: boolean;
-  stack: Content[];
-  peak?: Content;
-  push?: (content: Content) => void;
-  pop?: () => void;
-  open?: (content: Content) => void;
-  hide?: () => void;
-}
-
-const ModalContext = createContext<IModalContext>({
+const ModalContext = createContext({
   show: false,
-  stack: [] as Content[],
+  stack: [],
 });
 
 interface Props {
@@ -28,7 +14,7 @@ interface Props {
 
 export const ModalContainer = ({ config, children }: Props) => {
   const [show, setShow] = useState(false);
-  const [stack, setStack] = useState<Content[]>([]);
+  const [stack, setStack] = useState([]);
 
   const push = (content: Content) => {
     setStack([...stack, content]);

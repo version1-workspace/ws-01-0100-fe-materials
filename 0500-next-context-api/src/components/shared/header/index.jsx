@@ -1,24 +1,26 @@
-"use client"
-import Link from "next/link"
-import { useState } from "react"
-import styles from "./index.module.css"
-import { useModal } from "@/lib/modal"
-import route from "@/lib/route"
-import TaskForm from "@/components/tasks/form"
-import Icon from "../../icon"
-import useTasks from "@/contexts/tasks"
-import Search from "@/components/tasks/search"
+"use client";
+import Link from "next/link";
+import { useState } from "react";
+import styles from "./index.module.css";
+import { useModal } from "@/lib/modal";
+import TaskForm from "@/components/tasks/form";
+import Icon from "../icon";
+import useTasks from "@/contexts/tasks";
+import Search from "@/components/tasks/search";
 
 const user = {
   username: "test",
-  email: "test@example.com"
-}
+  email: "test@example.com",
+};
 
 function Dropdown({ trigger }) {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
   return (
     <div className={styles.dropdownContainer}>
+      {show ? (
+        <div className={styles.overlay} onClick={() => setShow(false)}></div>
+      ) : null}
       <div className={styles.trigger} onClick={() => setShow(true)}>
         {trigger}
       </div>
@@ -27,14 +29,12 @@ function Dropdown({ trigger }) {
           <li
             className={styles.dropdownItem}
             onClick={() => {
-              setShow(false)
+              setShow(false);
             }}
           >
             <div className={styles.userInfo}>
-              <Link href={route.users.profile.toString()}>
-                <p className={styles.username}>{user.username}</p>
-                <p className={styles.email}>{user.email}</p>
-              </Link>
+              <p className={styles.username}>{user.username}</p>
+              <p className={styles.email}>{user.email}</p>
             </div>
           </li>
           <li>
@@ -43,7 +43,7 @@ function Dropdown({ trigger }) {
           <li
             className={styles.dropdownItem}
             onClick={() => {
-              setShow(false)
+              setShow(false);
             }}
           >
             <p className={styles.logout}>ログアウト</p>
@@ -51,12 +51,12 @@ function Dropdown({ trigger }) {
         </ul>
       ) : null}
     </div>
-  )
+  );
 }
 
 export default function Header() {
-  const { open, hide } = useModal()
-  const { fetchDefault: fetchTasks } = useTasks()
+  const { open, hide } = useModal();
+  const { fetchDefault: fetchTasks } = useTasks();
 
   return (
     <header className={styles.header}>
@@ -84,13 +84,13 @@ export default function Header() {
                       <TaskForm
                         title="タスクを追加"
                         onSubmit={() => {
-                          fetchTasks()
-                          hide()
+                          fetchTasks();
+                          hide();
                         }}
                         onCancel={hide}
                       />
-                    )
-                  })
+                    ),
+                  });
                 }}
               />
             </li>
@@ -113,5 +113,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

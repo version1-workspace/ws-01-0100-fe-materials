@@ -62,7 +62,7 @@
   position: absolute;
   z-index: 1;
   right: -16px;
-  box-shadow: 1px 1px 4px 1px var(--font-color-dark);
+  box-shadow: 1px 1px 8px 1px #2e2e2e20;
   background: var(--bg-color-light);
   color: var(--font-color-dark);
 }
@@ -102,4 +102,13 @@
 
 .trigger {
   cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
