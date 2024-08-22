@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import dayjs from "dayjs";
 import { getTasks, setTasks } from "@/datastore";
+import { factory } from "@/services/api/models";
 
 export async function GET(_, context) {
   const {
@@ -27,7 +28,7 @@ export async function GET(_, context) {
   });
 }
 
-export async function PATCH(_, context) {
+export async function PATCH(request, context) {
   const {
     params: { id },
   } = context;
@@ -46,10 +47,10 @@ export async function PATCH(_, context) {
     );
   }
 
-  const task = tasks[index];
+  const task = factory.task(tasks[index]);
   const error = task.validate();
   if (error) {
-    return new Response(
+    return NextResponse.json(
       {
         message: error,
       },
@@ -62,10 +63,10 @@ export async function PATCH(_, context) {
   tasks[index] = task.assign({
     ...params,
     updatedAt: dayjs().format(),
-  });
+  }).raw;
   setTasks(tasks);
 
-  return new Response({
+  return NextResponse.json({
     data: task.raw,
   });
 }
@@ -91,7 +92,7 @@ export async function DELETE(_, context) {
   tasks.splice(index, 1);
   setTasks(tasks);
 
-  return new Response({
+  return NextResponse.json({
     data: task.raw,
   });
 }
