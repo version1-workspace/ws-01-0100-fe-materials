@@ -41,7 +41,6 @@ const Form = ({ title, data, onSubmit, onCancel }) => {
     },
     onSubmit: async (values) => {
       const { project, ...rest } = values;
-      debugger
       try {
         await api.createTask({
           data: { ...rest, projectId: project?.id, kind: "task" },

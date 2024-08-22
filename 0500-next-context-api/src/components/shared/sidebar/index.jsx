@@ -1,57 +1,56 @@
-"use client"
-import { Fragment, useMemo, useState } from "react"
-import styles from "./index.module.css"
-import { usePathname } from "next/navigation"
+"use client";
+import { Fragment, useMemo, useState } from "react";
+import styles from "./index.module.css";
+import { usePathname } from "next/navigation";
 import {
   IoChevronForward as ShowIcon,
-  IoChevronBack as HiddenIcon
-} from "react-icons/io5"
-import route from "@/lib/route"
-import useProjects from "@/contexts/projects"
-import Link from "@/components/shared/link"
-import { classHelper } from "@/lib/cls"
-import { truncate } from "@/lib/string"
+  IoChevronBack as HiddenIcon,
+} from "react-icons/io5";
+import route from "@/lib/route";
+import useProjects from "@/contexts/projects";
+import Link from "@/components/shared/link";
+import { classHelper } from "@/lib/cls";
+import { truncate } from "@/lib/string";
 
-const colors = (function() {
-  const list = []
+const colors = (function () {
+  const list = [];
   for (let i = 0; i < 10; i++) {
-    const code = ((i + 1) * 140) % 760
-    const r = Math.max(code - 510, 0)
-    const g = Math.min(Math.max(code - 255, 0), 255)
-    const b = Math.min(255, code)
-    list.push(`rgba(${r}, ${g}, ${b}, 0.6)`)
+    const code = ((i + 1) * 140) % 760;
+    const r = Math.max(code - 510, 0);
+    const g = Math.min(Math.max(code - 255, 0), 255);
+    const b = Math.min(255, code);
+    list.push(`rgba(${r}, ${g}, ${b}, 0.6)`);
   }
 
-  return list
-})()
+  return list;
+})();
 
-const projectCountLimit = 5
+const projectCountLimit = 5;
 
-const sidebarMenulist = projects => [
+const sidebarMenulist = (projects) => [
   {
     title: "ダッシュボード",
-    path: "/"
+    path: "/",
   },
   {
     title: "タスク",
-    path: route.tasks.toString()
+    path: route.tasks.toString(),
   },
   {
-    title: "プロジェクト"
-    ,
-    path: route.projects.toString(),
-    children: projects.slice(0, projectCountLimit).map(it => {
+    title: "プロジェクト",
+    path: "#!",
+    children: projects.slice(0, projectCountLimit).map((it) => {
       return {
         title: it.name,
         path: route.projects.with(it.slug),
         options: {
-          deadline: it.deadline?.format()
-        }
-      }
+          deadline: it.deadline?.format(),
+        },
+      };
     }),
-    footer: (function() {
+    footer: (function () {
       if (projects.length <= projectCountLimit) {
-        return null
+        return null;
       }
 
       return (
@@ -60,31 +59,31 @@ const sidebarMenulist = projects => [
             あと {projects.length - projectCountLimit} プロジェクト
           </p>
         </Link>
-      )
-    })()
-  }
-]
+      );
+    })(),
+  },
+];
 
 export default function Sidebar() {
-  const { projects } = useProjects()
-  const [show, setShow] = useState(true)
-  const pathname = usePathname()
+  const { projects } = useProjects();
+  const [show, setShow] = useState(true);
+  const pathname = usePathname();
 
-  const list = useMemo(() => sidebarMenulist(projects), [projects])
+  const list = useMemo(() => sidebarMenulist(projects), [projects]);
 
   return (
     <div
       className={classHelper({
         [styles.sidebar]: true,
         [styles.sidebarShow]: show,
-        [styles.sidebarHidden]: !show
+        [styles.sidebarHidden]: !show,
       })}
     >
       <div className={styles.content}>
         <div className={styles.header}>
           <span
             className={styles.sidebarToggle}
-            onClick={() => setShow(show => !show)}
+            onClick={() => setShow((show) => !show)}
           >
             {show ? <HiddenIcon /> : <ShowIcon />}
           </span>
@@ -93,7 +92,7 @@ export default function Sidebar() {
           {show ? (
             <>
               <ul className={styles.menu}>
-                {list.map(menuItem => {
+                {list.map((menuItem) => {
                   return (
                     <Fragment key={menuItem.path}>
                       <li>
@@ -102,10 +101,12 @@ export default function Sidebar() {
                             className={classHelper({
                               [styles.menuItem]: true,
                               [styles.menuItemActive]:
-                                pathname === menuItem.path
+                                pathname === menuItem.path,
                             })}
                           >
-                            <div className={styles.menuTitle}>{menuItem.title}</div>
+                            <div className={styles.menuTitle}>
+                              {menuItem.title}
+                            </div>
                           </div>
                         </Link>
                       </li>
@@ -118,7 +119,7 @@ export default function Sidebar() {
                                 className={classHelper({
                                   [styles.menuItem]: true,
                                   [styles.menuItemActive]:
-                                    pathname === item.path
+                                    pathname === item.path,
                                 })}
                               >
                                 <Link href={item.path}>
@@ -127,7 +128,7 @@ export default function Sidebar() {
                                       <span
                                         className={styles.dot}
                                         style={{
-                                          background: colors[index]
+                                          background: colors[index],
                                         }}
                                       ></span>
                                       {typeof item.title === "string"
@@ -140,7 +141,7 @@ export default function Sidebar() {
                                   </div>
                                 </Link>
                               </li>
-                            )
+                            );
                           })}
                         </ul>
                       ) : null}
@@ -148,7 +149,7 @@ export default function Sidebar() {
                         {menuItem.footer}
                       </div>
                     </Fragment>
-                  )
+                  );
                 })}
               </ul>
             </>
@@ -157,5 +158,5 @@ export default function Sidebar() {
         <div className={styles.footer}></div>
       </div>
     </div>
-  )
+  );
 }

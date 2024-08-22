@@ -1,5 +1,4 @@
 import { createContext, useContext, useMemo } from "react";
-import { useToast } from "@/lib/toast/hook";
 import api from "@/services/api";
 import { factory } from "@/services/api/models";
 import { useEffect, useState } from "react";
@@ -11,7 +10,6 @@ const ProjectsContext = createContext({
 });
 
 export const useProjectsWithoutContext = () => {
-  const toast = useToast();
   const [data, setData] = useState(Pagination.create());
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +27,6 @@ export const useProjectsWithoutContext = () => {
       );
     } catch (e) {
       console.error(e);
-      toast.error("プロジェクトの取得に失敗しました");
     } finally {
       setLoading(false);
     }

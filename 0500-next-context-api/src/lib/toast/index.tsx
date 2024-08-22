@@ -1,6 +1,11 @@
 "use client";
 import { createContext, useState, useRef } from "react";
-import { IoCloseOutline as Close } from "react-icons/io5";
+import {
+  IoCloseOutline as Close,
+  IoInformationCircle as Info,
+  IoCheckmarkCircleOutline as Success,
+  IoAlertCircleOutline as Error,
+} from "react-icons/io5";
 import { Position } from "./config";
 import { capitalFirstChar } from "./util";
 import styles from "./index.module.css";
@@ -21,6 +26,21 @@ interface Element {
   config: Config;
 }
 
+const appearances = {
+  info: {
+    title: "Info",
+    icon: <Info size="20px" />,
+  },
+  success: {
+    title: "Success",
+    icon: <Success size="20px" />,
+  },
+  error: {
+    title: "Error",
+    icon: <Error size="20px" />,
+  },
+};
+
 export const Toast = ({
   config,
   style,
@@ -34,9 +54,11 @@ export const Toast = ({
 
   return (
     <div className={[styles.container, variantStyle].join(" ")} style={style}>
+      <div className={styles.icon}>{appearances[config.variant].icon}</div>
       <div className={styles.content}>
         <div className={styles.header}>
-          <Close className={styles.close} onClick={onClose} />
+          <p className={styles.title}>{appearances[config.variant].title}</p>
+          <Close className={styles.close} size="20px" onClick={onClose} />
         </div>
         <div className={styles.body}>{config.message}</div>
       </div>

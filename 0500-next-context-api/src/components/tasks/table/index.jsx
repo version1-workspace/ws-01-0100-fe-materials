@@ -103,8 +103,8 @@ const Row = ({ data, refetch }) => {
         />
       </div>
       <div className={join(styles.tableCell, styles.detail)}>
-        <Link href={route.tasks.with(data.id)}>
-          <span className={styles.detailText}>more ...</span>
+        <Link href={route.tasks.with(data.id)} className={styles.detailLink}>
+          <span className={styles.detailText}>詳細をみる</span>
         </Link>
       </div>
     </div>

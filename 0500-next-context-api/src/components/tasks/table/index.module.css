@@ -85,23 +85,28 @@
 
 .status {
   padding: 0;
-  width: 12%;
+  width: 15%;
 }
 
 .statusHeader {
-  width: 12%;
+  width: 20%;
 }
 
 .project {
-  width: 14%;
+  width: 20%;
 }
 
 .deadline {
-  width: 14%;
+  width: 20%;
 }
 
 .detail {
-  width: 8%;
+  width: 20%;
+}
+
+.detailLink {
+  width: 100%;
+  text-align: center;
 }
 
 .detailText {
