@@ -32,14 +32,6 @@ export default function Main() {
               })}
             </div>
           )}
-          <div className={styles.projectListFooter}>
-            <Link
-              className={styles.projectListLink}
-              href={route.projects.toString()}
-            >
-              プロジェクト一覧
-            </Link>
-          </div>
         </div>
         <div className={styles.chart}>
           <h2 className={styles.sectionTitle}>進捗</h2>

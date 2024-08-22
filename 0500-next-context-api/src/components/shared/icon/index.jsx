@@ -15,6 +15,7 @@ import {
   IoCloseCircle,
   IoCloseOutline,
   IoCaretDown,
+  IoEnterSharp,
   IoDocumentText,
   IoEllipsisVerticalOutline,
   IoGitCommit,
@@ -33,15 +34,18 @@ import {
   IoFilter,
   IoGridOutline,
   IoAddCircle,
+  IoTrash,
 } from "react-icons/io5";
 import styles from "./index.module.css";
 import { classHelper } from "@/lib/cls";
 
 const icons = {
   unknown: IoCodeOutline,
+  enter: IoEnterSharp,
   filter: IoFilter,
   folder: IoGridOutline,
   shouldbe: IoCompassOutline,
+  delete: IoTrash,
   goal: IoScanOutline,
   close: IoCloseOutline,
   closeCircle: IoCloseCircle,

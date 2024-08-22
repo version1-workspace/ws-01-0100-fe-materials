@@ -104,8 +104,22 @@ const Row = ({ data, refetch }) => {
       </div>
       <div className={join(styles.tableCell, styles.detail)}>
         <Link href={route.tasks.with(data.id)} className={styles.detailLink}>
-          <span className={styles.detailText}>詳細をみる</span>
+          <Icon size="20px" name="enter" color="#666" />
         </Link>
+        <Icon
+          name="delete"
+          size="20px"
+          color="var(--danger-color)"
+          className={styles.deleteIcon}
+          onClick={async () => {
+            if (!confirm("この操作は取り消せまん。削除しますか？")) {
+              return
+            }
+
+            await api.deleteTask(data.id);
+            await refetch();
+          }}
+        />
       </div>
     </div>
   );

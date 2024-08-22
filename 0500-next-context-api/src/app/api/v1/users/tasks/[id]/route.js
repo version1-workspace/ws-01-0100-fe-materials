@@ -78,8 +78,8 @@ export async function DELETE(_, context) {
   } = context;
 
   const tasks = getTasks();
-  const task = tasks.find((it) => it.id === id);
-  if (!task) {
+  const index = tasks.findIndex((it) => it.id === id);
+  if (index == -1) {
     return NextResponse.json(
       {
         message: "Not found",
@@ -90,10 +90,10 @@ export async function DELETE(_, context) {
     );
   }
 
-  tasks.splice(index, 1);
+  const res = tasks.splice(index, 1);
   setTasks(tasks);
 
   return NextResponse.json({
-    data: task.raw,
+    data: res,
   });
 }

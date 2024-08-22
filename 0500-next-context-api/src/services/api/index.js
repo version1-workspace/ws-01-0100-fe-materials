@@ -122,6 +122,9 @@ const api = {
     }, {})
     return client.instance.patch(`/users/tasks/${id}`, _data)
   },
+  deleteTask: (id) => {
+    return client.instance.delete(`/users/tasks/${id}`)
+  },
 }
 
 export default api
