@@ -4,21 +4,19 @@ import api from "@/services/api";
 import { factory } from "@/services/api/models";
 import styles from "./page.module.css";
 import { join } from "@/lib/cls";
-import Icon from "@/components/shared/icon"; import route from "@/lib/route";
+import Icon from "@/components/shared/icon";
+import route from "@/lib/route";
 import TextInput from "@/components/shared/input/text";
 
 export default function Project({ params: { slug } }) {
   const [project, setProject] = useState();
 
-  const fetch = useCallback(
-    async ({ slug }) => {
-      const res = await api.fetchProject({ slug });
-      const item = factory.project(res.data.data);
+  const fetch = useCallback(async ({ slug }) => {
+    const res = await api.fetchProject({ slug });
+    const item = factory.project(res.data.data);
 
-      setProject(item);
-    },
-    [],
-  );
+    setProject(item);
+  }, []);
 
   useEffect(() => {
     fetch({ slug });
@@ -71,7 +69,7 @@ export default function Project({ params: { slug } }) {
                   <span className={styles.slugBasePath}>
                     {route.projects.with("")}
                   </span>
-                  <TextInput value={project.slug} />
+                  <TextInput value={project.slug} readOnly />
                 </p>
               </div>
               <div className={styles.field}>

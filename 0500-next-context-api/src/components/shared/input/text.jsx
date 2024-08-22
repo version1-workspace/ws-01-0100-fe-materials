@@ -1,5 +1,5 @@
 import { join } from "@/lib/cls";
-import { ChangeEvent, ForwardedRef, forwardRef } from "react";
+import { forwardRef } from "react";
 import styles from "./text.module.css";
 
 export default forwardRef(function Input(
@@ -10,12 +10,14 @@ export default forwardRef(function Input(
     containerClassName,
     inputClassName,
     onChange,
+    readOnly,
   },
   ref,
 ) {
   return (
     <div className={join(styles.container, containerClassName)}>
       <input
+        readOnly={readOnly}
         ref={ref}
         className={join(styles.text, inputClassName)}
         type={type}

@@ -14,22 +14,11 @@ export const TaskListContainer = ({ children }) => {
     page,
     limit,
     statuses,
-    text,
-    projectId,
-    order,
-    date
   }) => {
     const res = await api.fetchTasks({
       page: page || 1,
       limit: limit || 20,
       status: Object.keys(statuses || {}),
-      search: text,
-      projectId: projectId,
-      sortType: order?.type,
-      sortOrder: order?.value,
-      dateFrom: date?.start,
-      dateTo: date?.end,
-      dateType: date?.type
     })
     const { data: tasks, pageInfo } = res.data
     const list = tasks.map(it => factory.task(it))

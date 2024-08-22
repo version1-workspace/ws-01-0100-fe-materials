@@ -2,18 +2,19 @@ import { useState } from "react";
 import Link from "next/link";
 import styles from "./index.module.css";
 import { classHelper, join } from "@/lib/cls";
-import { statusOptions } from "@/services/api/models/task";
 import route from "@/lib/route";
 import Select from "@/components/shared/select";
 import Icon from "@/components/shared/icon";
 import EditableField from "@/components/shared/editableField";
 import useProjects from "@/contexts/projects";
+import useTasks from "@/contexts/tasks";
 import api from "@/services/api";
-import useCheck from "@/contexts/check";
 
 const TaskTable = ({ data }) => {
-  const { check, checkAll, checked, allChecked } = useCheck();
-  const ids = data.map((it) => it.id);
+  const { fetch } = useTasks();
+  const refetch = () => {
+    fetch({ page: data.page });
+  };
 
   return (
     <div className={styles.table}>
@@ -22,23 +23,15 @@ const TaskTable = ({ data }) => {
           className={classHelper({
             [styles.tableHeaderCell]: true,
             [styles.check]: true,
-            [styles.unchecked]: !allChecked,
-            [styles.checked]: allChecked,
-          })}>
-          <Icon
-            className={styles.checkIcon}
-            name="checkOutline"
-            onClick={() => checkAll(ids)}
-          />
-        </div>
+          })}
+        ></div>
         <div className={join(styles.tableHeaderCell, styles.title)}>タスク</div>
         <div className={join(styles.tableHeaderCell, styles.project)}>
           プロジェクト
         </div>
-        <div className={join(styles.tableHeaderCell, styles.statusHeader)}>
-          ステータス
+        <div className={join(styles.tableHeaderCell, styles.deadline)}>
+          期限日
         </div>
-        <div className={styles.tableHeaderCell}>期限日</div>
         <div className={join(styles.tableHeaderCell, styles.detail)}></div>
       </div>
       <div className={styles.tableBody}>
@@ -47,29 +40,78 @@ const TaskTable = ({ data }) => {
             <td>タスクが登録されていません</td>
           </div>
         ) : null}
-        {data.map((it) => {
-          return (
-            <Row
-              key={it.id}
-              data={it}
-              checked={checked[it.id]}
-              onCheck={() => {
-                check(it.id);
-              }}
-            />
-          );
+        {data.list.map((it) => {
+          return <Row key={it.id} data={it} refetch={refetch} />;
         })}
       </div>
     </div>
   );
 };
 
-const SelectorProxy = ({
-  options,
-  defaultValue,
-  defaultOption,
-  onSelect,
-}) => {
+const Row = ({ data, refetch }) => {
+  const { options: projectOptions } = useProjects();
+
+  return (
+    <div key={data.id} className={styles.tableRow}>
+      <div
+        className={classHelper({
+          [styles.tableCell]: true,
+          [styles.check]: true,
+          [styles.unchecked]: true,
+        })}
+      >
+        <Icon
+          className={styles.checkIcon}
+          name="checkOutline"
+          onClick={async () => {
+            await api.updateTask(data.id, { status: "completed" });
+            await refetch();
+          }}
+        />
+      </div>
+      <div className={join(styles.tableCell, styles.title)}>
+        <EditableField
+          defaultValue={data.title}
+          onChangeEnd={async (value) => {
+            await api.updateTask(data.id, { title: value });
+            await refetch();
+          }}
+        />
+      </div>
+      <div className={join(styles.tableCell, styles.project)}>
+        <SelectorProxy
+          options={projectOptions}
+          defaultValue={data.project?.id}
+          defaultOption={{
+            label: "プロジェクトを選択してください",
+            value: "",
+          }}
+          onSelect={async (option) => {
+            await api.updateTask(data.id, { projectId: option.value });
+            await refetch();
+          }}
+        />
+      </div>
+      <div className={join(styles.tableCell, styles.deadline)}>
+        <EditableField
+          type="date"
+          defaultValue={data.deadline.format() || ""}
+          onChangeEnd={async (value) => {
+            await api.updateTask(data.id, { deadline: value });
+            await refetch();
+          }}
+        />
+      </div>
+      <div className={join(styles.tableCell, styles.detail)}>
+        <Link href={route.tasks.with(data.id)}>
+          <span className={styles.detailText}>more ...</span>
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+const SelectorProxy = ({ options, defaultValue, defaultOption, onSelect }) => {
   const [value, setValue] = useState(defaultValue);
 
   return (
@@ -83,76 +125,6 @@ const SelectorProxy = ({
       }}
       containerStyleClass={styles.selector}
     />
-  );
-};
-
-const Row = ({ data, checked, onCheck }) => {
-  const { options: projectOptions } = useProjects();
-
-  return (
-    <div key={data.id} className={styles.tableRow}>
-      <div
-        className={classHelper({
-          [styles.tableCell]: true,
-          [styles.check]: true,
-          [styles.unchecked]: !checked,
-          [styles.checked]: checked,
-        })}>
-        <Icon
-          className={styles.checkIcon}
-          name="checkOutline"
-          onClick={onCheck}
-        />
-      </div>
-      <div className={join(styles.tableCell, styles.title)}>
-        <EditableField
-          defaultValue={data.title}
-          onChangeEnd={async (value) => {
-            await api.updateTask(data.id, { title: value });
-          }}
-        />
-      </div>
-      <div className={join(styles.tableCell, styles.project)}>
-        <SelectorProxy
-          options={projectOptions}
-          defaultValue={data.project.id}
-          defaultOption={{
-            label: "プロジェクトを選択してください",
-            value: "",
-          }}
-          onSelect={async (option) => {
-            await api.updateTask(data.id, { projectId: option.value });
-          }}
-        />
-      </div>
-      <div className={join(styles.tableCell, styles.status)}>
-        <SelectorProxy
-          options={statusOptions}
-          defaultValue={data.status}
-          defaultOption={{
-            label: "ステータスを選択してください",
-            value: "",
-          }}
-          onSelect={async (option) => {
-            await api.updateTask(data.id, { status: option.value });
-          }}
-        />
-      </div>
-      <div className={styles.tableCell}>
-        <EditableField
-          type="date"
-          defaultValue={data.deadline.format() || ""}
-          onChangeEnd={(value) => {
-            api.updateTask(data.id, { deadline: value });
-          }}
-        />
-      </div>
-      <div className={join(styles.tableCell, styles.detail)}>
-        <Link href={route.tasks.with(data.id)}>
-          <span className={styles.detailText}>more ...</span>
-        </Link>
-      </div>
-    </div>
   );
 };
 

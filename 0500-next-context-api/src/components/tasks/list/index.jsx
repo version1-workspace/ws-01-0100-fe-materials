@@ -22,7 +22,7 @@ export default function TaskList({ header, footer }) {
     <CheckContainer>
       <div className={styles.container}>
         {header || <TaskListHeader />}
-        <TaskTable data={data.list} />
+        <TaskTable data={data} />
         {footer || (
           <div className={styles.footer}>
             <Pagination

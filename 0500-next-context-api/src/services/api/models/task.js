@@ -1,171 +1,186 @@
-import { ja } from "@/lib/translate"
-import { factory } from "."
-import { getProjects } from "@/datastore"
+import { ja } from "@/lib/translate";
+import { factory } from ".";
+import { getProjects } from "@/datastore";
 
 const Status = {
   initial: "initial",
   scheduled: "scheduled",
   completed: "completed",
-  archived: "archived"
-}
+  archived: "archived",
+};
 
-export const selectableStatus = ["scheduled", "completed", "archived"]
+export const selectableStatus = ["scheduled", "completed", "archived"];
 
-const taskStatuses = ja.derive("task.status")
+const taskStatuses = ja.derive("task.status");
 
-export const statusOptions = selectableStatus.map(it => {
-  return { label: taskStatuses.t(it), value: it }
-})
+export const statusOptions = selectableStatus.map((it) => {
+  return { label: taskStatuses.t(it), value: it };
+});
 
 export class TaskModel {
   constructor(params) {
-    this.id = params.id
-    this._raw = params
+    this.id = params.id;
+    this._raw = params;
 
-    this._children = params.children?.map(it => {
+    this._children = params.children?.map((it) => {
       if (!it.project && params.project) {
-        it.project = params.project
+        it.project = params.project;
       }
 
-      return factory.task(it) || []
-    })
+      return factory.task(it) || [];
+    });
 
     if (params.project) {
-      debugger
-      this._project = factory.project(params.project)
+      this._project = factory.project(params.project);
     }
 
     if (params.parent) {
-      this._parent = factory.task(params.parent)
+      this._parent = factory.task(params.parent);
     }
   }
 
   get raw() {
-    return this._raw
+    return this._raw;
   }
 
   get children() {
-    return this._children
+    return this._children;
   }
 
   get parent() {
-    return this._parent
+    return this._parent;
   }
 
   get project() {
-    return this._project
+    return this._project;
   }
 
   get isPersist() {
-    return this._raw.status !== Status.initial
+    return this._raw.status !== Status.initial;
   }
 
   get isArchived() {
-    return this._raw.status === "archived"
+    return this._raw.status === "archived";
   }
 
   get isCompleted() {
-    return this._raw.status === "completed"
+    return this._raw.status === "completed";
   }
 
   get isMilestone() {
-    return this._raw.kind === "milestone"
+    return this._raw.kind === "milestone";
   }
 
   params() {
     if (!this._raw) {
-      return
+      return;
     }
 
     return {
       ...JSON.parse(
-        JSON.stringify(this._raw, Object.getOwnPropertyNames(this._raw))
+        JSON.stringify(this._raw, Object.getOwnPropertyNames(this._raw)),
       ),
-      parent: this._raw.project
-    }
+      parent: this._raw.project,
+    };
   }
 
   withDeadline(value) {
-    const params = this.params()
+    const params = this.params();
     if (!params) {
-      return
+      return;
     }
 
-    params.deadline = value
+    params.deadline = value;
 
-    return factory.task(params)
+    return factory.task(params);
   }
 
   withTitle(value) {
-    const params = this.params()
+    const params = this.params();
     if (!params) {
-      return
+      return;
     }
 
-    params.title = value
+    params.title = value;
 
-    return factory.task(params)
+    return factory.task(params);
   }
 
   scheduled() {
-    return this.updateStatus("scheduled")
+    return this.updateStatus("scheduled");
   }
 
   complete() {
-    return this.updateStatus("completed")
+    return this.updateStatus("completed");
   }
 
   archive() {
-    return this.updateStatus("archived")
+    return this.updateStatus("archived");
   }
 
   reopen() {
-    return this.updateStatus("scheduled")
+    return this.updateStatus("scheduled");
   }
 
   trancatedDescription(length = 30, delimiter = "...") {
     if (!this._raw.description) {
-      return ""
+      return "";
     }
 
-    return this._raw.description.slice(0, length) + " " + delimiter
+    return this._raw.description.slice(0, length) + " " + delimiter;
   }
 
   updateStatus(status) {
     const raw = {
       ...this._raw,
-      status
-    }
+      status,
+    };
 
-    return factory.task(raw)
+    return factory.task(raw);
   }
 
   validate() {
     if (!this._raw.title) {
       return {
-        message: "Title is required"
-      }
+        message: "Title is required",
+      };
     }
 
     if (!this._raw.kind) {
       return {
-        message: "Kind is required"
-      }
+        message: "Kind is required",
+      };
     }
 
     if (!this._raw.status) {
       return {
-        message: "Status is required"
-      }
+        message: "Status is required",
+      };
     }
 
-    return null
+    return null;
   }
 
-  assign({ description, title, status, deadline, projectId } = {}) {
-    const project = getProjects().find(it => it.id === projectId)
-    const params = { ...this._raw, description, title, status, deadline, project }
-    return new TaskModel(params)
+  assign(params) {
+    const filtered = {};
+    Object.keys(params).forEach((key) => {
+      if (
+        ["description", "title", "status", "deadline"].includes(key)
+      ) {
+        filtered[key] = params[key];
+      }
+
+      if (key === "projectId") {
+        const project = getProjects().find(
+          (project) => project.id === params[key],
+        );
+        filtered.project = project;
+      }
+    });
+
+    return new TaskModel({
+      ...this._raw,
+      ...filtered,
+    });
   }
 }
-

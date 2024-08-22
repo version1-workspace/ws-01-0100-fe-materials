@@ -4,10 +4,6 @@ import api from "@/services/api";
 import TextInput from "@/components/shared/input/text";
 import DateInput from "@/components/shared/input/date";
 import AppDate from "@/lib/date";
-import {
-  selectableStatus,
-  statusOptions,
-} from "@/services/api/models/task";
 import Select from "@/components/shared/select";
 import TextArea from "@/components/shared/input/textarea";
 import { join } from "@/lib/cls";
@@ -23,17 +19,14 @@ const Form = ({ title, data, onSubmit, onCancel }) => {
   const { submit, change, errors, form } = useForm({
     initialValues: {
       project: data?.project,
-      parent: data?.parent,
       title: data?.title || "",
       description: data?.description || "",
-      startingAt: data?.startingAt,
       deadline: data?.deadline?.forHtml || AppDate.in(7).toString(),
       status: data?.status || "scheduled",
-      children: [],
     },
     validate: (values, { errors }) => {
       if (!values.project) {
-        errors.set("project", "プロジェクトを設定してください");
+        errors.set("project", "プロジェクトを選択してください");
       }
 
       if (!values.title) {
@@ -48,9 +41,10 @@ const Form = ({ title, data, onSubmit, onCancel }) => {
     },
     onSubmit: async (values) => {
       const { project, ...rest } = values;
+      debugger
       try {
         await api.createTask({
-          data: { ...rest, projectId: data?.project?.id, kind: "task" },
+          data: { ...rest, projectId: project?.id, kind: "task" },
         });
 
         onSubmit();
@@ -80,7 +74,7 @@ const Form = ({ title, data, onSubmit, onCancel }) => {
                 data={projectOptions}
                 value={form.project?.id}
                 defaultOption={{
-                  label: "プログラムを選択してください",
+                  label: "プロジェクトを選択してください",
                   value: "",
                 }}
                 onSelect={(option) => {
@@ -130,36 +124,6 @@ const Form = ({ title, data, onSubmit, onCancel }) => {
               <ErrorMessage message={errorMessages.deadline} />
             </div>
           </div>
-          <div className={styles.field}>
-            <div className={styles.label}>開始予定日</div>
-            <div className={styles.input}>
-              <DateInput
-                value={form.startingAt}
-                onChange={(e) => {
-                  change({ startingAt: e.target.value });
-                }}
-              />
-            </div>
-          </div>
-          <div className={styles.field}>
-            <div className={join(styles.label, styles.status)}>ステータス</div>
-            <div className={styles.input}>
-              <Select
-                data={statusOptions}
-                value={form.status}
-                defaultOption={{
-                  label: "ステータスを選択してください",
-                  value: "",
-                }}
-                onSelect={(option) => {
-                  const status = selectableStatus.find(
-                    (it) => it === option.value,
-                  );
-                  change({ status });
-                }}
-              />
-            </div>
-          </div>
         </div>
         <div className={styles.footer}>
           <div className={styles.buttons}>
@@ -167,7 +131,8 @@ const Form = ({ title, data, onSubmit, onCancel }) => {
               variant="primary"
               onClick={() => {
                 submit();
-              }}>
+              }}
+            >
               {data ? "更新" : "作成"}
             </Button>
             <Button variant="secondary" onClick={onCancel}>

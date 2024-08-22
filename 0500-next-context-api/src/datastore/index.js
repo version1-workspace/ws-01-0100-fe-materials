@@ -86,7 +86,6 @@ const initProjects = function () {
 export const initTasks = function () {
   const __tasks = new Array(100).fill("").map((_, index) => ({
     id: uuid(),
-    uuid: "",
     description: "",
     kind: "task",
     title: `タスク ${index + 1}`,

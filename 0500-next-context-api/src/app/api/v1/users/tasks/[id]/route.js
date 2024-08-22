@@ -33,6 +33,7 @@ export async function PATCH(request, context) {
     params: { id },
   } = context;
   const params = await request.json();
+  console.log(params);
 
   const tasks = getTasks();
   const index = tasks.findIndex((it) => it.id === id);
@@ -47,7 +48,10 @@ export async function PATCH(request, context) {
     );
   }
 
-  const task = factory.task(tasks[index]);
+  const task = factory.task(tasks[index]).assign({
+    ...params,
+    updatedAt: dayjs().format()
+  });
   const error = task.validate();
   if (error) {
     return NextResponse.json(
@@ -60,10 +64,7 @@ export async function PATCH(request, context) {
     );
   }
 
-  tasks[index] = task.assign({
-    ...params,
-    updatedAt: dayjs().format(),
-  }).raw;
+  tasks[index] = task.raw;
   setTasks(tasks);
 
   return NextResponse.json({

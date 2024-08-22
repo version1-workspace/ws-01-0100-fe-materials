@@ -6,7 +6,6 @@ import { useModal } from "@/lib/modal";
 import TaskForm from "@/components/tasks/form";
 import Icon from "../icon";
 import useTasks from "@/contexts/tasks";
-import Search from "@/components/tasks/search";
 
 const user = {
   username: "test",
@@ -67,9 +66,6 @@ export default function Header() {
               <h2>Turvo</h2>
             </div>
           </Link>
-          <div className={styles.searchForm}>
-            <Search />
-          </div>
         </div>
         <div className={styles.right}>
           <ul className={styles.menu}>
