@@ -13,6 +13,8 @@ const ProjectsContext = createContext({
 export const useProjectsWithoutContext = () => {
   const toast = useToast();
   const [data, setData] = useState(Pagination.create());
+  const [loading, setLoading] = useState(true);
+
   const fetch = async (params) => {
     try {
       const res = await api.fetchProjects(params);
@@ -28,17 +30,20 @@ export const useProjectsWithoutContext = () => {
     } catch (e) {
       console.error(e);
       toast.error("プロジェクトの取得に失敗しました");
+    } finally {
+      setLoading(false);
     }
   };
 
   return {
     data,
+    loading,
     fetch,
   };
 };
 
 export const ProjectsContainer = ({ children }) => {
-  const { data, fetch } = useProjectsWithoutContext();
+  const { data, loading, fetch } = useProjectsWithoutContext();
 
   useEffect(() => {
     fetch({
@@ -48,7 +53,7 @@ export const ProjectsContainer = ({ children }) => {
 
   return (
     <ProjectsContext.Provider
-      value={{ data: data.list, paginated: data, fetch }}
+      value={{ data: data.list, paginated: data, loading, fetch }}
     >
       {children}
     </ProjectsContext.Provider>
@@ -56,7 +61,7 @@ export const ProjectsContainer = ({ children }) => {
 };
 
 const useProjects = () => {
-  const { fetch, data } = useContext(ProjectsContext);
+  const { fetch, data, loading } = useContext(ProjectsContext);
 
   const options = useMemo(() => {
     return data.reduce((acc, it) => {
@@ -68,6 +73,7 @@ const useProjects = () => {
     fetch,
     refetch: () => fetch({ limit: 100 }),
     projects: data,
+    loading,
     options,
   };
 };

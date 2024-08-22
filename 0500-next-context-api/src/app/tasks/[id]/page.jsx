@@ -1,5 +1,4 @@
 "use client";
-import route from "@/lib/route";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
@@ -7,10 +6,7 @@ import { useForm } from "@/hooks/useForm";
 import api from "@/services/api";
 import DateInput from "@/components/shared/input/date";
 import AppDate from "@/lib/date";
-import {
-  selectableStatus,
-  statusOptions,
-} from "@/services/api/models/task";
+import { selectableStatus, statusOptions } from "@/services/api/models/task";
 import Select from "@/components/shared/select";
 import TextArea from "@/components/shared/input/textarea";
 import { join } from "@/lib/cls";
@@ -194,7 +190,8 @@ const TaskDetail = ({ params }) => {
               variant="primary"
               onClick={() => {
                 submit();
-              }}>
+              }}
+            >
               更新
             </Button>
             <Button
@@ -204,15 +201,16 @@ const TaskDetail = ({ params }) => {
                   return;
                 }
                 updateFormWith(task);
-              }}>
+              }}
+            >
               リセット
             </Button>
           </div>
           <div className={styles.back}>
             <p onClick={() => router.back()} className={styles.backText}>
-              <Icon name="back" />
-              <Icon name="back" />
-              戻る
+              <Icon name="back" className={styles.icon} />
+              <Icon name="back" className={styles.icon} />
+              <span className={styles.backTextContent}>戻る</span>
             </p>
           </div>
         </div>

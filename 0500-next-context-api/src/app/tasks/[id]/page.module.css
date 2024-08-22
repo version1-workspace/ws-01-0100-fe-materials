@@ -67,7 +67,17 @@
 }
 
 .backText {
+  cursor: pointer;
   color: var(--primary-color);
   display: flex;
   align-items: center;
+}
+
+.backTextContent {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.icon:first-child {
+  margin-right: -4px;
 }

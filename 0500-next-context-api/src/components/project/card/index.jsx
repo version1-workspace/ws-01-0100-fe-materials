@@ -15,12 +15,12 @@ export default function Projet({ data }) {
       </div>
       <div className={styles.body}>
         <div className={styles.goal}>
-          <span>ゴール : </span>
+          <span className={styles.label}>ゴール : </span>
           <p>{data.goal}</p>
         </div>
         {data.shouldbe ? (
           <div className={styles.shouldbe}>
-            <span>あり方 : </span>
+            <span className={styles.label}>あり方 : </span>
             <p>{data.shouldbe}</p>
           </div>
         ) : null}

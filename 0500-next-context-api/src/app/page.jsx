@@ -8,46 +8,48 @@ import TaskList from "@/components/tasks/list";
 import route from "@/lib/route";
 import useProjects from "@/contexts/projects";
 import useTasks from "@/contexts/tasks";
-import Icon from "@/components/shared/icon";
+import Skelton from "@/components/shared/skelton";
 
 export default function Main() {
-  const { projects } = useProjects();
+  const { projects, loading: projectsLoading } = useProjects();
   const { data } = useTasks();
 
   return (
     <div className={styles.projects}>
       <div className={styles.dashboard}>
         <div className={styles.projectList}>
-          <h2 className={styles.sectionTitle}>
-            プロジェクト
-            <div className={styles.addProject}>
-              <Icon size={20} className={styles.projectAddIcon} name="add" />
+          <h2 className={styles.sectionTitle}>プロジェクト</h2>
+          {projectsLoading ? (
+            <Skelton rowHeight="180px" />
+          ) : (
+            <div className={styles.content}>
+              {projects.slice(0, 3).map((item) => {
+                return (
+                  <Link key={item.slug} href={route.projects.with(item.slug)}>
+                    <Card data={item} />
+                  </Link>
+                );
+              })}
             </div>
-          </h2>
-          <div className={styles.content}>
-            {projects.slice(0, 3).map((item) => {
-              return (
-                <Link
-                  key={item.slug}
-                  href={route.projects.with(item.slug)}>
-                  <Card data={item} />
-                </Link>
-              );
-            })}
-          </div>
+          )}
           <div className={styles.projectListFooter}>
             <Link
               className={styles.projectListLink}
-              href={route.projects.toString()}>
+              href={route.projects.toString()}
+            >
               プロジェクト一覧
             </Link>
           </div>
         </div>
         <div className={styles.chart}>
           <h2 className={styles.sectionTitle}>進捗</h2>
-          <div className={styles.content}>
-            <Chart />
-          </div>
+          {projectsLoading ? (
+            <Skelton row={1} rowHeight="400px" />
+          ) : (
+            <div className={styles.content}>
+              <Chart />
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.todos}>

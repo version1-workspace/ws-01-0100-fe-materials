@@ -5,7 +5,7 @@ const projects = [
   {
     id: "01aae611-e02f-46d7-997f-d88cd7842c01",
     name: "プログラミング",
-    deadline: "2023/08/12",
+    deadline: dayjs().add(7, "days").format(),
     slug: "programming",
     goal: "期限日までにフロントエンドエンジニアとして就職する。",
     shouldbe: "エンジニアとしての学習習慣を身につけて生活する。",
@@ -30,7 +30,7 @@ const projects = [
   {
     id: "9a75b860-8587-4a78-98f8-39fae76b82df",
     name: "英語",
-    deadline: "2023/08/12",
+    deadline: dayjs().add(14, "days").format(),
     slug: "english",
     goal: "IELTS Overall 7.0 を取得する。",
     shouldbe: "英語に浸る。",
@@ -55,7 +55,7 @@ const projects = [
   {
     id: "f0647d45-78ec-4eb3-b432-712c3131a080",
     name: "プライベート",
-    deadline: "2023/08/12",
+    deadline: dayjs().add(21, "days").format(),
     slug: "private",
     goal: "長期休みに旅行をする",
     shouldbe: "",

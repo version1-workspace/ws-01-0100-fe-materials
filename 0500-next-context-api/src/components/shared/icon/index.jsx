@@ -92,6 +92,7 @@ const Icon = ({
         [styles.interactivePulse]: interactive === "pulse",
         [styles.interactiveHover]: interactive === "hover",
         [styles.interactiveHoverDark]: interactive === "hoverDark",
+        [className]: !!className,
       })}
       onClick={onClick}>
       {<Component className={className} size={size} color={color} />}
