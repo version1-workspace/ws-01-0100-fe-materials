@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import dayjs from 'dayjs';
-import { getTasks, setTasks, getProjects } from "@/datastore";
+import AppDate from "@/lib/date";
+import { getTasks, setTasks, getProjects, getUUID } from "@/datastore";
 import { PageInfo } from "@/services/api/models/pagination";
-import { v4 as uuid } from "uuid";
 import { factory } from "@/services/api/models";
 
 export async function GET(request) {
@@ -16,7 +16,9 @@ export async function GET(request) {
   });
 
   tasks.sort((a, b) => {
-    return new Date(b.deadline) - new Date(a.deadline);
+    const aa = AppDate.parse(a.deadline)
+    const bb = AppDate.parse(b.deadline)
+    return aa.isAfter(bb) ? 1 : -1;
   });
   const pageInfo = new PageInfo({
     page,
@@ -37,8 +39,9 @@ export async function POST(request) {
 
   const tasks = getTasks();
   const project = getProjects().find((it) => it.id === projectId);
+
   const task = factory.task({
-    id: uuid(),
+    id: getUUID(),
     ...rest,
     project,
     createdAt: dayjs().format(),

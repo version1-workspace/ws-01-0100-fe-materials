@@ -33,7 +33,6 @@ export async function PATCH(request, context) {
     params: { id },
   } = context;
   const params = await request.json();
-  console.log(params);
 
   const tasks = getTasks();
   const index = tasks.findIndex((it) => it.id === id);

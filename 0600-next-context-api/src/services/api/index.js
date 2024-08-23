@@ -43,7 +43,7 @@ class Client {
   }
 }
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+const baseURL = (typeof window !== "undefined" ? window.location.origin : null) || "http://localhost:3000"
 
 const client = new Client({
   baseURL: `${baseURL}/api/v1`,

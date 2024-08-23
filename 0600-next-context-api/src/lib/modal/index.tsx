@@ -2,7 +2,21 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import Modal, { ContainerConfig } from "./components";
 
-const ModalContext = createContext({
+interface Content {
+  content: ReactNode;
+}
+
+interface IModalContext {
+  show: boolean;
+  stack: Content[];
+  peak?: Content;
+  push?: (content: Content) => void;
+  pop?: () => void;
+  open?: (content: Content) => void;
+  hide?: () => void;
+}
+
+const ModalContext = createContext<IModalContext>({
   show: false,
   stack: [],
 });

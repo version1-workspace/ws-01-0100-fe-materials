@@ -37,11 +37,12 @@ export default class AppDate {
   }
 
   getTime() {
+    console.log(this.date, this.date.getTime())
     return this.date.getTime()
   }
 
   isAfter(date) {
-    return this.date.getTime() > date.getTime()
+    return this.getTime() > date.getTime()
   }
 }
 

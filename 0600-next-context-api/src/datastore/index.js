@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { v4 as uuid } from "uuid";
+import uuids from "./uuids";
 
 const projects = [
   {
@@ -85,14 +85,14 @@ const initProjects = function () {
 
 export const initTasks = function () {
   const __tasks = new Array(100).fill("").map((_, index) => ({
-    id: uuid(),
+    id: uuids[index],
     description: "",
     kind: "task",
     title: `タスク ${index + 1}`,
     status: "scheduled",
-    createdAt: "2023-08-23T00:00:00-07:00",
-    updatedAt: "2023-08-23T00:00:00-07:00",
-    deadline: "2023-08-30T00:00:00-07:00",
+    createdAt: dayjs().format(),
+    updatedAt: dayjs().format(),
+    deadline: dayjs().add(14, "days").format(),
     children: [],
     project: projects[0],
   }));
@@ -207,9 +207,18 @@ export const getProjects = () => {
   return globalThis.__datastore.projects || [];
 };
 
+export const getUUID = () => {
+  const tasks = getTasks()
+  const id = tasks[tasks.length-1].id
+  const index = uuids.findIndex((uuid) => uuid === id);
+  return uuids[index + 1];
+}
+
 export const init = () => {
   globalThis.__datastore = {};
   initStats();
   initProjects();
   initTasks();
 };
+
+

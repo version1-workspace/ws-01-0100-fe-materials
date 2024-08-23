@@ -9,6 +9,7 @@ import EditableField from "@/components/shared/editableField";
 import useProjects from "@/contexts/projects";
 import useTasks from "@/contexts/tasks";
 import api from "@/services/api";
+import { useToast } from "@/lib/toast/hook";
 
 const TaskTable = ({ data }) => {
   const { fetch } = useTasks();
@@ -50,6 +51,7 @@ const TaskTable = ({ data }) => {
 
 const Row = ({ data, refetch }) => {
   const { options: projectOptions } = useProjects();
+  const toast = useToast();
 
   return (
     <div key={data.id} className={styles.tableRow}>
@@ -64,8 +66,13 @@ const Row = ({ data, refetch }) => {
           className={styles.checkIcon}
           name="checkOutline"
           onClick={async () => {
-            await api.updateTask(data.id, { status: "completed" });
-            await refetch();
+            try {
+              await api.updateTask(data.id, { status: "completed" });
+              await refetch();
+            } catch (e) {
+              console.error(e);
+              toast.error("更新に失敗しました。");
+            }
           }}
         />
       </div>
@@ -73,8 +80,13 @@ const Row = ({ data, refetch }) => {
         <EditableField
           defaultValue={data.title}
           onChangeEnd={async (value) => {
-            await api.updateTask(data.id, { title: value });
-            await refetch();
+            try {
+              await api.updateTask(data.id, { title: value });
+              await refetch();
+            } catch (e) {
+              console.error(e);
+              toast.error("更新に失敗しました。");
+            }
           }}
         />
       </div>
@@ -87,8 +99,13 @@ const Row = ({ data, refetch }) => {
             value: "",
           }}
           onSelect={async (option) => {
-            await api.updateTask(data.id, { projectId: option.value });
-            await refetch();
+            try {
+              await api.updateTask(data.id, { projectId: option.value });
+              await refetch();
+            } catch (e) {
+              console.error(e);
+              toast.error("更新に失敗しました。");
+            }
           }}
         />
       </div>
@@ -97,8 +114,13 @@ const Row = ({ data, refetch }) => {
           type="date"
           defaultValue={data.deadline.format() || ""}
           onChangeEnd={async (value) => {
-            await api.updateTask(data.id, { deadline: value });
-            await refetch();
+            try {
+              await api.updateTask(data.id, { deadline: value });
+              await refetch();
+            } catch (e) {
+              console.error(e);
+              toast.error("更新に失敗しました。");
+            }
           }}
         />
       </div>
@@ -113,11 +135,16 @@ const Row = ({ data, refetch }) => {
           className={styles.deleteIcon}
           onClick={async () => {
             if (!confirm("この操作は取り消せまん。削除しますか？")) {
-              return
+              return;
             }
 
-            await api.deleteTask(data.id);
-            await refetch();
+            try {
+              await api.deleteTask(data.id);
+              await refetch();
+            } catch (e) {
+              console.error(e);
+              toast.error("削除に失敗しました。");
+            }
           }}
         />
       </div>
