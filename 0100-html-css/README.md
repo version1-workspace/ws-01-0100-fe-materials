@@ -1,9 +1,9 @@
 # HTML/CSS(BEM, Sass) 課題
 
-デモ: https://version1-workspace.github.io/ws-01-0100-fe-materials/0100-html-css/index.html
+デモ: https://version1-real-todo.netlify.app/
 
 HTML, CSS(SASS), BEMとレスポンシブコーディングを勉強するためのリポジトリです。
-上記デモサイトをみながらなるべく同じサイトができるようにコーディングをして下さい。
+上記デモサイトのトップページを検証ツールなど使いながらなるべく同じサイトができるようにコーディングをして下さい。
 
 ## 課題で身に着けること
 
