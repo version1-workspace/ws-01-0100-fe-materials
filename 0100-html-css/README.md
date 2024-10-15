@@ -19,38 +19,17 @@ HTML, CSS(SASS), BEMとレスポンシブコーディングを勉強するため
 
 ### 1. ドキュメント/記事を読んで必要な知識を理解する
 
-#### BEMについて
+必要な知識に関する知識はこちらのドキュメントを参照して下さい。
 
-参照:
-- [脱ビギナーのためのCSS入門](https://speakerdeck.com/jjoo/tuo-biginafalsetamefalsecssru-men)
-- [BEM](https://getbem.com/)
+[./docs/documents.md](./docs/documents.md)
 
-公式ドキュメント:
+最終的には全てに目を通せることが望ましいですが、課題でのアウトプットを把握した上でドキュメントを読み進めて下さい。
+無意識「インプットのためのインプット」になってしまうことがあるので、一旦最終的なアウトプットを把握してそこから逆算してドキュメントを呼んで下さい。
+情報の取捨選択ができていれば「つまみ読み」するような読み方になるはずです。
 
-https://getbem.com/
+- [目的を持ってインプットする|「学ぶ」を上手くなろう。効率的なプログラミング学習のポイント](https://youtu.be/wILAOC6rKiM?si=iILGfG5-Q2VONx9q&t=657)
+- [難解な本、分厚い本の読み方。本を三段階に分けてよむ。](https://blog.ver-1-0.net/2019/03/28/three-phase-reading/)
 
-#### フレックスボックス
-
-- [もう迷わない！CSS Flexboxの使い方を徹底解説](https://webdesign-trends.net/entry/8148)
-
-#### レスポンシブデザインについて
-
-- [レスポンシブデザインとは
-実装のメリット・デメリット、作り方について解説](https://gmotech.jp/semlabo/seo/blog/responsive_design/)
-- [レスポンシブデザインに必要不可欠なブレイクポイントとメディアクエリとは？](https://www.studio-umi.jp/blog/185/610)
-
-#### Sassについて
-
-- [sass公式](https://sass-lang.com/)
-- [SASS](https://www.webdesignleaves.com/pr/css/css_basic_08.html)
-- [Dart Sass](https://sass-lang.com/dart-sass)
-
-#### npmについて
-
-- [便利なパッケージ管理ツール！npmとは【初心者向け】](https://techacademy.jp/magazine/16105)
-- [【初心者向け】NPMとpackage.jsonを概念的に理解する](https://qiita.com/righteous/items/e5448cb2e7e11ab7d477)
-- [そろそろ適当に npm install するのを卒業する](https://zenn.dev/ikuraikura/articles/71b917ab11ae690e3cd7)
-- [NPM](https://docs.npmjs.com/about-npm)
 
 ### 1. ファイルの中身を確認して課題を開始
 
