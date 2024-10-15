@@ -65,7 +65,7 @@ JS が初めての方は下記リンクを参照してください。
 こちらは必須の内容なので必ず目を通してから課題を進めてください。
 課題中にエラーが発生した場合も適宜こちらのドキュメントを参照して進めましょう。
 
-1. JavaScript でのデバッグ技術入門(https://version1-workspace.gitbook.io/javascript-5)
+1. [JavaScript でのデバッグ技術入門](https://version1-workspace.gitbook.io/javascript-5)
 2. [JavaScript in 10 minutes] コードを速く書くために Console タブを活用しよう (https://www.youtube.com/watch?v=JqLmrQzBjZU)
 
 ### 3. 各設問のコメントにしたがって、回答
