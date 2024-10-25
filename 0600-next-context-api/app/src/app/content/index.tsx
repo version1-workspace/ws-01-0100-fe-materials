@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/app/main/layout.module.css";
+import styles from "../layout.module.css";
 import AuthContainer from "@/components/auth";
 import Header from "@/components/shared/header/main";
 import Sidebar from "@/components/shared/sidebar";
