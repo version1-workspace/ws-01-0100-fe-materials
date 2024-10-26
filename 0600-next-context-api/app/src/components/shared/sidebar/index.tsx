@@ -1,14 +1,13 @@
 "use client";
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useMemo, useState, Fragment } from "react";
 import styles from "@/components/shared/sidebar/index.module.css";
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import {
   IoChevronForward as ShowIcon,
   IoChevronBack as HiddenIcon,
 } from "react-icons/io5";
 import route from "@/lib/route";
 import useProjects from "@/contexts/projects";
-import Icon from "@/components/shared/icon";
 import { Project } from "@/services/api/models/project";
 import Link from "@/components/shared/link";
 import { classHelper } from "@/lib/cls";
@@ -27,21 +26,14 @@ const projectCountLimit = 5;
 const sidebarMenulist = (projects: Project[]) => [
   {
     title: "ダッシュボード",
-    path: route.toString(),
+    path: "/",
   },
   {
     title: "タスク",
     path: route.tasks.toString(),
   },
   {
-    title: (
-      <>
-        プロジェクト
-        <Link href={route.projects.new.toString()}>
-          <Icon name="add" />
-        </Link>
-      </>
-    ),
+    title: <div>プロジェクト</div>,
     path: route.projects.toString(),
     children: projects.slice(0, projectCountLimit).map((it) => {
       return {
@@ -70,6 +62,7 @@ const sidebarMenulist = (projects: Project[]) => [
 ];
 
 export default function Sidebar() {
+  const router = useRouter();
   const { projects } = useProjects();
   const [show, setShow] = useState(true);
   const pathname = usePathname();
@@ -97,25 +90,22 @@ export default function Sidebar() {
               <ul className={styles.menu}>
                 {list.map((menuItem: MenuItem) => {
                   return (
-                    <>
-                      <li key={menuItem.path}>
-                        <Link href={menuItem.path}>
+                    <Fragment key={`sidebar-${menuItem.path}`}>
+                      <li onClick={() => router.push(menuItem.path)}>
+                        <div
+                          className={classHelper({
+                            [styles.menuItem]: true,
+                            [styles.menuItemActive]: pathname === menuItem.path,
+                          })}>
                           <div
                             className={classHelper({
-                              [styles.menuItem]: true,
-                              [styles.menuItemActive]:
+                              [styles.menuTitle]: true,
+                              [styles.menuTitleActive]:
                                 pathname === menuItem.path,
                             })}>
-                            <p
-                              className={classHelper({
-                                [styles.menuTitle]: true,
-                                [styles.menuTitleActive]:
-                                  pathname === menuItem.path,
-                              })}>
-                              {menuItem.title}
-                            </p>
+                            {menuItem.title}
                           </div>
-                        </Link>
+                        </div>
                       </li>
                       {menuItem.children?.length ? (
                         <ul className={styles.children}>
@@ -128,23 +118,23 @@ export default function Sidebar() {
                                   [styles.menuItemActive]:
                                     pathname === item.path,
                                 })}>
-                                <Link href={item.path}>
-                                  <div className={styles.project}>
-                                    <div>
-                                      <span
-                                        className={styles.dot}
-                                        style={{
-                                          background: item.options?.color,
-                                        }}></span>
-                                      {typeof item.title === "string"
-                                        ? truncate(item.title, 10)
-                                        : item.title}
-                                    </div>
-                                    <span className={styles.deadline}>
-                                      {item.options?.deadline}
-                                    </span>
+                                <div
+                                  className={styles.project}
+                                  onClick={() => router.push(item.path)}>
+                                  <div>
+                                    <span
+                                      className={styles.dot}
+                                      style={{
+                                        background: item.options?.color,
+                                      }}></span>
+                                    {typeof item.title === "string"
+                                      ? truncate(item.title, 10)
+                                      : item.title}
                                   </div>
-                                </Link>
+                                  <span className={styles.deadline}>
+                                    {item.options?.deadline}
+                                  </span>
+                                </div>
                               </li>
                             );
                           })}
@@ -153,7 +143,7 @@ export default function Sidebar() {
                       <div className={styles.menuItemFooter}>
                         {menuItem.footer}
                       </div>
-                    </>
+                    </Fragment>
                   );
                 })}
               </ul>

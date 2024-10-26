@@ -3,11 +3,9 @@ import Link from "next/link";
 import { useState } from "react";
 import styles from "./index.module.css";
 import { useModal } from "@/lib/modal";
-import route from "@/lib/route";
 import TaskForm from "@/components/tasks/form";
 import Icon from "../../icon";
 import useTasks from "@/contexts/tasks";
-import { useAuth } from "@/components/auth";
 import Search from "@/components/tasks/search";
 
 interface DropdownProps {
@@ -15,21 +13,16 @@ interface DropdownProps {
 }
 
 function Dropdown({ trigger }: DropdownProps) {
-  const { user, logout } = useAuth();
   const [show, setShow] = useState(false);
-
-  if (!user) {
-    return null;
-  }
 
   return (
     <div className={styles.dropdownContainer}>
       {show ? (
         <div className={styles.overlay} onClick={() => setShow(false)}></div>
       ) : null}
-      <p className={styles.trigger} onClick={() => setShow(true)}>
+      <div className={styles.trigger} onClick={() => setShow(true)}>
         {trigger}
-      </p>
+      </div>
       {show ? (
         <ul className={styles.dropdown}>
           <li
@@ -37,9 +30,7 @@ function Dropdown({ trigger }: DropdownProps) {
             onClick={() => {
               setShow(false);
             }}>
-            <Link
-              className={styles.dropdownLink}
-              href={route.users.profile.toString()}>
+            <Link className={styles.dropdownLink} href="">
               <div className={styles.dropdownIcon}>
                 <Icon name="person" size={20} />
               </div>
@@ -52,7 +43,6 @@ function Dropdown({ trigger }: DropdownProps) {
           <li
             className={styles.dropdownItem}
             onClick={() => {
-              logout();
               setShow(false);
             }}>
             <div className={styles.dropdownLink}>
@@ -76,7 +66,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.content}>
         <div className={styles.left}>
-          <Link href={route.toString()}>
+          <Link href="">
             <div className={styles.logo}>
               <h2>Turvo</h2>
             </div>

@@ -29,6 +29,7 @@ const handler = {
       if (route.config.path.slice(-1) === "/") {
         return route.config.path + path;
       }
+
       return route.config.path + "/" + path;
     };
     route.config.path = route.with(prop);

@@ -1,6 +1,6 @@
 import DateDecorator from "./date";
-import { Project, ProjectParams } from "@/services/api/models/project";
-import { v4 as uuid } from "uuid";
+import { Project, ProjectParams } from "./project";
+import { getProjects } from "../index";
 import { ja } from "@/lib/transltate";
 import { factory } from ".";
 
@@ -25,10 +25,10 @@ export const statusOptions = selectableStatus.map((it) => {
 
 export type StatusType = keyof typeof Status;
 
-type Kind = 'task' | 'milestone'
+type Kind = "task" | "milestone";
 
 export interface TaskParams {
-  uuid: string;
+  id: string;
   title: string;
   kind: Kind;
   description: string;
@@ -66,7 +66,7 @@ export class TaskModel {
   readonly _project: Project;
 
   constructor(params: TaskParams) {
-    this.id = params.uuid || uuid();
+    this.id = params.id;
     this._raw = params;
 
     this._children = params.children?.map((it) => {
@@ -172,6 +172,49 @@ export class TaskModel {
     }
 
     return this._raw.description.slice(0, length) + " " + delimiter;
+  }
+
+  validate() {
+    if (!this._raw.title) {
+      return {
+        message: "Title is required",
+      };
+    }
+
+    if (!this._raw.kind) {
+      return {
+        message: "Kind is required",
+      };
+    }
+
+    if (!this._raw.status) {
+      return {
+        message: "Status is required",
+      };
+    }
+
+    return null;
+  }
+
+  assign(params: Partial<TaskParams>) {
+    const filtered: Partial<TaskParams> = {};
+    Object.keys(params).forEach((key) => {
+      if (["description", "title", "status", "deadline"].includes(key)) {
+        filtered[key as keyof TaskParams] = params[key as keyof TaskParams];
+      }
+
+      if (key === "projectId") {
+        const project = getProjects().find(
+          (project) => project.id === params[key],
+        );
+        filtered.project = project;
+      }
+    });
+
+    return new TaskModel({
+      ...this._raw,
+      ...filtered,
+    });
   }
 
   private updateStatus(status: StatusType) {

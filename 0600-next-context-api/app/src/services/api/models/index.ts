@@ -1,12 +1,8 @@
-import {
-  Project,
-  ProjectParams,
-  ProjectModel,
-} from "@/services/api/models/project";
-import { Stats, StatsParams, StatsModel } from "@/services/api/models/stats";
-import { Task, TaskParams, TaskModel } from "@/services/api/models/task";
+import { Project, ProjectParams, ProjectModel } from "./project";
+import { Stats, StatsParams, StatsModel } from "./stats";
+import { Task, TaskParams, TaskModel } from "./task";
 
-import DateDecorater from "@/services/api/models/date";
+import DateDecorater from "./date";
 import { User, UserModel, UserParams } from "./user";
 
 interface Params<T> {

@@ -50,6 +50,9 @@ export class Pagination<T> {
   }
 
   get pageCount() {
+    if (this.pageInfo.limit === 0) {
+      return 0;
+    }
     return Math.ceil(this.total / this.pageInfo.limit);
   }
 

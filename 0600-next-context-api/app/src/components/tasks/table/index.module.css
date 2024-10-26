@@ -37,6 +37,10 @@
   font-size: 12px;
 }
 
+.tableCell:first-child {
+  padding-left: 16px;
+}
+
 .tableCell:last-child {
   border-right: 0;
 }
@@ -53,38 +57,8 @@
   min-height: 100%;
 }
 
-.check {
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  width: 5%;
-}
-
-.unchecked {
-  color: transparent;
-}
-
-.unchecked:hover {
-  color: inherit;
-}
-
-.checked {
-  color: var(--primary-color);
-  font-size: 1.2em;
-}
-
-.checkIcon {
-}
-
-.checkIcon:hover {
-}
-
-.checkIconVisible {
-
-}
-
 .title {
-  width: 40%;
+  width: 50%;
 }
 
 .status {

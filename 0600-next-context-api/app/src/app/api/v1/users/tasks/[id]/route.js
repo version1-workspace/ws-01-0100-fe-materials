@@ -37,7 +37,7 @@ export async function PATCH(request, context) {
   const tasks = getTasks();
   const index = tasks.findIndex((it) => it.id === id);
   if (index == -1) {
-    return new Response(
+    return NextResponse.json(
       {
         message: "Not found",
       },
@@ -49,7 +49,7 @@ export async function PATCH(request, context) {
 
   const task = factory.task(tasks[index]).assign({
     ...params,
-    updatedAt: dayjs().format()
+    updatedAt: dayjs().format(),
   });
   const error = task.validate();
   if (error) {

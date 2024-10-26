@@ -35,33 +35,6 @@ export default function Projects() {
             <p>
               {data.page} / {data.pageCount} ({data.total} 件)
             </p>
-            <p className={styles.toggleArchive}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={status.includes("archived")}
-                  onChange={() => {
-                    if (status.includes("archived")) {
-                      setStatus(["active"]);
-                      fetch({
-                        limit: data.pageInfo.limit,
-                        page: 1,
-                        status: ["active"],
-                      });
-                      return;
-                    }
-
-                    fetch({
-                      limit: data.pageInfo.limit,
-                      page: 1,
-                      status: ["active", "archived"],
-                    });
-                    setStatus(["active", "archived"]);
-                  }}
-                />
-                アーカイブを含む
-              </label>
-            </p>
           </div>
           <ul>
             {data.list.map((it) => {

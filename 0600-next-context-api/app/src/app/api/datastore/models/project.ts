@@ -1,6 +1,5 @@
 import { Task, TaskParams } from "@/services/api/models/task";
 import { now } from "@/services/api/models/date";
-import { v4 as uuid } from "uuid";
 import DateDecorator from "./date";
 import { factory } from ".";
 
@@ -61,7 +60,7 @@ export class ProjectModel {
   readonly _milestones: Task[] = [];
 
   constructor(params: ProjectParams) {
-    this.id = params?.uuid || uuid();
+    this.id = params?.uuid;
     this._raw = params;
     if (params?.milestones) {
       this._milestones = params.milestones.map((it) => factory.task(it));
@@ -181,7 +180,7 @@ export class ProjectModel {
   }
 
   get isArchived() {
-    return this._raw.status === 'archived'
+    return this._raw.status === "archived";
   }
 }
 

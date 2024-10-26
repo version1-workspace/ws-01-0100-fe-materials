@@ -25,6 +25,7 @@
 }
 
 .menuItem {
+  cursor: pointer;
   display:  block;
   padding: 16px;
   padding-left: 32px;

@@ -1,6 +1,5 @@
 import { Task, TaskParams } from "@/services/api/models/task";
 import { now } from "@/services/api/models/date";
-import { v4 as uuid } from "uuid";
 import DateDecorator from "./date";
 import { factory } from ".";
 
@@ -13,7 +12,7 @@ const Status = {
 type StatusType = keyof typeof Status;
 
 export interface ProjectParams {
-  uuid: string;
+  id: string;
   name: string;
 
   createdAt: string;
@@ -56,12 +55,10 @@ export interface ProjectDateProps {
 }
 
 export class ProjectModel {
-  readonly id: string;
   readonly _raw: ProjectParams;
   readonly _milestones: Task[] = [];
 
   constructor(params: ProjectParams) {
-    this.id = params?.uuid || uuid();
     this._raw = params;
     if (params?.milestones) {
       this._milestones = params.milestones.map((it) => factory.task(it));
@@ -181,7 +178,7 @@ export class ProjectModel {
   }
 
   get isArchived() {
-    return this._raw.status === 'archived'
+    return this._raw.status === "archived";
   }
 }
 

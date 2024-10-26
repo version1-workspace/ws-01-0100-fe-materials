@@ -11,6 +11,7 @@
 }
 
 .chart {
+  margin-top: 64px;
   width: 100%;
 }
 
@@ -29,7 +30,7 @@
 .control {
   margin: 18px 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 

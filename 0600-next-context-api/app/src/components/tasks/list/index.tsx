@@ -17,7 +17,7 @@ export default function TaskList({ header, footer }: Props) {
   const filter = useFilter({
     onInit: async (params) => {
       fetch({ page: 1, ...params });
-    }
+    },
   });
   const { data, fetch } = useTasks();
 

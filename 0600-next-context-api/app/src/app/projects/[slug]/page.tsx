@@ -7,9 +7,7 @@ import styles from "./page.module.css";
 import { join } from "@/lib/cls";
 import Icon from "@/components/shared/icon";
 import route from "@/lib/route";
-import TaskForm from "@/components/tasks/form";
 import TextInput from "@/components/shared/input/text";
-import MilestoneList from "@/components/milestones/list";
 import PopupMenu from "@/components/shared/popupMenu";
 import { useModal } from "@/lib/modal";
 import { useToast } from "@/lib/toast/hook";
@@ -227,42 +225,6 @@ export default function Project({ params: { slug } }: Props) {
                 ) : null}
               </div>
             </div>
-          </div>
-          <div className={styles.milestoneListHeader}>
-            <div
-              className={styles.addMilestone}
-              onClick={() => {
-                open({
-                  content: (
-                    <TaskForm
-                      title="マイルストーンを追加"
-                      data={factory.task({
-                        uuid: "",
-                        title: "",
-                        kind: "milestone" as const,
-                        description: "",
-                        status: "scheduled" as const,
-                        project,
-                        createdAt: "",
-                        updatedAt: "",
-                        deadline: "",
-                        parent: undefined,
-                        children: [],
-                      })}
-                      onSubmit={() => {
-                        hide();
-                      }}
-                      onCancel={hide}
-                    />
-                  ),
-                });
-              }}>
-              <Icon name="add" />
-              <p>マイルストーンを追加する</p>
-            </div>
-          </div>
-          <div className={styles.milestoneList}>
-            <MilestoneList project={project} />
           </div>
         </div>
       </div>

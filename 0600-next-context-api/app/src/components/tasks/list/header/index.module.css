@@ -1,6 +1,6 @@
 .header {
   border-bottom: 1px solid var(--table-border-color);
-  margin: 16px;
+  margin: 16px 0;
 }
 
 .layout {

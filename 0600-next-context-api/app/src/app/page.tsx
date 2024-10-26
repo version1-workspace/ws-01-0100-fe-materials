@@ -18,14 +18,7 @@ export default function Main() {
     <div className={styles.projects}>
       <div className={styles.dashboard}>
         <div className={styles.projectList}>
-          <h2 className={styles.sectionTitle}>
-            プロジェクト
-            <p className={styles.addProject}>
-              <Link href={route.projects.new.toString()}>
-                <Icon size={20} className={styles.projectAddIcon} name="add" />
-              </Link>
-            </p>
-          </h2>
+          <h2 className={styles.sectionTitle}>プロジェクト</h2>
           <div className={styles.content}>
             {projects.slice(0, 3).map((item) => {
               return (

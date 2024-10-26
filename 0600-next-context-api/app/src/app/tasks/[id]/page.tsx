@@ -25,7 +25,6 @@ import useProjects from "@/contexts/projects";
 import { factory } from "@/services/api/models";
 import Icon from "@/components/shared/icon";
 import EditableField from "@/components/shared/editableField";
-import useMilestones from "@/hooks/useMilestones";
 
 interface Props {
   params: {
@@ -51,11 +50,6 @@ const TaskDetail = ({ params }: Props) => {
   const toast = useToast();
   const [task, setTask] = useState<Task>();
   const { projects, options } = useProjects();
-  const {
-    fetch: fetchMilestones,
-    milestones,
-    options: milestoneOptions,
-  } = useMilestones();
   const router = useRouter();
 
   const { submit, change, errors, form } = useForm<Form>({
@@ -91,7 +85,7 @@ const TaskDetail = ({ params }: Props) => {
           ...rest,
           projectId: project?.id,
         });
-        router.push(route.toString());
+        router.push("/");
 
         toast.success("タスクを更新しました。");
       } catch (e) {
@@ -122,8 +116,6 @@ const TaskDetail = ({ params }: Props) => {
       const task = factory.task(res.data.data);
       setTask(task);
       updateFormWith(task);
-
-      fetchMilestones({ slug: task.project?.slug });
     };
 
     init();
@@ -138,15 +130,37 @@ const TaskDetail = ({ params }: Props) => {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <h2 className={styles.title}>
-            <EditableField
-              defaultValue={form.title}
-              inputStyleClass={styles.titleField}
-              onChangeEnd={(value) => {
-                change({ title: value });
-              }}
-            />
-          </h2>
+          <div className={styles.mainHeader}>
+            <h2 className={styles.title}>
+              <EditableField
+                defaultValue={form.title}
+                inputStyleClass={styles.titleField}
+                onChangeEnd={(value) => {
+                  change({ title: value });
+                }}
+              />
+            </h2>
+            <div className={styles.actions}>
+              <Icon
+                name="remove"
+                onClick={async () => {
+                  if (!confirm("このタスクを削除しますか？")) {
+                    return;
+                  }
+
+                  try {
+                    await api.deleteTask({ id: task.id });
+                    toast.success("タスクを削除しました。");
+                  } catch (e) {
+                    console.error(e);
+                    toast.error("タスクの削除に失敗しました。");
+                  }
+
+                  router.push("/");
+                }}
+              />
+            </div>
+          </div>
           <div className={styles.subHeader}>
             <div className={styles.subHeaderColumn}>
               <div className={styles.label}>作成日時: {form.createdAt}</div>
@@ -177,30 +191,6 @@ const TaskDetail = ({ params }: Props) => {
               <ErrorMessage message={errorMessages.project} />
             </div>
           </div>
-          {task.isMilestone ? null : (
-            <div className={styles.field}>
-              <div className={join(styles.label, styles.required)}>
-                マイルストーン
-              </div>
-              <div className={styles.input}>
-                <Select
-                  data={milestoneOptions}
-                  value={form.parent?.id}
-                  defaultOption={{
-                    label: "マイルストーンを選択してください",
-                    value: "",
-                  }}
-                  onSelect={(option) => {
-                    const parent = milestones.find(
-                      (it) => it.id === option.value,
-                    );
-                    change({ parent });
-                  }}
-                />
-                <ErrorMessage message={errorMessages.project} />
-              </div>
-            </div>
-          )}
           <div className={styles.field}>
             <div className={join(styles.label, styles.required)}>締切日</div>
             <div className={styles.input}>
@@ -211,17 +201,6 @@ const TaskDetail = ({ params }: Props) => {
                 }}
               />
               <ErrorMessage message={errorMessages.deadline} />
-            </div>
-          </div>
-          <div className={styles.field}>
-            <div className={styles.label}>開始予定日</div>
-            <div className={styles.input}>
-              <DateInput
-                value={form.startingAt}
-                onChange={(e) => {
-                  change({ startingAt: e.target.value });
-                }}
-              />
             </div>
           </div>
           <div className={styles.field}>

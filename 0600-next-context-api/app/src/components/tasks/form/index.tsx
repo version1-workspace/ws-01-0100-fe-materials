@@ -12,13 +12,12 @@ import {
   Task,
   TaskParams,
 } from "@/services/api/models/task";
-import Select, { OptionItem } from "@/components/shared/select";
+import Select from "@/components/shared/select";
 import TextArea from "@/components/shared/input/textarea";
 import { join } from "@/lib/cls";
 import Button from "@/components/shared/button";
 import { useToast } from "@/lib/toast/hook";
 import ErrorMessage from "@/components/shared/errorMessage";
-import useMilestones from "@/hooks/useMilestones";
 import { useEffect } from "react";
 import useProjects from "@/contexts/projects";
 
@@ -43,11 +42,6 @@ interface Form {
 const Form = ({ title, data, onSubmit, onCancel }: Props) => {
   const toast = useToast();
   const { projects, options: projectOptions } = useProjects();
-  const {
-    fetch: fetchMilestones,
-    milestones,
-    options: milestoneOptions,
-  } = useMilestones();
   const { submit, change, errors, form } = useForm<Form>({
     initialValues: {
       project: data?.project,
@@ -128,29 +122,6 @@ const Form = ({ title, data, onSubmit, onCancel }: Props) => {
               <ErrorMessage message={errorMessages.project} />
             </div>
           </div>
-          {form.project && !data?.isMilestone ? (
-            <div className={styles.field}>
-              <div className={styles.label}>マイルストーン</div>
-              <div className={styles.input}>
-                <Select
-                  data={milestoneOptions}
-                  value={form.parent?.id}
-                  defaultOption={{
-                    label: "マイルストーンを選択してください",
-                    value: "",
-                  }}
-                  onSelect={(option) => {
-                    const parent = milestones.find(
-                      (it) => it.id === option.value,
-                    );
-
-                    change({ parent });
-                  }}
-                />
-                <ErrorMessage message={errorMessages.milestone} />
-              </div>
-            </div>
-          ) : null}
           <div className={styles.field}>
             <div className={join(styles.label, styles.required)}>タスク</div>
             <div className={styles.input}>
@@ -188,17 +159,6 @@ const Form = ({ title, data, onSubmit, onCancel }: Props) => {
                 }}
               />
               <ErrorMessage message={errorMessages.deadline} />
-            </div>
-          </div>
-          <div className={styles.field}>
-            <div className={styles.label}>開始予定日</div>
-            <div className={styles.input}>
-              <DateInput
-                value={form.startingAt}
-                onChange={(e) => {
-                  change({ startingAt: e.target.value });
-                }}
-              />
             </div>
           </div>
           <div className={styles.field}>

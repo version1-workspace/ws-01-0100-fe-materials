@@ -1,6 +1,5 @@
 import DateDecorator from "./date";
 import { Project, ProjectParams } from "@/services/api/models/project";
-import { v4 as uuid } from "uuid";
 import { ja } from "@/lib/transltate";
 import { factory } from ".";
 
@@ -25,10 +24,9 @@ export const statusOptions = selectableStatus.map((it) => {
 
 export type StatusType = keyof typeof Status;
 
-type Kind = 'task' | 'milestone'
+type Kind = "task" | "milestone";
 
 export interface TaskParams {
-  uuid: string;
   title: string;
   kind: Kind;
   description: string;
@@ -66,7 +64,6 @@ export class TaskModel {
   readonly _project: Project;
 
   constructor(params: TaskParams) {
-    this.id = params.uuid || uuid();
     this._raw = params;
 
     this._children = params.children?.map((it) => {

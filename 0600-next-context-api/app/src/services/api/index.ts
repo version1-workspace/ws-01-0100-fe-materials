@@ -74,32 +74,6 @@ const api = {
   fetchUser: () => {
     return client.instance.get("/users/me");
   },
-  createProject: (project: {
-    name: string;
-    slug: string;
-    deadline: string;
-    goal: string;
-    shouldbe?: string;
-    status: "active";
-    milestones: {
-      title: string;
-      deadline: string;
-    }[];
-  }) => {
-    return client.instance.post(`/users/projects`, project);
-  },
-  updateProject: (
-    slug: string,
-    project: {
-      name: string;
-      slug: string;
-      deadline: string;
-      goal: string;
-      shouldbe?: string;
-    },
-  ) => {
-    return client.instance.patch(`/users/projects/${slug}`, project);
-  },
   fetchProject: ({ slug }: { slug: string }) => {
     return client.instance.get(`/users/projects/${slug}`);
   },
@@ -119,12 +93,6 @@ const api = {
         status,
       },
     });
-  },
-  archiveProject({ slug }: { slug: string }) {
-    return client.instance.patch(`/users/projects/${slug}/archive`);
-  },
-  reopenProject({ slug }: { slug: string }) {
-    return client.instance.patch(`/users/projects/${slug}/reopen`);
   },
   fetchStats() {
     return client.instance.get(`/users/stats`);
@@ -170,30 +138,6 @@ const api = {
       },
     });
   },
-  fetchMilestones: ({ slug }: { slug: string }) => {
-    return client.instance.get(`/projects/${slug}/milestones`);
-  },
-  archiveMilestone: ({ slug, id }: { id: string; slug: string }) => {
-    return client.instance.put(`/projects/${slug}/milestones/${id}/archive`);
-  },
-  completeTask: ({ id }: { id: string }) => {
-    return client.instance.put(`/users/tasks/${id}/complete`);
-  },
-  reopenTask: ({ id }: { id: string }) => {
-    return client.instance.put(`/users/tasks/${id}/reopen`);
-  },
-  archiveTask: ({ id }: { id: string }) => {
-    return client.instance.put(`/users/tasks/${id}/archive`);
-  },
-  bulkCompleteTask: ({ ids }: { ids: string[] }) => {
-    return client.instance.put(`/bulk/tasks/complete`, { ids });
-  },
-  bulkArchiveTask: ({ ids }: { ids: string[] }) => {
-    return client.instance.put(`/bulk/tasks/archive`, { ids });
-  },
-  bulkReopenTask: ({ ids }: { ids: string[] }) => {
-    return client.instance.put(`/bulk/tasks/reopen`, { ids });
-  },
   createTask: ({
     data,
   }: {
@@ -237,6 +181,9 @@ const api = {
       };
     }, {});
     return client.instance.patch(`/users/tasks/${id}`, _data);
+  },
+  deleteTask: ({ id }: { id: string }) => {
+    return client.instance.delete(`/users/tasks/${id}`);
   },
   authenticate: async ({
     email,
