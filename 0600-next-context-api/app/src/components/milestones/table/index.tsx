@@ -170,7 +170,7 @@ const Row = ({ data, checked, onCheck }: RowProps) => {
         />
       </div>
       <div className={join(styles.tableCell, styles.detail)}>
-        <Link href={route.main.tasks.with(data.id)}>
+        <Link href={route.tasks.with(data.id)}>
           <Icon className={styles.detailIcon} name="arrowForward" />
         </Link>
       </div>

@@ -93,7 +93,7 @@ export default function Project({ params: { slug } }: Props) {
                     history.replaceState(
                       null,
                       "",
-                      route.main.projects.with(form.slug),
+                      route.projects.with(form.slug),
                     );
                   }
 
@@ -197,7 +197,7 @@ export default function Project({ params: { slug } }: Props) {
                 <label className={styles.label}>スラッグ: </label>
                 <p className={join(styles.text, styles.slug)}>
                   <span className={styles.slugBasePath}>
-                    {route.main.projects.with("")}
+                    {route.projects.with("")}
                   </span>
                   <TextInput value={project.slug} />
                 </p>

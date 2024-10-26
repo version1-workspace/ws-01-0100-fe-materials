@@ -27,26 +27,26 @@ const projectCountLimit = 5;
 const sidebarMenulist = (projects: Project[]) => [
   {
     title: "ダッシュボード",
-    path: route.main.toString(),
+    path: route.toString(),
   },
   {
     title: "タスク",
-    path: route.main.tasks.toString(),
+    path: route.tasks.toString(),
   },
   {
     title: (
       <>
         プロジェクト
-        <Link href={route.main.projects.new.toString()}>
+        <Link href={route.projects.new.toString()}>
           <Icon name="add" />
         </Link>
       </>
     ),
-    path: route.main.projects.toString(),
+    path: route.projects.toString(),
     children: projects.slice(0, projectCountLimit).map((it) => {
       return {
         title: it.name,
-        path: route.main.projects.with(it.slug),
+        path: route.projects.with(it.slug),
         options: {
           deadline: it.deadline?.format(),
           color: it.color,
@@ -59,7 +59,7 @@ const sidebarMenulist = (projects: Project[]) => [
       }
 
       return (
-        <Link href={route.main.projects.toString()}>
+        <Link href={route.projects.toString()}>
           <p className={styles.showMoreProjects}>
             あと {projects.length - projectCountLimit} プロジェクト
           </p>

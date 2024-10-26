@@ -57,7 +57,7 @@ export default function Search() {
               return (
                 <li key={task.id}>
                   <Link
-                    href={route.main.tasks.with(task.id)}
+                    href={route.tasks.with(task.id)}
                     className={styles.row}
                     onClick={close}>
                     <div className={styles.task}>

@@ -39,7 +39,7 @@ function Dropdown({ trigger }: DropdownProps) {
             }}>
             <Link
               className={styles.dropdownLink}
-              href={route.main.users.profile.toString()}>
+              href={route.users.profile.toString()}>
               <div className={styles.dropdownIcon}>
                 <Icon name="person" size={20} />
               </div>
@@ -76,7 +76,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.content}>
         <div className={styles.left}>
-          <Link href={route.main.toString()}>
+          <Link href={route.toString()}>
             <div className={styles.logo}>
               <h2>Turvo</h2>
             </div>

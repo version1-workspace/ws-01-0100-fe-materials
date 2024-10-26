@@ -91,7 +91,7 @@ const TaskDetail = ({ params }: Props) => {
           ...rest,
           projectId: project?.id,
         });
-        router.push(route.main.toString());
+        router.push(route.toString());
 
         toast.success("タスクを更新しました。");
       } catch (e) {

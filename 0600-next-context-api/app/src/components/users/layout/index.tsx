@@ -56,7 +56,7 @@ export default function UsersLayout({ children }: Props) {
               {menuSettings.map((it) => {
                 const href = it.children
                   ? "#!"
-                  : route.main.users[it.key].toString();
+                  : route.users[it.key].toString();
                 return (
                   <li key={it.key}>
                     <Link href={href}>
@@ -64,7 +64,7 @@ export default function UsersLayout({ children }: Props) {
                         className={classHelper({
                           [styles.menuItem]: true,
                           [styles.activeMenu]:
-                            route.main.users[it.key].toString() === pathname,
+                            route.users[it.key].toString() === pathname,
                         })}>
                         {it.title}
                       </p>
@@ -74,14 +74,13 @@ export default function UsersLayout({ children }: Props) {
                         {it.children.map((child) => {
                           return (
                             <li key={child.key}>
-                              <Link
-                                href={route.main.users[child.key].toString()}>
+                              <Link href={route.users[child.key].toString()}>
                                 <p
                                   className={classHelper({
                                     [styles.menuItem]: true,
                                     [styles.subMenuItem]: true,
                                     [styles.activeMenu]:
-                                      route.main.users[child.key].toString() ===
+                                      route.users[child.key].toString() ===
                                       pathname,
                                   })}>
                                   {child.title}

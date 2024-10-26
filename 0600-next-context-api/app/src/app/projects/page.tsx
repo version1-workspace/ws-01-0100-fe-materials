@@ -7,13 +7,13 @@ import { useProjectsWithoutContext } from "@/contexts/projects";
 import Link from "next/link";
 import Pagination from "@/components/shared/pagination";
 import { useSearchParams } from "next/navigation";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Projects() {
   const { fetch, data } = useProjectsWithoutContext();
-  const router = useRouter()
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const page = searchParams.get('page');
+  const page = searchParams.get("page");
   const [status, setStatus] = useState(["active"]);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function Projects() {
             {data.list.map((it) => {
               return (
                 <li key={it.id}>
-                  <Link href={route.main.projects.with(it.slug)}>
+                  <Link href={route.projects.with(it.slug)}>
                     <Card data={it} />
                   </Link>
                 </li>
@@ -82,7 +82,7 @@ export default function Projects() {
             hasNext={data.hasNext}
             hasPrevious={data.hasPrevious}
             onFetch={(page: number) => {
-              router.push(route.main.projects.with(`?page=${page}`))
+              router.push(route.projects.with(`?page=${page}`));
             }}
           />
         </div>

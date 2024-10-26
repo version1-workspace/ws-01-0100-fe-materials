@@ -134,7 +134,7 @@ export default function MilestoneList({ project }: Props) {
                         className={styles.milestoneTitleIcon}
                         name="milestone"
                       />
-                      <Link href={route.main.tasks.with(it.id)}>
+                      <Link href={route.tasks.with(it.id)}>
                         <p>{it.title}</p>
                       </Link>
                     </div>
@@ -153,7 +153,7 @@ export default function MilestoneList({ project }: Props) {
                               text: "編集する",
                               logo: <Icon name="edit" />,
                               onClick: () => {
-                                router.push(route.main.tasks.with(it.id));
+                                router.push(route.tasks.with(it.id));
                               },
                             },
                             {
