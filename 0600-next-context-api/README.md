@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# 006_next-context api
 
-First, run the development server:
+このレポジトリは下記の内容を学習します。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Next.js 基礎
+2. React Context API
+3. Web API 統合(HTTP, REST API, Promise)
+4. Web API 経由の認証
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Step 1 では、一旦Web APIを使わずに、モックモジュールを使ってデモと同等のUIを実装します。
+Step 2 で、公開APIを使って、デモと同等のUIを実装します。
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 課題内容
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+下記デモと同様のものを作成してください。
 
-## Learn More
+### デモ
 
-To learn more about Next.js, take a look at the following resources:
+[デモ]()
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 課題の進め方
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. 課題の最終ゴールを確認する
 
-## Deploy on Vercel
+デモを確認したり、メンターに確認してこの課題で達成すべき内容を確認してください。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. 必要な概念を確認する
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+課題でやる全体像を把握した上で課題に必要な概念を学んで取り組んでください。
+この課題ではリポジトリをフォークするのではなく、自分のリポジトリを作成して取り組んでください。
+
+[参考資料](./docs/documents.md)
+
+3. 実装に取り組む
+
+実装量が多いので適切なタイミングでメンターに方向性のチェックを依頼するようにしてください。
+
+Hint: 方向性のチェックを行う際は、プルリクエストを使用して現時点のコードを共有しながら進めましょう。
+
+[プルリクエストを出す上での注意点]()
+
+### (WIP) 実装のチェックリスト
+
+#### Step 1
+
+- [ ] Next.js(TypeScript) プロジェクトを作成する
+- [ ] ESlint, Prettier を設定する
+- [ ] モックモジュールを使って、デモと同等のUIを実装する
+
+#### Step 2
+
+- [ ] 公開APIを使って、デモと同等のUIを実装する
+  - [ ] トークンの取得部分を実装する。 
+  - [ ] タスクのCRUD機能を公開APIに差し替える。
+
+4. 実装が完了したら、Github Pages にアップロードする。
+
+5. メンターに最終レビューを依頼する
+
