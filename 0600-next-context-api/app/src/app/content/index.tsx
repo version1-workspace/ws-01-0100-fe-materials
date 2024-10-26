@@ -1,6 +1,5 @@
 "use client";
 import styles from "../layout.module.css";
-import AuthContainer from "@/components/auth";
 import Header from "@/components/shared/header/main";
 import Sidebar from "@/components/shared/sidebar";
 import { ModalContainer } from "@/lib/modal";
@@ -15,7 +14,6 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Body({ children }: { children: React.ReactNode }) {
   return (
     <body className={[inter.className, styles.body].join(" ")}>
-      <AuthContainer>
         <ProjectsContainer>
           <TaskListContainer>
             <ToastContainer
@@ -34,7 +32,6 @@ export default function Body({ children }: { children: React.ReactNode }) {
             </ToastContainer>
           </TaskListContainer>
         </ProjectsContainer>
-      </AuthContainer>
     </body>
   );
 }

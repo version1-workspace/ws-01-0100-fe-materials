@@ -17,6 +17,7 @@ import Option from "@/components/shared/option";
 import Select from "@/components/shared/select";
 import api from "@/services/api";
 import { dataset } from "@/services/api/models/stats";
+import { factory } from "@/services/api/models";
 
 import {
   IoBarChart as BarChart,
@@ -108,7 +109,8 @@ export default function Chart() {
   useEffect(() => {
     const init = async () => {
       const res = await api.fetchStats();
-      const data = dataset(res.data, unit);
+      const stats = res.data.data.map((it) => factory.stats(it));
+      const data = dataset(stats, unit);
       setData(data as any);
     };
 

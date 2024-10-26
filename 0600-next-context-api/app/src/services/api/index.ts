@@ -1,9 +1,9 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
-import mockApi from "./mock";
 
-const _sessionStorage = typeof sessionStorage !== 'undefined' ? sessionStorage : undefined
+const _sessionStorage =
+  typeof sessionStorage !== "undefined" ? sessionStorage : undefined;
 
-export const getAccessToken = () => _sessionStorage?.getItem('token') || '';
+export const getAccessToken = () => _sessionStorage?.getItem("token") || "";
 
 export const setUserId = (uuid: string) => localStorage.setItem("uuid", uuid);
 export const getUserId = () => localStorage.getItem("uuid") || "";
@@ -26,7 +26,8 @@ class Client {
         ...(config.headers || {}),
       },
     });
-    this._instance.defaults.headers["Authorization"] = `Bearer ${getAccessToken()}`;
+    this._instance.defaults.headers["Authorization"] =
+      `Bearer ${getAccessToken()}`;
   }
 
   get instance() {
@@ -38,7 +39,7 @@ class Client {
   }
 
   setAccessToken = (token: string) => {
-    _sessionStorage?.setItem('token', token)
+    _sessionStorage?.setItem("token", token);
     if (this._instance) {
       this._instance.defaults.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -51,7 +52,7 @@ class Client {
   };
 }
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:7000'
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 const client = new Client({
   baseURL: `${baseURL}/api/v1`,
@@ -125,7 +126,9 @@ const api = {
   reopenProject({ slug }: { slug: string }) {
     return client.instance.patch(`/users/projects/${slug}/reopen`);
   },
-  fetchStats: mockApi.fetchStats,
+  fetchStats() {
+    return client.instance.get(`/users/stats`);
+  },
   fetchTask: ({ id }: { id: string }) => {
     return client.instance.get(`/users/tasks/${id}`);
   },
