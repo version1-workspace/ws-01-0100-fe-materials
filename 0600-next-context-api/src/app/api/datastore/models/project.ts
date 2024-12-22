@@ -1,5 +1,5 @@
-import { Task, TaskParams } from "@/services/api/models/task";
-import { now } from "@/services/api/models/date";
+import { Task, TaskParams } from "./task";
+import { now } from "./date";
 import DateDecorator from "./date";
 import { factory } from ".";
 
