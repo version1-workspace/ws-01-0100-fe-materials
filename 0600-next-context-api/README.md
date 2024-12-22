@@ -42,9 +42,8 @@ Hint: 方向性のチェックを行う際は、プルリクエストを使用�
 - [ ] Next.js(TypeScript) プロジェクトを作成する
 - [ ] ESlint, Prettier を設定する
 - [ ] api.zip を解答して next.js プロジェクトの src/app/api に配置。
-- [ ] chart.zip を解凍して next.js プロジェクトの src/components/chart に配置。
 - [ ] api.zip で実装された API を使用して、デモと同等のUIを実装する
- - [ ] ダッシュボード画面(/)の実装。(図の表示部分は chart.zip の中身を使用)
+ - [ ] ダッシュボード画面(/)の実装。(グラフの表示部分は [Chart.js](https://www.chartjs.org/docs/latest/getting-started/installation.html#npm) を使用)
  - [ ] タスク一覧画面(tasks)の実装。
  - [ ] プロジェクト一覧画面(tasks)の実装。
 
