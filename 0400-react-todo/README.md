@@ -155,5 +155,4 @@ npm install --save-dev --save-exact prettier
 
 FYI: https://prettier.io/docs/en/install
 
-## よくある質問
 
