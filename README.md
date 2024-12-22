@@ -2,12 +2,20 @@
 # フロントエンドコース課題
 
 こちらは MENTA 上で提供している課題の一覧です。
-
 https://menta.work/plan/1608/4274
 
-週一回でビデオ通話＆チャットで課題をレビュー&チェックしながら進めていきます。
+### 基本の進め方
+
+1. 週一回でビデオ通話＆チャットで課題をレビュー&チェックしながら進めていきます。
+2. JavaScript や TypeScript の課題以外はデモサイトがあるので、そのデモサイトを見様見真似で作る形になります。
+3. 各課題の進め方は、ディレクトリトップにある REDAME.md を参照ください
 
 ## 課題一覧
+
+[見本アプリ](https://version1-real-todo.netlify.app/)
+
+下記課題は、この見本アプリの要素を分解したもので、シンプルにしたものです。（課題で完全に同じものを作るわけではありません。）
+将来的に見本アプリと同じようなものを作れるようにそれぞれ分解して学習を進めていきます。
 
 1. [HTML/CSS(sass, BEM) 課題](./0100-html-css)
 2. [JavaScript 課題](./0200-js-base)
@@ -16,8 +24,6 @@ https://menta.work/plan/1608/4274
 5. [TypeScript 課題](./0500-ts-base)
 6. [TODO アプリ(Next.js, Context API, HTTP) 課題](./0600-next-context-api)
 7. [Web API (Nest.js) 課題](./0700-nest-web-api)
-
-[デモサイト Top](https://version1-workspace.github.io/ws-01-0100-fe-materials/)
 
 
 ## 課題リポジトリをローカルにクローン
