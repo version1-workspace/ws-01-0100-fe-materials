@@ -8,13 +8,22 @@ import Link from "next/link";
 import Pagination from "@/components/shared/pagination";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 
-export default function Projects() {
+export default function Wrapper() {
+  return (
+    <Suspense>
+      <Projects />
+    </Suspense>
+  );
+}
+
+function Projects() {
   const { fetch, data } = useProjectsWithoutContext();
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = searchParams.get("page");
-  const [status, setStatus] = useState(["active"]);
+  const [status] = useState(["active"]);
 
   useEffect(() => {
     fetch({

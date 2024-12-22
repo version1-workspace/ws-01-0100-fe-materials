@@ -198,14 +198,17 @@ export class TaskModel {
 
   assign(params: Partial<TaskParams>) {
     const filtered: Partial<TaskParams> = {};
-    Object.keys(params).forEach((key) => {
+    Object.keys(params).forEach((key: any) => {
       if (["description", "title", "status", "deadline"].includes(key)) {
-        filtered[key as keyof TaskParams] = params[key as keyof TaskParams];
+        // @ts-ignore
+        filtered[key] = params[key];
+
       }
 
       if (key === "projectId") {
         const project = getProjects().find(
-          (project) => project.id === params[key],
+          // @ts-ignore
+          (project: Project) => project.id === params[key],
         );
         filtered.project = project;
       }

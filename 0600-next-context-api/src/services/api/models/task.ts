@@ -27,6 +27,7 @@ export type StatusType = keyof typeof Status;
 type Kind = "task" | "milestone";
 
 export interface TaskParams {
+  id: string;
   title: string;
   kind: Kind;
   description: string;
@@ -57,7 +58,6 @@ export interface TaskDateProps {
 }
 
 export class TaskModel {
-  readonly id: string;
   readonly _raw: TaskParams;
   readonly _children: Task[];
   readonly _parent?: Task;

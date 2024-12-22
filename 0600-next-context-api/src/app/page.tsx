@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import styles from "./page.module.css";
 import Card from "@/components/project/card";
 import Chart from "@/components/project/chart";
@@ -52,7 +53,9 @@ export default function Main() {
           </Link>
         </div>
         <div className={styles.content}>
-          <TaskList header={<></>} footer={<></>} />
+          <Suspense>
+            <TaskList header={<></>} footer={<></>} />
+          </Suspense>
         </div>
         <div className={styles.sectionFooter}>
           {data ? (

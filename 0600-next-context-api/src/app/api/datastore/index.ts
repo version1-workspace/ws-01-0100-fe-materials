@@ -80,6 +80,7 @@ const projects = [
 ];
 
 const initProjects = function () {
+  // @ts-ignore
   globalThis.__datastore.projects = projects;
 };
 
@@ -97,6 +98,7 @@ export const initTasks = function () {
     project: projects[0],
   }));
 
+  // @ts-ignore
   globalThis.__datastore.tasks = __tasks;
 };
 
@@ -172,38 +174,47 @@ const stats = [
 ];
 
 const initStats = () => {
+  // @ts-ignore
   globalThis.__datastore.stats = stats;
 };
 
 export const getStats = () => {
+  // @ts-ignore
   if (!globalThis.__datastore) {
     init();
   }
 
+  // @ts-ignore
   return globalThis.__datastore.stats || [];
 };
 
 export const getTasks = () => {
+  // @ts-ignore
   if (!globalThis.__datastore) {
     init();
   }
 
+  // @ts-ignore
   return globalThis.__datastore.tasks || [];
 };
 
-export const setTasks = (tasks) => {
+export const setTasks = (tasks: any) => {
+  // @ts-ignore
   if (!globalThis.__datastore) {
     init();
   }
 
+  // @ts-ignore
   globalThis.__datastore.tasks = tasks;
 };
 
 export const getProjects = () => {
+  // @ts-ignore
   if (!globalThis.__datastore) {
     init();
   }
 
+  // @ts-ignore
   return globalThis.__datastore.projects || [];
 };
 
@@ -215,6 +226,7 @@ export const getUUID = () => {
 }
 
 export const init = () => {
+  // @ts-ignore
   globalThis.__datastore = {};
   initStats();
   initProjects();

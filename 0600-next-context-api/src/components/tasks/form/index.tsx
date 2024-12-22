@@ -18,7 +18,6 @@ import { join } from "@/lib/cls";
 import Button from "@/components/shared/button";
 import { useToast } from "@/lib/toast/hook";
 import ErrorMessage from "@/components/shared/errorMessage";
-import { useEffect } from "react";
 import useProjects from "@/contexts/projects";
 
 interface Props {
@@ -86,12 +85,6 @@ const Form = ({ title, data, onSubmit, onCancel }: Props) => {
 
   const errorMessages = errors.object;
 
-  useEffect(() => {
-    if (data?.project) {
-      fetchMilestones({ slug: data.project.slug });
-    }
-  }, [data]);
-
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -114,9 +107,6 @@ const Form = ({ title, data, onSubmit, onCancel }: Props) => {
                 onSelect={(option) => {
                   const project = projects.find((it) => it.id === option.value);
                   change({ project });
-                  if (project) {
-                    fetchMilestones({ slug: project.slug });
-                  }
                 }}
               />
               <ErrorMessage message={errorMessages.project} />

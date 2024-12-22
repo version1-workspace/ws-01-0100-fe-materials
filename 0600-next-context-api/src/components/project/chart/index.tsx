@@ -13,7 +13,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import api from "@/services/api";
-import { dataset } from "@/services/api/models/stats";
+import { dataset, StatsParams } from "@/services/api/models/stats";
 import { factory } from "@/services/api/models";
 
 ChartJS.register(
@@ -60,7 +60,7 @@ export default function Chart() {
   useEffect(() => {
     const init = async () => {
       const res = await api.fetchStats();
-      const stats = res.data.data.map((it) => factory.stats(it));
+      const stats = res.data.data.map((it: StatsParams) => factory.stats(it));
       const data = dataset(stats, Unit.day);
       setData(data as any);
     };

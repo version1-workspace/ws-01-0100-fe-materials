@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import TaskList from "@/components/tasks/list";
 import styles from "./page.module.css";
 
@@ -8,7 +9,9 @@ export default function Tasks() {
         <div className={styles.header}>
           <h2 className={styles.title}>タスク</h2>
         </div>
-        <TaskList />
+        <Suspense>
+          <TaskList />
+        </Suspense>
       </div>
     </div>
   );

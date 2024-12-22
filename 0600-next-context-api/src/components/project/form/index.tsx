@@ -1,12 +1,10 @@
 import styles from "./index.module.css";
 import { useForm } from "@/hooks/useForm";
-import api from "@/services/api";
 import TextInput from "@/components/shared/input/text";
 import DateInput from "@/components/shared/input/date";
 import { Project } from "@/services/api/models/project";
 import { join } from "@/lib/cls";
 import Button from "@/components/shared/button";
-import { useToast } from "@/lib/toast/hook";
 import ErrorMessage from "@/components/shared/errorMessage";
 
 interface Props {
@@ -24,8 +22,7 @@ interface Form {
   deadline: string;
 }
 
-const Form = ({ title, data, onSubmit, onCancel }: Props) => {
-  const toast = useToast();
+const Form = ({ title, data, onCancel }: Props) => {
   const { submit, change, errors, form } = useForm<Form>({
     initialValues: {
       name: data?.name || "",
@@ -53,17 +50,7 @@ const Form = ({ title, data, onSubmit, onCancel }: Props) => {
 
       return errors;
     },
-    onSubmit: async (values: Form) => {
-      try {
-        await api.updateProject(data?.slug || "", values);
-
-        onSubmit(values);
-
-        toast.success("プロジェクトを更新しました。");
-      } catch {
-        toast.error("プロジェクトの更新に失敗しました。");
-      }
-    },
+    onSubmit: async (values: Form) => {},
   });
 
   const errorMessages = errors.object;

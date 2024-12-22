@@ -8,11 +8,7 @@ import { join } from "@/lib/cls";
 import Icon from "@/components/shared/icon";
 import route from "@/lib/route";
 import TextInput from "@/components/shared/input/text";
-import PopupMenu from "@/components/shared/popupMenu";
-import { useModal } from "@/lib/modal";
-import { useToast } from "@/lib/toast/hook";
 import useProjects from "@/contexts/projects";
-import ProjectForm from "@/components/project/form";
 
 interface Props {
   params: {
@@ -20,45 +16,9 @@ interface Props {
   };
 }
 
-const projectActions = ({
-  project,
-  onEdit,
-  onArchive,
-  onReopen,
-}: {
-  project?: Project;
-  onEdit: () => void;
-  onArchive: () => Promise<void>;
-  onReopen: () => Promise<void>;
-}) => [
-  {
-    key: "edit",
-    text: "プロジェクト情報を編集する",
-    logo: <Icon name="edit" />,
-    onClick: onEdit,
-  },
-  project?.isArchived
-    ? {
-        key: "reopen",
-        text: "プロジェクトを元に戻す",
-        logo: <Icon name="undo" />,
-        danger: true,
-        onClick: onReopen,
-      }
-    : {
-        key: "archive",
-        text: "プロジェクトをアーカイブする",
-        logo: <Icon name="archive" />,
-        danger: true,
-        onClick: onArchive,
-      },
-];
-
 export default function Project({ params: { slug } }: Props) {
   const [project, setProject] = useState<Project>();
-  const { projects, refetch: refetchGlobalProjects } = useProjects();
-  const { open, hide } = useModal();
-  const toast = useToast();
+  const { projects } = useProjects();
   // FIXME: set color code by project in BE.
   const color = useMemo(
     () => projects.find((it) => it.slug === slug)?.color,
@@ -73,68 +33,6 @@ export default function Project({ params: { slug } }: Props) {
 
     setProject(item);
   }, []);
-
-  const actions = useMemo(
-    () =>
-      projectActions({
-        project,
-        onEdit: () => {
-          open({
-            content: (
-              <ProjectForm
-                title="プロジェクトを編集"
-                data={project}
-                onSubmit={(form) => {
-                  refetchGlobalProjects();
-                  fetch({ slug: form.slug });
-                  if (project?.slug !== form.slug) {
-                    history.replaceState(
-                      null,
-                      "",
-                      route.projects.with(form.slug),
-                    );
-                  }
-
-                  hide();
-                }}
-                onCancel={hide}
-              />
-            ),
-          });
-        },
-        onReopen: async () => {
-          if (!project) {
-            return;
-          }
-
-          try {
-            await api.reopenProject({ slug: project.slug });
-            toast.success("プロジェクトを元に戻しました");
-            await refetchGlobalProjects();
-          } catch {
-            toast.error("アーカイブに失敗しました");
-          }
-        },
-        onArchive: async () => {
-          if (!project) {
-            return;
-          }
-
-          if (!confirm("プロジェクトをアーカイブしますがよろしいですか？")) {
-            return;
-          }
-
-          try {
-            await api.archiveProject({ slug: project.slug });
-            toast.success("プロジェクトをアーカイブしました");
-            await refetchGlobalProjects();
-          } catch {
-            toast.error("アーカイブに失敗しました");
-          }
-        },
-      }),
-    [toast, project, fetch, refetchGlobalProjects],
-  );
 
   useEffect(() => {
     fetch({ slug });
@@ -155,15 +53,11 @@ export default function Project({ params: { slug } }: Props) {
             }}>
             <div className={styles.header}>
               <h1 className={styles.title} style={{ color }}>
+                {" "}
                 {project.isArchived ? "（アーカイブ）" : null}
                 {project.name}
               </h1>
-              <div className={styles.menu}>
-                <PopupMenu
-                  trigger={<Icon name="menu" interactive="pulse" />}
-                  actions={actions}
-                />
-              </div>
+              <div className={styles.menu}></div>
             </div>
             <div className={styles.projectBody}>
               <div className={styles.field}>
