@@ -6,8 +6,7 @@
 1. Next.js 基礎
 2. React Context API
 3. Web API 統合(HTTP, REST API, Promise)
-4. Web API 経由の認証
-
+   
 ## 課題内容
 
 下記デモと同様のものを作成してください。
