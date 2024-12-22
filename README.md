@@ -31,6 +31,9 @@ https://menta.work/plan/1608/4274
 
 - [GitHubフォークのやり方](https://version-1workspace.gitbook.io/github/how-to-fork)
 
+本体のリポジトリに更新が入った場合は下記手順でブランチを更新してください。
+https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-branch-from-the-web-ui
+
 ### 2. リポジトリ をクローン
 
 フォークをリポジトリしてクローン
