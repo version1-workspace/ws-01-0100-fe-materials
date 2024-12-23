@@ -62,7 +62,12 @@ React を理解するために公式のチュートリアルを行って React �
 [React チュートリアル](https://ja.react.dev/learn/tutorial-tic-tac-toe)
 
 
-チュートリアルを行った上で、「React を学ぶ」の項目や「[React の流儀](https://ja.react.dev/learn/thinking-in-react)」の項目を読むとより深く理解できるかと思います。
+チュートリアルを行った上で、「[React を学ぶ](https://ja.react.dev/learn/describing-the-ui)」の項目や「[React の流儀](https://ja.react.dev/learn/thinking-in-react)」の項目を読むとより深く理解できるかと思います。
+
+[リファレンス](https://ja.react.dev/reference/react)
+ - [useState](https://ja.react.dev/reference/react/useState)
+ - [useEffect](https://ja.react.dev/reference/react/useEffect)
+ - [Reactのルール](https://ja.react.dev/reference/rules)
 
 ### 4. Todo アプリを実装
 
