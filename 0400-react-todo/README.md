@@ -23,6 +23,7 @@ demo: https://version1-workspace.github.io/ws-01-0100-fe-materials/0400-react-to
 ### 1. create-next-app を使用して React プロジェクトを作成
 
 React のプロジェクトを作成していきますが、今回は Next.js のアプリとしてプロジェクトを作成します。
+
 (参考: https://react.dev/learn/start-a-new-react-project#nextjs-pages-router)
 
 下記、コマンドを実行して Next.js のプロジェクトを作成してください。
