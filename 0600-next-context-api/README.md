@@ -15,6 +15,17 @@
 
 [デモ](https://next-context-api.netlify.app/)
 
+## 使用するAPIについて
+
+使用するAPIはこちらのリポジトリにある api.zip を展開した後、　Next.js プロジェクトの app/api に配置をしてそちらの APIを使うようにしてください。
+
+
+### API 仕様書
+
+Swagger UI を使用して仕様を管理しています。こちらでエンドポイントやリクエストBodyを確認してください。
+
+https://next-context-api.netlify.app/api/v1/spec
+
 ## 課題の進め方
 
 1. 課題の最終ゴールを確認する
@@ -36,15 +47,9 @@ Hint: 方向性のチェックを行う際は、プルリクエストを使用�
 
 [プルリクエストを出す上での注意点]()
 
-## 使用するAPIについて
+4. 実装が完了したら、Github Pages にアップロードする。
 
-使用するAPIはこちらのリポジトリにある api.zip を展開した後、　Next.js プロジェクトの app/api に配置をしてそちらの APIを使うようにしてください。
-
-### API 仕様書
-
-Swagger UI を使用して仕様を管理しています。こちらでエンドポイントやリクエストBodyを確認してください。
-
-https://next-context-api.netlify.app/api/v1/spec
+5. メンターに最終レビューを依頼する
 
 ### 実装のチェックリスト
 
@@ -52,11 +57,8 @@ https://next-context-api.netlify.app/api/v1/spec
 - [ ] ESlint, Prettier を設定する
 - [ ] api.zip を解答して next.js プロジェクトの app/api に配置。
 - [ ] api.zip で実装された API を使用して、デモと同等のUIを実装する
- - [ ] ダッシュボード画面(/)の実装。(グラフの表示部分は [Chart.js](https://www.chartjs.org/docs/latest/getting-started/installation.html#npm) を使用)
- - [ ] タスク一覧画面(tasks)の実装。
- - [ ] プロジェクト一覧画面(tasks)の実装。
+    - [ ] ダッシュボード画面(/)の実装。(グラフの表示部分は [Chart.js](https://www.chartjs.org/docs/latest/getting-started/installation.html#npm) を使用)
+    - [ ] タスク一覧画面(tasks)の実装。
+    - [ ] プロジェクト一覧画面(tasks)の実装。
 
-4. 実装が完了したら、Github Pages にアップロードする。
-
-5. メンターに最終レビューを依頼する
 
