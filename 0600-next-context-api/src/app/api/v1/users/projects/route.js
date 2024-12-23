@@ -3,7 +3,7 @@ import { getProjects } from "../../../datastore";
 import { PageInfo } from "../../../datastore/models/pagination";
 
 export async function GET(request) {
-  const projects = getProjects()
+  const projects = getProjects();
   const searchParams = request.nextUrl.searchParams;
   const page = searchParams.get("page") || 1;
   const limit = searchParams.get("limit") || 20;

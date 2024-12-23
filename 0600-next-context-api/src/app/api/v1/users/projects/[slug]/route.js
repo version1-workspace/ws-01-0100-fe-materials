@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
 import { getProjects } from "../../../../datastore";
+import { notFound } from "../../../../lib/renderer";
 
-export async function GET(request, context) {
+export async function GET(_, context) {
   const { slug } = context.params || {};
   const project = getProjects().find((it) => it.slug === slug);
+  if (!project) {
+    return notFound();
+  }
 
   return NextResponse.json({ data: project });
 }

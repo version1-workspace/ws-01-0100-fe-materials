@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import dayjs from "dayjs";
 import { getTasks, setTasks } from "../../../../datastore";
 import { factory } from "../../../../datastore/models";
+import { notFound } from "../../../../lib/renderer";
 
 export async function GET(_, context) {
   const {
@@ -13,14 +14,7 @@ export async function GET(_, context) {
   });
 
   if (!task) {
-    return NextResponse.json(
-      {
-        error: "Not Found",
-      },
-      {
-        status: 404,
-      },
-    );
+    return notFound();
   }
 
   return NextResponse.json({
@@ -53,14 +47,7 @@ export async function PATCH(request, context) {
   });
   const error = task.validate();
   if (error) {
-    return NextResponse.json(
-      {
-        message: error,
-      },
-      {
-        status: 400,
-      },
-    );
+    return notFound();
   }
 
   tasks[index] = task.raw;
@@ -79,14 +66,7 @@ export async function DELETE(_, context) {
   const tasks = getTasks();
   const index = tasks.findIndex((it) => it.id === id);
   if (index == -1) {
-    return NextResponse.json(
-      {
-        message: "Not found",
-      },
-      {
-        status: 404,
-      },
-    );
+    return notFound();
   }
 
   const res = tasks.splice(index, 1);

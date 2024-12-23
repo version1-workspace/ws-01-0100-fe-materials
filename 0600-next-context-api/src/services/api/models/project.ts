@@ -14,17 +14,7 @@ type StatusType = keyof typeof Status;
 export interface ProjectParams {
   id: string;
   name: string;
-
-  createdAt: string;
-  updatedAt: string;
-  deadline: string;
-  startingAt?: string;
-  startedAt?: string;
-  finishedAt?: string;
-  archivedAt?: string;
-
   status: StatusType;
-
   slug: string;
   goal: string;
   shouldbe: string;
@@ -43,6 +33,14 @@ export interface ProjectParams {
     };
   };
   milestones: TaskParams[];
+
+  createdAt: string;
+  updatedAt: string;
+  deadline: string;
+  startingAt?: string;
+  startedAt?: string;
+  finishedAt?: string;
+  archivedAt?: string;
 }
 
 export interface ProjectDateProps {
