@@ -25,7 +25,7 @@
 4. [TODO アプリ (React) 課題](./0400-react-todo)
 5. [TypeScript 課題](./0500-ts-base)
 6. [TODO アプリ(Next.js, Context API, HTTP) 課題](./0600-next-context-api)
-7. [Web API (Nest.js) 課題](./0700-nest-web-api)
+7. [サーバサイド | Web API (Nest.js) 課題](./0700-nest-web-api)
 
 
 ## 課題リポジトリをローカルにクローン
