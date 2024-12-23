@@ -43,6 +43,7 @@ Hint: 方向性のチェックを行う際は、プルリクエストを使用�
 ### API 仕様書
 
 Swagger UI を使用して仕様を管理しています。こちらでエンドポイントやリクエストBodyを確認してください。
+
 https://next-context-api.netlify.app/api/v1/spec
 
 ### 実装のチェックリスト
