@@ -6,12 +6,10 @@
 ### API 仕様
 https://nest-web-api.netlify.app/api/v1/spec
 
-
 ### 技術スタック
 
 - Nest.js
 - MySQL
-
 
 ## 認証について
 
@@ -20,6 +18,17 @@ https://nest-web-api.netlify.app/api/v1/spec
 
 それぞれのエンドポイントでは jwt トークンを発行して各エンドポイントでは、
 Authorization ヘッダー内のトークンを検証して、トークンが不正な場合は 401 Unauthorized で返すように実装してください。
+
+## 課題で身に着けること
+
+- データベースの基本
+- MVC(Model View Controller)
+- SQLでのCRUD
+- ORMの基礎
+- ORMでのCRUD
+- マイグレーションとシード
+- JWTを使用した認証・認可
+- Nest.jsを利用したWeb APIの実装
 
 ## 課題の進め方
 
