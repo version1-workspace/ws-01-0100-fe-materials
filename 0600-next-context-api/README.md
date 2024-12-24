@@ -46,7 +46,7 @@ https://next-context-api.netlify.app/api/v1/spec
 
 Hint: 方向性のチェックを行う際は、プルリクエストを使用して現時点のコードを共有しながら進めましょう。
 
-[プルリクエストを出す上での注意点]()
+[プルリクエストを出す上での注意点](https://lab.ver-1-0.net/posts/pr-points/)
 
 #### 4. 実装が完了したら、Github Pages にアップロードする。
 
