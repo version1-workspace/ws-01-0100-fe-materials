@@ -72,6 +72,11 @@ paths:
         - User
       summary: Get user info
       operationId: getUser
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token
+          required: true
       responses:
         '200':
           description: user info
@@ -93,6 +98,10 @@ paths:
       summary: Get project list
       operationId: getProjects
       parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token
+          required: true
         - in: query
           name: limit
           description: 返却するプロジェクトの最大数
@@ -135,6 +144,10 @@ paths:
       summary: Get a project by slug
       operationId: getProject
       parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token
+          required: true
         - in: path
           name: slug
           required: true
@@ -164,6 +177,10 @@ paths:
       summary: Get tasks
       operationId: fetchTasks
       parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token
+          required: true
         - in: query
           name: limit
           description: 返却するプロジェクトの最大数
@@ -216,6 +233,11 @@ paths:
         - Task
       summary: Create a new task
       operationId: createTasks
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token
+          required: true
       requestBody:
         content:
           application/json:
@@ -237,6 +259,10 @@ paths:
       summary: get tasks
       operationId: fetchTasks
       parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token
+          required: true
         - in: path
           name: id
           description: タスクID
@@ -268,6 +294,20 @@ paths:
         - Task
       summary: Update a task
       operationId: updateTask
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token
+          required: true
+        - in: path
+          name: id
+          description: タスクID
+          required: true
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
+            sample: 20
       requestBody:
         content:
           application/json:
@@ -296,6 +336,20 @@ paths:
         - Task
       summary: Delete a task
       operationId: deleteTask
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token
+          required: true
+        - in: path
+          name: id
+          description: タスクID
+          required: true
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
+            sample: 20
       responses:
         '200':
           content:
