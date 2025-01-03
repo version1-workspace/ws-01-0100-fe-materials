@@ -24,9 +24,9 @@
  *
  */
 
-import { getRandomIndex, Card, ILogger, Logger } from "../lib/babanuki";
+import { getRandomIndex, Card, ILogger, IPlayer, Logger } from "../lib/babanuki";
 
-export class Player {
+export class Player implements IPlayer {
   hands: Card[] = [];
   name: string;
 
@@ -87,11 +87,11 @@ export class Player {
 export class GameMaster {
   logger: ILogger;
   cards: Card[] = [];
-  players: Player[] = [];
-  rank: Player[] = [];
+  players: IPlayer[] = [];
+  rank: IPlayer[] = [];
   turn = 1;
 
-  constructor(logger: Logger, players: Player[]) {
+  constructor(logger: Logger, players: IPlayer[]) {
     this.logger = logger;
     this.players = players;
   }

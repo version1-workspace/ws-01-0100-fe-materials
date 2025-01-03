@@ -93,6 +93,11 @@ export interface IGameMaster {
 export interface IPlayer {
   name: string;
   hands: Card[];
+  done: boolean;
+  onlyJoker: boolean;
+  discard: () => Card[];
+  assign: (card: Card) => void;
+  draw: (player: IPlayer) => Card;
 }
 
 export interface ILogger {
