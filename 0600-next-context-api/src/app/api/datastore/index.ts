@@ -9,6 +9,7 @@ const projects = [
     slug: "programming",
     goal: "期限日までにフロントエンドエンジニアとして就職する。",
     shouldbe: "エンジニアとしての学習習慣を身につけて生活する。",
+    color: "#00008c60",
     stats: {
       kinds: {
         milestone: 4,
@@ -34,6 +35,7 @@ const projects = [
     slug: "english",
     goal: "IELTS Overall 7.0 を取得する。",
     shouldbe: "英語に浸る。",
+    color: "#0019ff99",
     stats: {
       kinds: {
         milestone: 4,
@@ -59,6 +61,7 @@ const projects = [
     slug: "private",
     goal: "長期休みに旅行をする",
     shouldbe: "",
+    color: "#00a5ff99",
     stats: {
       kinds: {
         milestone: 4,
