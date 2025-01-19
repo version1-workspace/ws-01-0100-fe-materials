@@ -5,7 +5,6 @@ const apiHost = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 export async function GET() {
   const filePath = path.join(process.cwd(), "src/app/api/v1/spec/index.html");
-  console.log(filePath);
 
   // ファイルの内容を読み込む
   try {

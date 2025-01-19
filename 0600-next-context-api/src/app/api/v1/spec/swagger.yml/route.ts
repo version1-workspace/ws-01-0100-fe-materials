@@ -6,7 +6,6 @@ export async function GET() {
     process.cwd(),
     "src/app/api/v1/spec/swagger.yml/swagger.yml",
   );
-  console.log(filePath);
 
   // ファイルの内容を読み込む
   try {
