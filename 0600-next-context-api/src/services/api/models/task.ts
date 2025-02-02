@@ -1,6 +1,6 @@
 import DateDecorator from "./date";
 import { Project, ProjectParams } from "@/services/api/models/project";
-import { ja } from "@/lib/transltate";
+import { ja } from "@/lib/translate";
 import { factory } from ".";
 
 const Status = {
