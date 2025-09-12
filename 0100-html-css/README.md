@@ -66,8 +66,4 @@ Live Sass Compilerなどを入れている方はプラグインの機能をOFF�
 無料で使えるフォントファイルライブラリのGoogleFontもデフォルトで読み込む様な設定をしています。
 フォント指定する場合は、 stylesheets/sass/shared/_global.sass の %font を extend 指定してください。
 
-### 画像について
-
-実装の際に使用する画像は assets/ フォルダに全て格納されています。
-HTML 内で適当なパスを指定して課題を進めて下さい。
 
