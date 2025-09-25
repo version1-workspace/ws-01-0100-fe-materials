@@ -36,7 +36,7 @@ function flatten(list) {
  */
 
 function toMap(list) {
-  let obj = {}
+  let obj = {};
   for (let i = 0; i < list.length; i++) {
     obj[list[i]] = true;
   }
@@ -55,8 +55,8 @@ function toMap(list) {
 
 function toList(obj) {
   return Object.entries(obj).reduce((acc, item) => {
-    return [...acc, ...item]
-  }, [])
+    return [...acc, ...item];
+  }, []);
 }
 
 /**
@@ -77,9 +77,9 @@ function toList(obj) {
  */
 
 function ids(obj) {
-  return Object.values(obj).map((it) => {
-    return it.id
-  }, [])
+  return Object.values(obj).map(it => {
+    return it.id;
+  }, []);
 }
 
 /**
@@ -96,16 +96,16 @@ function ids(obj) {
  */
 
 function merge(a, b) {
-  let obj = {}
-  a.forEach(it => obj[it] = true)
+  let obj = {};
+  a.forEach(it => (obj[it] = true));
   return Object.values(b).reduce((acc, it) => {
     if (obj[it]) {
-      return acc
+      return acc;
     }
 
-    obj[it] = true
-    return [...acc, it]
-  }, a)
+    obj[it] = true;
+    return [...acc, it];
+  }, a);
 }
 
 /**
@@ -121,7 +121,7 @@ function merge(a, b) {
  */
 
 function intersection(a, b) {
-  return a.filter((aa) => b.find(it => it === aa))
+  return a.filter(aa => b.find(it => it === aa));
 }
 
 /**
@@ -138,17 +138,17 @@ function intersection(a, b) {
  */
 
 function mergeObjOfArray(a, b) {
-  const obj = JSON.parse(JSON.stringify(a))
+  const obj = JSON.parse(JSON.stringify(a));
   for (let i = 0; i < b.length; i++) {
-    const index = a.findIndex(it => it.id == b[i].id)
+    const index = a.findIndex(it => it.id == b[i].id);
     if (index >= 0) {
-      obj[index] = { ...a[index], ...b[i] }
+      obj[index] = { ...a[index], ...b[i] };
     } else {
-      obj.push(b[i])
+      obj.push(b[i]);
     }
   }
 
-  return obj
+  return obj;
 }
 
 /**
@@ -164,49 +164,39 @@ function mergeObjOfArray(a, b) {
  */
 
 function sum(data) {
-  let next = data
-  let sum = 0
+  let next = data;
+  let sum = 0;
 
-  const isObject = (val) => val && typeof val === 'object' && !Array.isArray(val)
+  const isObject = val => val && typeof val === "object" && !Array.isArray(val);
 
-  while(Object.keys(next || []).length > 0) {
-    const list = []
-    Object.keys(next).forEach((key) => {
-      const val = next[key]
-      if (key === 'count') {
-        sum += val
+  while (Object.keys(next || []).length > 0) {
+    const list = [];
+    Object.keys(next).forEach(key => {
+      const val = next[key];
+      if (key === "count") {
+        sum += val;
+        return;
       }
 
-      if (Array.isArray(val)) {
-        val.forEach((it) => {
-          if (it.count) {
-            sum += it.count
-          }
-
-          if (Array.isArray(it) || isObject(it)) {
-            list.push(it)
-          }
-        })
-      }
-
-      if (isObject(val)) {
+      if (val) {
         Object.keys(val).forEach(key => {
-          const it = val[key]
-          if (key === 'count') {
-            sum += it
+          const it = val[key];
+          if (key === "count") {
+            sum += it;
           }
 
           if (Array.isArray(it) || isObject(it)) {
-            list.push(it)
+            list.push(it);
           }
-        })
+        });
+        return;
       }
-    })
+    });
 
-    next = list
+    next = list;
   }
 
-  return sum
+  return sum;
 }
 
 module.exports = {
@@ -218,4 +208,4 @@ module.exports = {
   intersection,
   mergeObjOfArray,
   sum
-}
+};
