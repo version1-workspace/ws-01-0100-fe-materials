@@ -53,7 +53,8 @@ Hint: 方向性のチェックを行う際は、プルリクエストを使用�
 - [プルリクエストを出す上での注意点](https://lab.ver-1-0.net/posts/pr-points/)
 
 
-#### 4. 実装が完了したら、Github Pages にアップロードする。
+#### 4. 実装が完了したら、Netlify にアップロードする。
+https://www.netlify.com/
 
 #### 5. メンターに最終レビューを依頼する
 
