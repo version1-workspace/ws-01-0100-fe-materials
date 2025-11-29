@@ -50,7 +50,6 @@ Authorization ヘッダー内のトークンを検証して、トークンが不
 Hint: 方向性のチェックを行う際は、プルリクエストを使用して現時点のコードを共有しながら進めましょう。
 
 - [プルリクエストを出す上での注意点](https://lab.ver-1-0.net/posts/pr-points/)
-- [動画|プルリクエストを作るときに考えること。各ステップでのNG行動と意識すること](https://www.youtube.com/watch?v=bFSHeY7_Igw)
 
 #### 4. 実装が完了したら、Github Pages にアップロードする。
 
