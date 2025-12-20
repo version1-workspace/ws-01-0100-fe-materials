@@ -21,7 +21,7 @@
     "dayjs": "^1.11.9",
     "eslint": "^8.57.0",
     "eslint-config-next": "13.4.19",
-    "next": "^14.2.2",
+    "next": "^14.2.35",
     "query-string": "^8.2.0",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
