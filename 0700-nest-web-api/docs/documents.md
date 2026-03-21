@@ -10,6 +10,6 @@ https://typeorm.io/
 
 ## MySQL
 
-[https://version1-workspace.gitbook.io/ws-mysql-tutorial](https://version1-workspace.gitbook.io/ws-mysql-tutorial)
+[MySQL初級チュートリアル](https://version1-workspace.gitbook.io/ws-mysql-tutorial)
 
 
