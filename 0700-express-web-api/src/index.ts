@@ -7,10 +7,12 @@ const port = Number(process.env.PORT ?? 3000);
 
 console.log("public directory:", path.join(__dirname, "../public"));
 
-// app.get("/spec", (req: Request, res: Response) => {
-//   res.send("Hello TypeScript + Express!");
-// });
-//
+const apiRoot = (path: string) => `/api/v1/${path}`;
+
+app.get(apiRoot("/spec"), (req: Request, res: Response) => {
+  res.send("Hello TypeScript + Express!");
+});
+
 app
   .listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
