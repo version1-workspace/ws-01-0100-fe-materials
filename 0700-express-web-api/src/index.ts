@@ -1,13 +1,18 @@
 // src/index.ts
 import express, { Request, Response } from "express";
+import path from "path";
 
 const app = express();
 const port = 3000;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello TypeScript + Express!");
-});
+console.log("public directory:", path.join(__dirname, "../public"));
+app.use(express.static(path.join(__dirname, "../public")));
+app.enable("strict routing");
 
+// app.get("/spec", (req: Request, res: Response) => {
+//   res.send("Hello TypeScript + Express!");
+// });
+//
 app
   .listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
