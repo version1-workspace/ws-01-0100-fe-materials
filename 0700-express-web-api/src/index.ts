@@ -9,10 +9,12 @@ console.log("public directory:", path.join(__dirname, "../public"));
 app.use(express.static(path.join(__dirname, "../public")));
 app.enable("strict routing");
 
-// app.get("/spec", (req: Request, res: Response) => {
-//   res.send("Hello TypeScript + Express!");
-// });
-//
+const apiRoot = (path: string) => `/api/v1/${path}`;
+
+app.get(apiRoot("/spec"), (req: Request, res: Response) => {
+  res.send("Hello TypeScript + Express!");
+});
+
 app
   .listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
