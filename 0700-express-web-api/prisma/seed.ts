@@ -1,19 +1,8 @@
 import "dotenv/config";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../generated/prisma/client";
+import { prisma } from "../src/models/prisma";
 import { createUser } from "../src/models/user";
 
-const databaseUrl = process.env.DATABASE_URL;
-
-if (!databaseUrl) {
-  throw new Error("DATABASE_URL is not set");
-}
-
-const prisma = new PrismaClient({
-  adapter: new PrismaPg(databaseUrl),
-});
-
-async function main() {
+export async function seedDatabase() {
   await prisma.task.deleteMany();
   await prisma.project.deleteMany();
   await prisma.user.deleteMany();
@@ -76,12 +65,14 @@ async function main() {
   }
 }
 
-main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (error) => {
-    console.error("Seed failed:", error);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+if (require.main === module) {
+  seedDatabase()
+    .then(async () => {
+      await prisma.$disconnect();
+    })
+    .catch(async (error) => {
+      console.error("Seed failed:", error);
+      await prisma.$disconnect();
+      process.exit(1);
+    });
+}
