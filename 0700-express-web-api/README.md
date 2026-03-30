@@ -1,4 +1,3 @@
-
 # Todo 管理用 Web API
 
 ## 使用技術
@@ -94,5 +93,5 @@ npm run test:watch
 
 - `src/**/*.test.ts`
   各モジュールと同階層に置いた単体テストです。
-- `tests/e2e/swagger.e2e.test.ts`
+- `tests/e2e/*.e2e.test.ts`
   `swagger.yml` の主要要件に沿った E2E テストです。

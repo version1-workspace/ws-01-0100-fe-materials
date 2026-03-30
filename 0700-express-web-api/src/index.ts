@@ -9,7 +9,7 @@ console.log("public directory:", path.join(__dirname, "../public"));
 
 const apiRoot = (path: string) => `/api/v1/${path}`;
 
-app.get(apiRoot("/spec"), (req: Request, res: Response) => {
+app.get(apiRoot("/spec"), (_req, res) => {
   res.send("Hello TypeScript + Express!");
 });
 
