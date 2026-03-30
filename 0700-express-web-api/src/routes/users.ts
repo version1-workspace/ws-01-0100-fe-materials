@@ -1,10 +1,17 @@
 import { Router } from "express";
 import { authenticate, AuthenticatedRequest } from "../middleware/authenticate";
-import { prisma } from "../lib/prisma";
+import { findProjectBySlug, findOwnedProject, listProjects } from "../models/project";
+import {
+  createTask,
+  deleteTask,
+  findTaskById,
+  listTasks,
+  TaskStatus,
+  updateTask,
+} from "../models/task";
+import { findUserProfile } from "../models/user";
 
 const router = Router();
-
-type TaskStatus = "scheduled" | "completed" | "archived";
 
 function toPositiveInt(value: unknown, fallback: number): number {
   const parsed = Number(value);
@@ -61,7 +68,7 @@ function serializeProjectStats(
   return stats;
 }
 
-function serializeProject(project: {
+type SerializableProject = {
   id: string;
   name: string;
   slug: string;
@@ -74,7 +81,9 @@ function serializeProject(project: {
   startedAt: Date | null;
   finishedAt: Date | null;
   tasks?: Array<{ kind: string; status: string }>;
-}) {
+};
+
+function serializeProject(project: SerializableProject) {
   return {
     id: project.id,
     name: project.name,
@@ -96,7 +105,6 @@ type SerializableTask = {
   id: string;
   title: string;
   description: string;
-  kind: string;
   status: string;
   createdAt: Date;
   updatedAt: Date;
@@ -105,20 +113,7 @@ type SerializableTask = {
   archivedAt: Date | null;
   startingAt: Date | null;
   deadline: Date;
-  project?: {
-    id: string;
-    name: string;
-    slug: string;
-    goal: string;
-    shouldbe: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-    deadline: Date;
-    startingAt: Date | null;
-    startedAt: Date | null;
-    finishedAt: Date | null;
-    tasks?: Array<{ kind: string; status: string }>;
-  };
+  project?: SerializableProject;
   parent?: SerializableTask | null;
   children?: SerializableTask[];
 };
@@ -144,15 +139,7 @@ function serializeTask(task: SerializableTask): Record<string, unknown> {
 
 router.get("/users/me", authenticate, async (req: AuthenticatedRequest, res) => {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: req.currentUserId },
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        status: true,
-      },
-    });
+    const user = await findUserProfile(req.currentUserId!);
 
     if (!user) {
       res.status(401).json({ message: "Unauthorized" });
@@ -171,28 +158,11 @@ router.get("/users/projects", authenticate, async (req: AuthenticatedRequest, re
     const limit = toPositiveInt(req.query.limit, 20);
     const page = toPositiveInt(req.query.page, 1);
     const skip = (page - 1) * limit;
-
-    const [totalCount, projects] = await Promise.all([
-      prisma.project.count({
-        where: { userId: req.currentUserId },
-      }),
-      prisma.project.findMany({
-        where: { userId: req.currentUserId },
-        include: {
-          tasks: {
-            select: {
-              kind: true,
-              status: true,
-            },
-          },
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-        skip,
-        take: limit,
-      }),
-    ]);
+    const { totalCount, projects } = await listProjects({
+      userId: req.currentUserId!,
+      skip,
+      take: limit,
+    });
 
     res.json({
       data: projects.map(serializeProject),
@@ -212,22 +182,7 @@ router.get("/users/projects", authenticate, async (req: AuthenticatedRequest, re
 
 router.get("/users/projects/:slug", authenticate, async (req: AuthenticatedRequest, res) => {
   try {
-    const slug = String(req.params.slug);
-
-    const project = await prisma.project.findFirst({
-      where: {
-        userId: req.currentUserId,
-        slug,
-      },
-      include: {
-        tasks: {
-          select: {
-            kind: true,
-            status: true,
-          },
-        },
-      },
-    });
+    const project = await findProjectBySlug(req.currentUserId!, String(req.params.slug));
 
     if (!project) {
       res.status(404).json({ message: "Project not found" });
@@ -258,35 +213,12 @@ router.get("/users/tasks", authenticate, async (req: AuthenticatedRequest, res) 
       (status): status is TaskStatus =>
         status === "scheduled" || status === "completed" || status === "archived",
     );
-
-    const where = {
-      userId: req.currentUserId,
-      ...(filteredStatuses.length > 0 ? { status: { in: filteredStatuses } } : {}),
-    };
-
-    const [totalCount, tasks] = await Promise.all([
-      prisma.task.count({ where }),
-      prisma.task.findMany({
-        where,
-        include: {
-          project: {
-            include: {
-              tasks: {
-                select: {
-                  kind: true,
-                  status: true,
-                },
-              },
-            },
-          },
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-        skip,
-        take: limit,
-      }),
-    ]);
+    const { totalCount, tasks } = await listTasks({
+      userId: req.currentUserId!,
+      skip,
+      take: limit,
+      statuses: filteredStatuses,
+    });
 
     res.json({
       data: tasks.map(serializeTask),
@@ -313,44 +245,22 @@ router.post("/users/tasks", authenticate, async (req: AuthenticatedRequest, res)
       return;
     }
 
-    const project = await prisma.project.findFirst({
-      where: {
-        id: projectId,
-        userId: req.currentUserId,
-      },
-    });
+    const project = await findOwnedProject(req.currentUserId!, String(projectId));
 
     if (!project) {
       res.status(400).json({ message: "Project not found" });
       return;
     }
 
-    const task = await prisma.task.create({
-      data: {
-        userId: req.currentUserId!,
-        projectId,
-        title,
-        kind,
-        description,
-        status,
-        deadline: new Date(deadline),
-        startingAt: toOptionalDate(startingAt),
-        startedAt: status === "completed" ? new Date() : null,
-        finishedAt: status === "completed" ? new Date() : null,
-        archivedAt: status === "archived" ? new Date() : null,
-      },
-      include: {
-        project: {
-          include: {
-            tasks: {
-              select: {
-                kind: true,
-                status: true,
-              },
-            },
-          },
-        },
-      },
+    const task = await createTask({
+      userId: req.currentUserId!,
+      projectId: String(projectId),
+      title: String(title),
+      kind: String(kind),
+      description: String(description),
+      status: String(status),
+      deadline: new Date(String(deadline)),
+      startingAt: toOptionalDate(startingAt),
     });
 
     res.status(201).json({
@@ -364,28 +274,7 @@ router.post("/users/tasks", authenticate, async (req: AuthenticatedRequest, res)
 
 router.get("/users/tasks/:id", authenticate, async (req: AuthenticatedRequest, res) => {
   try {
-    const taskId = String(req.params.id);
-
-    const task = await prisma.task.findFirst({
-      where: {
-        id: taskId,
-        userId: req.currentUserId,
-      },
-      include: {
-        project: {
-          include: {
-            tasks: {
-              select: {
-                kind: true,
-                status: true,
-              },
-            },
-          },
-        },
-        parent: true,
-        children: true,
-      },
-    });
+    const task = await findTaskById(req.currentUserId!, String(req.params.id));
 
     if (!task) {
       res.status(404).json({ message: "Task not found" });
@@ -404,28 +293,15 @@ router.get("/users/tasks/:id", authenticate, async (req: AuthenticatedRequest, r
 router.patch("/users/tasks/:id", authenticate, async (req: AuthenticatedRequest, res) => {
   try {
     const taskId = String(req.params.id);
-
-    const currentTask = await prisma.task.findFirst({
-      where: {
-        id: taskId,
-        userId: req.currentUserId,
-      },
-    });
+    const currentTask = await findTaskById(req.currentUserId!, taskId);
 
     if (!currentTask) {
       res.status(404).json({ message: "Task not found" });
       return;
     }
 
-    const nextProjectId = req.body?.projectId;
-
-    if (nextProjectId) {
-      const project = await prisma.project.findFirst({
-        where: {
-          id: nextProjectId,
-          userId: req.currentUserId,
-        },
-      });
+    if (req.body?.projectId) {
+      const project = await findOwnedProject(req.currentUserId!, String(req.body.projectId));
 
       if (!project) {
         res.status(400).json({ message: "Project not found" });
@@ -433,37 +309,14 @@ router.patch("/users/tasks/:id", authenticate, async (req: AuthenticatedRequest,
       }
     }
 
-    const nextStatus = req.body?.status ?? currentTask.status;
-    const now = new Date();
-
-    const task = await prisma.task.update({
-      where: { id: currentTask.id },
-      data: {
-        title: req.body?.title ?? undefined,
-        kind: req.body?.kind ?? undefined,
-        description: req.body?.description ?? undefined,
-        status: req.body?.status ?? undefined,
-        projectId: req.body?.projectId ?? undefined,
-        startingAt: toOptionalDate(req.body?.startingAt),
-        deadline: req.body?.deadline ? new Date(req.body.deadline) : undefined,
-        startedAt: nextStatus === "completed" && !currentTask.startedAt ? now : undefined,
-        finishedAt: nextStatus === "completed" ? now : nextStatus === "scheduled" ? null : undefined,
-        archivedAt: nextStatus === "archived" ? now : nextStatus !== "archived" ? null : undefined,
-      },
-      include: {
-        project: {
-          include: {
-            tasks: {
-              select: {
-                kind: true,
-                status: true,
-              },
-            },
-          },
-        },
-        parent: true,
-        children: true,
-      },
+    const task = await updateTask(taskId, currentTask.status, currentTask.startedAt, {
+      title: req.body?.title,
+      kind: req.body?.kind,
+      description: req.body?.description,
+      status: req.body?.status,
+      projectId: req.body?.projectId,
+      startingAt: toOptionalDate(req.body?.startingAt),
+      deadline: req.body?.deadline ? new Date(req.body.deadline) : undefined,
     });
 
     res.json({
@@ -477,37 +330,14 @@ router.patch("/users/tasks/:id", authenticate, async (req: AuthenticatedRequest,
 
 router.delete("/users/tasks/:id", authenticate, async (req: AuthenticatedRequest, res) => {
   try {
-    const taskId = String(req.params.id);
-
-    const task = await prisma.task.findFirst({
-      where: {
-        id: taskId,
-        userId: req.currentUserId,
-      },
-      include: {
-        project: {
-          include: {
-            tasks: {
-              select: {
-                kind: true,
-                status: true,
-              },
-            },
-          },
-        },
-        parent: true,
-        children: true,
-      },
-    });
+    const task = await findTaskById(req.currentUserId!, String(req.params.id));
 
     if (!task) {
       res.status(404).json({ message: "Task not found" });
       return;
     }
 
-    await prisma.task.delete({
-      where: { id: task.id },
-    });
+    await deleteTask(task.id);
 
     res.json({
       data: serializeTask(task),

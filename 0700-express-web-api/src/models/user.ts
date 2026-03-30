@@ -46,3 +46,15 @@ export async function createUser(input: CreateUserInput) {
     },
   });
 }
+
+export async function findUserProfile(userId: string) {
+  return prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      status: true,
+    },
+  });
+}
