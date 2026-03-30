@@ -46,6 +46,12 @@ docker compose up -d
 npm install
 ```
 
+Prisma クライアントを生成します。
+
+```bash
+npx prisma generate
+```
+
 マイグレーションを適用します。
 
 ```bash
