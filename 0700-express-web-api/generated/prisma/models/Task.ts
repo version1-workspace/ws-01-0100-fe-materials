@@ -31,6 +31,7 @@ export type TaskMinAggregateOutputType = {
   parentId: string | null
   kind: string | null
   title: string | null
+  description: string | null
   status: string | null
   deadline: Date | null
   startingAt: Date | null
@@ -48,6 +49,7 @@ export type TaskMaxAggregateOutputType = {
   parentId: string | null
   kind: string | null
   title: string | null
+  description: string | null
   status: string | null
   deadline: Date | null
   startingAt: Date | null
@@ -65,6 +67,7 @@ export type TaskCountAggregateOutputType = {
   parentId: number
   kind: number
   title: number
+  description: number
   status: number
   deadline: number
   startingAt: number
@@ -84,6 +87,7 @@ export type TaskMinAggregateInputType = {
   parentId?: true
   kind?: true
   title?: true
+  description?: true
   status?: true
   deadline?: true
   startingAt?: true
@@ -101,6 +105,7 @@ export type TaskMaxAggregateInputType = {
   parentId?: true
   kind?: true
   title?: true
+  description?: true
   status?: true
   deadline?: true
   startingAt?: true
@@ -118,6 +123,7 @@ export type TaskCountAggregateInputType = {
   parentId?: true
   kind?: true
   title?: true
+  description?: true
   status?: true
   deadline?: true
   startingAt?: true
@@ -208,6 +214,7 @@ export type TaskGroupByOutputType = {
   parentId: string | null
   kind: string
   title: string
+  description: string
   status: string
   deadline: Date
   startingAt: Date | null
@@ -246,6 +253,7 @@ export type TaskWhereInput = {
   parentId?: Prisma.UuidNullableFilter<"Task"> | string | null
   kind?: Prisma.StringFilter<"Task"> | string
   title?: Prisma.StringFilter<"Task"> | string
+  description?: Prisma.StringFilter<"Task"> | string
   status?: Prisma.StringFilter<"Task"> | string
   deadline?: Prisma.DateTimeFilter<"Task"> | Date | string
   startingAt?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
@@ -267,6 +275,7 @@ export type TaskOrderByWithRelationInput = {
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   kind?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deadline?: Prisma.SortOrder
   startingAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -291,6 +300,7 @@ export type TaskWhereUniqueInput = Prisma.AtLeast<{
   parentId?: Prisma.UuidNullableFilter<"Task"> | string | null
   kind?: Prisma.StringFilter<"Task"> | string
   title?: Prisma.StringFilter<"Task"> | string
+  description?: Prisma.StringFilter<"Task"> | string
   status?: Prisma.StringFilter<"Task"> | string
   deadline?: Prisma.DateTimeFilter<"Task"> | Date | string
   startingAt?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
@@ -312,6 +322,7 @@ export type TaskOrderByWithAggregationInput = {
   parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   kind?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deadline?: Prisma.SortOrder
   startingAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -335,6 +346,7 @@ export type TaskScalarWhereWithAggregatesInput = {
   parentId?: Prisma.UuidNullableWithAggregatesFilter<"Task"> | string | null
   kind?: Prisma.StringWithAggregatesFilter<"Task"> | string
   title?: Prisma.StringWithAggregatesFilter<"Task"> | string
+  description?: Prisma.StringWithAggregatesFilter<"Task"> | string
   status?: Prisma.StringWithAggregatesFilter<"Task"> | string
   deadline?: Prisma.DateTimeWithAggregatesFilter<"Task"> | Date | string
   startingAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
@@ -349,6 +361,7 @@ export type TaskCreateInput = {
   id?: string
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -370,6 +383,7 @@ export type TaskUncheckedCreateInput = {
   parentId?: string | null
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -385,6 +399,7 @@ export type TaskUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -406,6 +421,7 @@ export type TaskUncheckedUpdateInput = {
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -424,6 +440,7 @@ export type TaskCreateManyInput = {
   parentId?: string | null
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -438,6 +455,7 @@ export type TaskUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -455,6 +473,7 @@ export type TaskUncheckedUpdateManyInput = {
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -487,6 +506,7 @@ export type TaskCountOrderByAggregateInput = {
   parentId?: Prisma.SortOrder
   kind?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deadline?: Prisma.SortOrder
   startingAt?: Prisma.SortOrder
@@ -504,6 +524,7 @@ export type TaskMaxOrderByAggregateInput = {
   parentId?: Prisma.SortOrder
   kind?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deadline?: Prisma.SortOrder
   startingAt?: Prisma.SortOrder
@@ -521,6 +542,7 @@ export type TaskMinOrderByAggregateInput = {
   parentId?: Prisma.SortOrder
   kind?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deadline?: Prisma.SortOrder
   startingAt?: Prisma.SortOrder
@@ -677,6 +699,7 @@ export type TaskCreateWithoutUserInput = {
   id?: string
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -696,6 +719,7 @@ export type TaskUncheckedCreateWithoutUserInput = {
   parentId?: string | null
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -743,6 +767,7 @@ export type TaskScalarWhereInput = {
   parentId?: Prisma.UuidNullableFilter<"Task"> | string | null
   kind?: Prisma.StringFilter<"Task"> | string
   title?: Prisma.StringFilter<"Task"> | string
+  description?: Prisma.StringFilter<"Task"> | string
   status?: Prisma.StringFilter<"Task"> | string
   deadline?: Prisma.DateTimeFilter<"Task"> | Date | string
   startingAt?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
@@ -757,6 +782,7 @@ export type TaskCreateWithoutProjectInput = {
   id?: string
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -776,6 +802,7 @@ export type TaskUncheckedCreateWithoutProjectInput = {
   parentId?: string | null
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -817,6 +844,7 @@ export type TaskCreateWithoutChildrenInput = {
   id?: string
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -837,6 +865,7 @@ export type TaskUncheckedCreateWithoutChildrenInput = {
   parentId?: string | null
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -856,6 +885,7 @@ export type TaskCreateWithoutParentInput = {
   id?: string
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -875,6 +905,7 @@ export type TaskUncheckedCreateWithoutParentInput = {
   projectId: string
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -911,6 +942,7 @@ export type TaskUpdateWithoutChildrenInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -931,6 +963,7 @@ export type TaskUncheckedUpdateWithoutChildrenInput = {
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -963,6 +996,7 @@ export type TaskCreateManyUserInput = {
   parentId?: string | null
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -977,6 +1011,7 @@ export type TaskUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -996,6 +1031,7 @@ export type TaskUncheckedUpdateWithoutUserInput = {
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1013,6 +1049,7 @@ export type TaskUncheckedUpdateManyWithoutUserInput = {
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1029,6 +1066,7 @@ export type TaskCreateManyProjectInput = {
   parentId?: string | null
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -1043,6 +1081,7 @@ export type TaskUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1062,6 +1101,7 @@ export type TaskUncheckedUpdateWithoutProjectInput = {
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1079,6 +1119,7 @@ export type TaskUncheckedUpdateManyWithoutProjectInput = {
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1095,6 +1136,7 @@ export type TaskCreateManyParentInput = {
   projectId: string
   kind: string
   title: string
+  description?: string
   status?: string
   deadline: Date | string
   startingAt?: Date | string | null
@@ -1109,6 +1151,7 @@ export type TaskUpdateWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1128,6 +1171,7 @@ export type TaskUncheckedUpdateWithoutParentInput = {
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1145,6 +1189,7 @@ export type TaskUncheckedUpdateManyWithoutParentInput = {
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startingAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1193,6 +1238,7 @@ export type TaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   parentId?: boolean
   kind?: boolean
   title?: boolean
+  description?: boolean
   status?: boolean
   deadline?: boolean
   startingAt?: boolean
@@ -1215,6 +1261,7 @@ export type TaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   parentId?: boolean
   kind?: boolean
   title?: boolean
+  description?: boolean
   status?: boolean
   deadline?: boolean
   startingAt?: boolean
@@ -1235,6 +1282,7 @@ export type TaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   parentId?: boolean
   kind?: boolean
   title?: boolean
+  description?: boolean
   status?: boolean
   deadline?: boolean
   startingAt?: boolean
@@ -1255,6 +1303,7 @@ export type TaskSelectScalar = {
   parentId?: boolean
   kind?: boolean
   title?: boolean
+  description?: boolean
   status?: boolean
   deadline?: boolean
   startingAt?: boolean
@@ -1265,7 +1314,7 @@ export type TaskSelectScalar = {
   updatedAt?: boolean
 }
 
-export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "projectId" | "parentId" | "kind" | "title" | "status" | "deadline" | "startingAt" | "startedAt" | "finishedAt" | "archivedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
+export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "projectId" | "parentId" | "kind" | "title" | "description" | "status" | "deadline" | "startingAt" | "startedAt" | "finishedAt" | "archivedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
 export type TaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -1299,6 +1348,7 @@ export type $TaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     parentId: string | null
     kind: string
     title: string
+    description: string
     status: string
     deadline: Date
     startingAt: Date | null
@@ -1740,6 +1790,7 @@ export interface TaskFieldRefs {
   readonly parentId: Prisma.FieldRef<"Task", 'String'>
   readonly kind: Prisma.FieldRef<"Task", 'String'>
   readonly title: Prisma.FieldRef<"Task", 'String'>
+  readonly description: Prisma.FieldRef<"Task", 'String'>
   readonly status: Prisma.FieldRef<"Task", 'String'>
   readonly deadline: Prisma.FieldRef<"Task", 'DateTime'>
   readonly startingAt: Prisma.FieldRef<"Task", 'DateTime'>

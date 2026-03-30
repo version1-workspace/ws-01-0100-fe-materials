@@ -12,7 +12,6 @@ import {
   updateTask,
 } from "../models/task";
 import { findUserProfile } from "../models/user";
-import { toOptionalDate, toPositiveInt } from "./helper";
 import {
   ProjectShowResponse,
   ProjectsIndexResponse,
@@ -21,6 +20,7 @@ import {
 } from "../serializers/project";
 import { serializeTask, TaskShowResponse, TasksIndexResponse } from "../serializers/task";
 import { serializeUser, UserShowResponse } from "../serializers/user";
+import { toOptionalDate, toPositiveInt } from "./helper";
 
 const router = Router();
 

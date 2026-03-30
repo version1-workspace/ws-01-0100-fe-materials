@@ -1,6 +1,4 @@
 import { Router } from "express";
-import { asyncHandler } from "../middleware/async-handler";
-import { prisma } from "../models/prisma";
 import {
   accessTokenCookieMaxAge,
   authCookieOptions,
@@ -9,6 +7,8 @@ import {
   signRefreshToken,
 } from "../lib/auth";
 import { BadRequestError, UnauthorizedError } from "../lib/errors";
+import { asyncHandler } from "../middleware/async-handler";
+import { prisma } from "../models/prisma";
 import { comparePassword, createUser, UserAlreadyExistsError } from "../models/user";
 
 const router = Router();
