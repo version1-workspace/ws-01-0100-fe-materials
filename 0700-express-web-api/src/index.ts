@@ -3,6 +3,7 @@ import "dotenv/config";
 import cookieParser from "cookie-parser";
 import express, { Request, Response } from "express";
 import path from "path";
+import { errorHandler } from "./middleware/error-handler";
 import { authRouter } from "./routes/auth";
 import { usersRouter } from "./routes/users";
 import { prisma } from "./models/prisma";
@@ -19,6 +20,7 @@ app.enable("strict routing");
 const apiRoot = "/api/v1";
 app.use(apiRoot, authRouter);
 app.use(apiRoot, usersRouter);
+app.use(errorHandler);
 
 app
   .listen(port, () => {
