@@ -57,6 +57,12 @@ Prisma Client のみ再生成する場合:
 npx prisma generate
 ```
 
+Seed データを投入する場合:
+
+```bash
+npm run db:seed
+```
+
 DB の状態を確認したい場合:
 
 ```bash
