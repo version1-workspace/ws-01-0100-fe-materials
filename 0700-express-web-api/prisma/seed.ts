@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client";
+import { createUser } from "../src/models/user";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -17,14 +18,11 @@ async function main() {
   await prisma.project.deleteMany();
   await prisma.user.deleteMany();
 
-  const user = await prisma.user.create({
-    data: {
-      email: "demo@example.com",
-      username: "demo-user",
-      password: "password",
-      refreshToken: "demo-refresh-token",
-      status: "active",
-    },
+  const user = await createUser({
+    email: "demo@example.com",
+    username: "demo-user",
+    password: "password",
+    refreshToken: "demo-refresh-token",
   });
 
   for (let projectNumber = 1; projectNumber <= 10; projectNumber += 1) {
