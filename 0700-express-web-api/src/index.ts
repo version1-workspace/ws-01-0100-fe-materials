@@ -16,14 +16,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../public")));
 app.enable("strict routing");
 
-const apiRoot = (path: string) => `/api/v1/${path}`;
-
-app.get(apiRoot("/spec"), (req: Request, res: Response) => {
-  res.send("Hello TypeScript + Express!");
-});
-
-app.use("/api/v1", authRouter);
-app.use("/api/v1", usersRouter);
+const apiRoot = "/api/v1";
+app.use(apiRoot, authRouter);
+app.use(apiRoot, usersRouter);
 
 app
   .listen(port, () => {

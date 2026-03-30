@@ -44,7 +44,8 @@ async function main() {
         projectId: project.id,
         kind: "milestone",
         title: `Project ${projectNumber} のマイルストーン`,
-        status: "initial",
+        description: `Project ${projectNumber} 全体の進行を管理するマイルストーン`,
+        status: "scheduled",
         deadline: new Date(`2026-04-${String(projectNumber).padStart(2, "0")}T23:59:59+09:00`),
       },
     });
@@ -59,7 +60,8 @@ async function main() {
         parentId: milestone.id,
         kind: "task",
         title: `Project ${projectNumber} Task ${taskNumber}`,
-        status: taskNumber % 3 === 0 ? "finished" : "initial",
+        description: `Project ${projectNumber} のタスク ${taskNumber} です`,
+        status: taskNumber % 3 === 0 ? "completed" : "scheduled",
         deadline: new Date(
           `2026-06-${String(((taskNumber - 1) % 28) + 1).padStart(2, "0")}T23:59:59+09:00`,
         ),

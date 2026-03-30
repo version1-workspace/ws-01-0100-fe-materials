@@ -1,4 +1,3 @@
-import bcrypt from "bcryptjs";
 import { Router } from "express";
 import { prisma } from "../lib/prisma";
 import {
@@ -8,7 +7,7 @@ import {
   signAccessToken,
   signRefreshToken,
 } from "../lib/auth";
-import { createUser, UserAlreadyExistsError } from "../models/user";
+import { comparePassword, createUser, UserAlreadyExistsError } from "../models/user";
 
 const router = Router();
 
@@ -96,7 +95,7 @@ router.post("/auth/login", async (req, res) => {
       return;
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await comparePassword(password, user.password);
 
     if (!isPasswordValid) {
       res.status(401).json({ message: "Unauthorized" });
