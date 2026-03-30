@@ -17,6 +17,8 @@ tags:
     description: 各タスクをまとめる単位。プロジェクト。
   - name: Task
     description: タスク
+security:
+  - bearerAuth: []
 paths:
   /auth/signup:
     post:
@@ -24,6 +26,7 @@ paths:
         - Auth
       summary: Signup
       operationId: signup
+      security: []
       requestBody:
         content:
           application/json:
@@ -48,6 +51,7 @@ paths:
         - Auth
       summary: Login
       operationId: login
+      security: []
       requestBody:
         content:
           application/json:
@@ -72,6 +76,8 @@ paths:
         - User
       summary: Get user info
       operationId: getUser
+      security:
+        - bearerAuth: []
       parameters:
         - name: Authorization
           in: header
@@ -97,6 +103,8 @@ paths:
         - Project
       summary: Get project list
       operationId: getProjects
+      security:
+        - bearerAuth: []
       parameters:
         - name: Authorization
           in: header
@@ -143,6 +151,8 @@ paths:
         - Project
       summary: Get a project by slug
       operationId: getProject
+      security:
+        - bearerAuth: []
       parameters:
         - name: Authorization
           in: header
@@ -366,6 +376,11 @@ paths:
         '500':
           description: Internal server error
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     Error:
       type: object
