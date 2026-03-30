@@ -10,132 +10,17 @@ import {
   updateTask,
 } from "../models/task";
 import { findUserProfile } from "../models/user";
+import { toOptionalDate, toPositiveInt } from "./helper";
+import {
+  ProjectShowResponse,
+  ProjectsIndexResponse,
+  serializePageInfo,
+  serializeProject,
+} from "../serializers/project";
+import { serializeTask, TaskShowResponse, TasksIndexResponse } from "../serializers/task";
+import { serializeUser, UserShowResponse } from "../serializers/user";
 
 const router = Router();
-
-function toPositiveInt(value: unknown, fallback: number): number {
-  const parsed = Number(value);
-  return Number.isInteger(parsed) && parsed > 0 ? parsed : fallback;
-}
-
-function toOptionalDate(value: unknown): Date | null | undefined {
-  if (value === undefined) {
-    return undefined;
-  }
-
-  if (value === null || value === "") {
-    return null;
-  }
-
-  const date = new Date(String(value));
-  return Number.isNaN(date.getTime()) ? undefined : date;
-}
-
-function serializeProjectStats(
-  tasks: Array<{
-    kind: string;
-    status: string;
-  }>,
-) {
-  const stats = {
-    total: tasks.length,
-    kinds: {
-      milestone: 0,
-      task: 0,
-      total: tasks.length,
-    },
-    states: {
-      scheduled: 0,
-      completed: 0,
-      archived: 0,
-    },
-  };
-
-  for (const task of tasks) {
-    if (task.kind === "milestone") {
-      stats.kinds.milestone += 1;
-    }
-
-    if (task.kind === "task") {
-      stats.kinds.task += 1;
-    }
-
-    if (task.status === "scheduled" || task.status === "completed" || task.status === "archived") {
-      stats.states[task.status] += 1;
-    }
-  }
-
-  return stats;
-}
-
-type SerializableProject = {
-  id: string;
-  name: string;
-  slug: string;
-  goal: string;
-  shouldbe: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  deadline: Date;
-  startingAt: Date | null;
-  startedAt: Date | null;
-  finishedAt: Date | null;
-  tasks?: Array<{ kind: string; status: string }>;
-};
-
-function serializeProject(project: SerializableProject) {
-  return {
-    id: project.id,
-    name: project.name,
-    slug: project.slug,
-    goal: project.goal,
-    shouldbe: project.shouldbe,
-    color: null,
-    stats: serializeProjectStats(project.tasks ?? []),
-    createdAt: project.createdAt,
-    updatedAt: project.updatedAt,
-    deadline: project.deadline,
-    startingAt: project.startingAt,
-    startedAt: project.startedAt,
-    finishedAt: project.finishedAt,
-  };
-}
-
-type SerializableTask = {
-  id: string;
-  title: string;
-  description: string;
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
-  finishedAt: Date | null;
-  startedAt: Date | null;
-  archivedAt: Date | null;
-  startingAt: Date | null;
-  deadline: Date;
-  project?: SerializableProject;
-  parent?: SerializableTask | null;
-  children?: SerializableTask[];
-};
-
-function serializeTask(task: SerializableTask): Record<string, unknown> {
-  return {
-    id: task.id,
-    title: task.title,
-    description: task.description,
-    status: task.status,
-    createdAt: task.createdAt,
-    updatedAt: task.updatedAt,
-    finishedAt: task.finishedAt,
-    startedAt: task.startedAt,
-    archivedAt: task.archivedAt,
-    startingAt: task.startingAt,
-    deadline: task.deadline,
-    project: task.project ? serializeProject(task.project) : undefined,
-    parent: task.parent ? serializeTask(task.parent) : null,
-    children: task.children?.map(serializeTask) ?? [],
-  };
-}
 
 router.get("/users/me", authenticate, async (req: AuthenticatedRequest, res) => {
   try {
@@ -146,7 +31,11 @@ router.get("/users/me", authenticate, async (req: AuthenticatedRequest, res) => 
       return;
     }
 
-    res.json({ data: user });
+    const response: UserShowResponse = {
+      data: serializeUser(user),
+    };
+
+    res.json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -164,16 +53,18 @@ router.get("/users/projects", authenticate, async (req: AuthenticatedRequest, re
       take: limit,
     });
 
-    res.json({
+    const response: ProjectsIndexResponse = {
       data: projects.map(serializeProject),
-      pageInfo: {
+      pageInfo: serializePageInfo({
         totalCount,
         limit,
         page,
         hasNext: skip + projects.length < totalCount,
         hasPrevious: page > 1,
-      },
-    });
+      }),
+    };
+
+    res.json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -189,9 +80,11 @@ router.get("/users/projects/:slug", authenticate, async (req: AuthenticatedReque
       return;
     }
 
-    res.json({
+    const response: ProjectShowResponse = {
       data: serializeProject(project),
-    });
+    };
+
+    res.json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -220,16 +113,18 @@ router.get("/users/tasks", authenticate, async (req: AuthenticatedRequest, res) 
       statuses: filteredStatuses,
     });
 
-    res.json({
+    const response: TasksIndexResponse = {
       data: tasks.map(serializeTask),
-      pageInfo: {
+      pageInfo: serializePageInfo({
         totalCount,
         limit,
         page,
         hasNext: skip + tasks.length < totalCount,
         hasPrevious: page > 1,
-      },
-    });
+      }),
+    };
+
+    res.json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -263,9 +158,11 @@ router.post("/users/tasks", authenticate, async (req: AuthenticatedRequest, res)
       startingAt: toOptionalDate(startingAt),
     });
 
-    res.status(201).json({
+    const response: TaskShowResponse = {
       data: serializeTask(task),
-    });
+    };
+
+    res.status(201).json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -281,9 +178,11 @@ router.get("/users/tasks/:id", authenticate, async (req: AuthenticatedRequest, r
       return;
     }
 
-    res.json({
+    const response: TaskShowResponse = {
       data: serializeTask(task),
-    });
+    };
+
+    res.json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -319,9 +218,11 @@ router.patch("/users/tasks/:id", authenticate, async (req: AuthenticatedRequest,
       deadline: req.body?.deadline ? new Date(req.body.deadline) : undefined,
     });
 
-    res.json({
+    const response: TaskShowResponse = {
       data: serializeTask(task),
-    });
+    };
+
+    res.json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -339,9 +240,11 @@ router.delete("/users/tasks/:id", authenticate, async (req: AuthenticatedRequest
 
     await deleteTask(task.id);
 
-    res.json({
+    const response: TaskShowResponse = {
       data: serializeTask(task),
-    });
+    };
+
+    res.json(response);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

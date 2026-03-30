@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../models/prisma";
 import {
   accessTokenCookieMaxAge,
   authCookieOptions,

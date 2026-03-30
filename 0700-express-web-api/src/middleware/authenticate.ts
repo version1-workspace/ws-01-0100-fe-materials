@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../models/prisma";
 import { verifyAccessToken } from "../lib/auth";
 
 type AuthenticatedRequest = Request & {

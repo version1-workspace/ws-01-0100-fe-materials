@@ -5,7 +5,7 @@ import express, { Request, Response } from "express";
 import path from "path";
 import { authRouter } from "./routes/auth";
 import { usersRouter } from "./routes/users";
-import { prisma } from "./lib/prisma";
+import { prisma } from "./models/prisma";
 
 const app = express();
 const port = Number(process.env.PORT ?? 3000);
