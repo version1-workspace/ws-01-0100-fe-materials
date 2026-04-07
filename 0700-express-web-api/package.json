@@ -5,9 +5,9 @@
   "scripts": {
     "test": "mkdir -p .tmp && TMPDIR=$PWD/.tmp vitest run",
     "test:watch": "mkdir -p .tmp && TMPDIR=$PWD/.tmp vitest",
-    "dev": "nodemon --watch src/**/*.ts --exec ts-node src/index.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node src/index.ts'",
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "db:seed": "ts-node prisma/seed.ts"
   },
   "author": "",
