@@ -5,7 +5,7 @@
 
 1. [PostgreSQL + Docker のチュートリアル](https://www.notion.so/Postgres-SQL-33383699ef5880a7ba44e9eac3467bc6?source=copy_link)
 2. [Express + TypeScript のチュートリアル](https://www.notion.so/Express-TypeScript-33383699ef588084b787eec9ef0bf50d?source=copy_link)
-3. [Prisma ORM + MVC のチュートリアル]()
+3. [Prisma ORM + MVC のチュートリアル](https://www.notion.so/Prisma-ORM-MVC-33c83699ef5880aea85cc8ba38631ddb?source=copy_link)
 4. [JWT 認証のチュートリアル](https://www.notion.so/Express-Cookie-JWT-33383699ef588040b9ecf4f476141d0f?source=copy_link)
 
 ## 参考資料

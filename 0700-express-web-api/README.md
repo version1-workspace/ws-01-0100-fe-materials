@@ -5,11 +5,7 @@
 
 ### API 仕様
 
-(要修正)
-- 認証方法の記載がない
-- ドメイン名が古い
-- Next.js で Swagger UI をホストしていたので代替が必要
-https://nest-web-api.netlify.app/api/v1/spec
+https://vws-api-spec-host.netlify.app/specs?id=express-web-api
 
 ### 技術スタック
 
