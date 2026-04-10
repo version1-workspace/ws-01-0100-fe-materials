@@ -19,8 +19,8 @@ https://vws-api-spec-host.netlify.app/specs?id=express-web-api
 
 ## 認証について
 
-/auth/signup でユーザ登録
-/auth/login でログインで認証を行うように実装してください。
+- `/auth/signup` でユーザ登録
+- `/auth/login` でログインで認証を行うように実装してください。
 
 それぞれのエンドポイントでは jwt トークンを発行して各エンドポイントでは、
 Authorization ヘッダー内のトークンを検証して、トークンが不正な場合は 401 Unauthorized で返すように実装してください。
