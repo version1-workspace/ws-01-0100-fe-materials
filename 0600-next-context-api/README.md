@@ -35,6 +35,8 @@ npm run dev
 
 http://localhost:3000/api/v1/spec
 
+![Swagger UI](./images/swagger-ui.png)
+
 ## 課題の進め方
 
 
