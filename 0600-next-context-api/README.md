@@ -26,9 +26,14 @@ $ unzip api.zip
 
 ### API 仕様書
 
-Swagger UI を使用して仕様を管理しています。こちらでエンドポイントやリクエストBodyを確認してください。
+Swagger UI を使用して仕様を管理しています。
+上記の api  の セットアップを行った後に、下記URLにアクセスして Swagger UI を確認してください。
 
-https://next-context-api.netlify.app/api/v1/spec
+```
+npm run dev
+```
+
+http://localhost:3000/api/v1/spec
 
 ## 課題の進め方
 
