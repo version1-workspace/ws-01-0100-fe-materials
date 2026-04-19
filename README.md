@@ -19,13 +19,15 @@
 
 ※ 見本アプリは自由に触って頂いて大丈夫です。
 
-1. [HTML/CSS(sass, BEM) 課題](./0100-html-css)
-2. [JavaScript 課題](./0200-js-base)
-3. [TODO アプリ (HTML/CSS, JS) 課題](./0300-js-dom-todo)
-4. [TODO アプリ (React) 課題](./0400-react-todo)
-5. [TypeScript 課題](./0500-ts-base)
-6. [TODO アプリ(Next.js, Context API, HTTP) 課題](./0600-next-context-api)
-7. [サーバサイド | Web API (Express.js+PostgreSQL) 課題](./0700-express-web-api)
+| No | 課題名 | ディレクトリ | AIエージェント使用 |
+|----|--------|--------------|--------------------|
+| 1 | HTML/CSS (Sass, BEM) 課題 | ./0100-html-css | - |
+| 2 | JavaScript 課題 | ./0200-js-base | - |
+| 3 | TODO アプリ (HTML/CSS, JS) 課題 | ./0300-js-dom-todo | - |
+| 4 | TODO アプリ (React) 課題 | ./0400-react-todo | - |
+| 5 | TypeScript 課題 | ./0500-ts-base | - |
+| 6 | TODO アプリ (Next.js, Context API, HTTP) 課題 | ./0600-next-context-api | ◯ |
+| 7 | サーバサイド | Web API (Express.js + PostgreSQL) 課題 | ./0700-express-web-api | ◯ |
 
 
 ## 課題リポジトリをローカルにクローン
