@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { expectPageInfo } from "./support/assertions";
-import { Project, expectProject } from "./support/contracts";
+import {
+  Project,
+  expectCompleteDataResponse,
+  expectCompletePageResponse,
+  expectCompleteProject,
+  expectProject
+} from "./support/contracts";
 import { apiRequestWithToken, loginAsSeedUser } from "./support/http";
 import { missingProjectSlug, seedProject, seedProjects } from "./testData";
 
@@ -34,6 +40,17 @@ describe("GET /users/projects", () => {
         expect(response.body.data.length).toBeLessThanOrEqual(1);
         expectPageInfo(response.body.pageInfo, { limit: 1, page: 1 });
         response.body.data.forEach(expectProject);
+      });
+
+      it("レスポンスが OpenAPI スキーマに適合する", async () => {
+        const token = await loginAsSeedUser();
+        const response = await apiRequestWithToken(
+          "/users/projects?limit=20&page=1",
+          token
+        );
+
+        expect(response.status).toBe(200);
+        expectCompletePageResponse(response.body, expectCompleteProject);
       });
 
       it("3 ページに分けて順番通りに取得できる", async () => {
@@ -71,6 +88,17 @@ describe("GET /users/projects/:slug", () => {
           slug: seedProject.slug
         })
       );
+    });
+
+    it("レスポンスが OpenAPI スキーマに適合する", async () => {
+      const token = await loginAsSeedUser();
+      const response = await apiRequestWithToken(
+        `/users/projects/${seedProject.slug}`,
+        token
+      );
+
+      expect(response.status).toBe(200);
+      expectCompleteDataResponse(response.body, expectCompleteProject);
     });
   });
 
