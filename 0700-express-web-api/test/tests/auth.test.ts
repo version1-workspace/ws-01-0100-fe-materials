@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { expectAuthData } from "./support/contracts";
+import {
+  expectAuthData,
+  expectCompleteAuth,
+  expectCompleteDataResponse,
+  expectCompleteError
+} from "./support/contracts";
 import { apiRequest } from "./support/http";
 import { seedUser } from "./testData";
 
@@ -16,6 +21,19 @@ describe("POST /auth/login", () => {
 
       expect(response.status).toBe(200);
       expectAuthData(response.body.data);
+    });
+
+    it("レスポンスが OpenAPI スキーマに適合する", async () => {
+      const response = await apiRequest("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email: seedUser.email,
+          password: seedUser.password
+        })
+      });
+
+      expect(response.status).toBe(200);
+      expectCompleteDataResponse(response.body, expectCompleteAuth);
     });
   });
 
@@ -53,6 +71,23 @@ describe("POST /auth/signup", () => {
       expect(response.status).toBe(200);
       expectAuthData(response.body.data);
     });
+
+    it("レスポンスが OpenAPI スキーマに適合する", async () => {
+      const unique = `schema-test-${Date.now()}-${crypto.randomUUID()}@example.com`;
+      const response = await apiRequest("/auth/signup", {
+        method: "POST",
+        body: JSON.stringify({
+          username: "api-schema-test-user",
+          email: unique,
+          email_confirmation: unique,
+          password: "password",
+          password_confirmation: "password"
+        })
+      });
+
+      expect(response.status).toBe(200);
+      expectCompleteDataResponse(response.body, expectCompleteAuth);
+    });
   });
 
   describe("異常系", () => {
@@ -69,6 +104,22 @@ describe("POST /auth/signup", () => {
       });
 
       expect(response.status).toBe(409);
+    });
+
+    it("409 レスポンスが OpenAPI スキーマに適合する", async () => {
+      const response = await apiRequest("/auth/signup", {
+        method: "POST",
+        body: JSON.stringify({
+          username: "duplicate-schema-test-user",
+          email: seedUser.email,
+          email_confirmation: seedUser.email,
+          password: "password",
+          password_confirmation: "password"
+        })
+      });
+
+      expect(response.status).toBe(409);
+      expectCompleteError(response.body);
     });
   });
 });

@@ -1,9 +1,16 @@
 import { expect } from "vitest";
 import {
+  expectBoolean,
+  expectEmail,
+  expectInteger,
+  expectIsoDateTime,
   expectNonEmptyString,
   expectOptionalInteger,
   expectOptionalIsoDateTime,
   expectOptionalString,
+  expectRecord,
+  expectSchemaProperty,
+  expectString,
   expectUuid
 } from "./assertions";
 
@@ -44,6 +51,148 @@ export type Task = {
   status: "scheduled" | "completed" | "archived";
   project?: Project;
 };
+
+type SchemaAssertion = (value: unknown) => void;
+
+const projectSchema = {
+  id: expectUuid,
+  name: expectString,
+  slug: expectString,
+  goal: expectString,
+  shouldbe: expectString,
+  color: expectString,
+  stats: expectCompleteProjectStats,
+  createdAt: expectIsoDateTime,
+  updatedAt: expectIsoDateTime,
+  deadline: expectIsoDateTime,
+  startingAt: expectIsoDateTime,
+  startedAt: expectIsoDateTime,
+  finishedAt: expectIsoDateTime
+} satisfies Record<string, SchemaAssertion>;
+
+const taskStatusPattern = /^(scheduled|completed|archived)$/;
+
+function expectCompleteObject(
+  value: unknown,
+  schema: Record<string, SchemaAssertion>
+): void {
+  expectRecord(value);
+
+  for (const [property, expectValue] of Object.entries(schema)) {
+    expectSchemaProperty(value, property, expectValue);
+  }
+}
+
+export function expectCompleteAuth(value: unknown): void {
+  expectCompleteObject(value, {
+    uuid: expectUuid,
+    accessToken: expectString,
+    refreshToken: expectString
+  });
+}
+
+export function expectCompleteUser(value: unknown): void {
+  expectCompleteObject(value, {
+    id: expectUuid,
+    username: expectString,
+    email: expectEmail,
+    status: (status) => {
+      expectString(status);
+      expect(status).toMatch(/^(active|deactive)$/);
+    }
+  });
+}
+
+export function expectCompleteProject(value: unknown): void {
+  expectCompleteObject(value, projectSchema);
+}
+
+function expectCompleteProjectStats(value: unknown): void {
+  expectCompleteObject(value, {
+    total: expectInteger,
+    kinds: expectCompleteProjectStatsKinds,
+    states: expectCompleteProjectStatsStates
+  });
+}
+
+function expectCompleteProjectStatsKinds(value: unknown): void {
+  expectCompleteObject(value, {
+    milestone: expectInteger,
+    task: expectInteger,
+    total: expectInteger
+  });
+}
+
+function expectCompleteProjectStatsStates(value: unknown): void {
+  expectCompleteObject(value, {
+    scheduled: expectInteger,
+    completed: expectInteger,
+    archived: expectInteger
+  });
+}
+
+export function expectCompleteTask(value: unknown): void {
+  expectCompleteObject(value, {
+    id: expectUuid,
+    title: expectString,
+    description: expectString,
+    status: (status) => {
+      expectString(status);
+      expect(status).toMatch(taskStatusPattern);
+    },
+    createdAt: expectIsoDateTime,
+    updatedAt: expectIsoDateTime,
+    finishedAt: expectIsoDateTime,
+    startedAt: expectIsoDateTime,
+    archivedAt: expectIsoDateTime,
+    startingAt: expectIsoDateTime,
+    deadline: expectIsoDateTime,
+    project: expectCompleteProject,
+    parent: expectCompleteTask,
+    children: (children) => {
+      expect(Array.isArray(children)).toBe(true);
+      (children as unknown[]).forEach(expectCompleteTask);
+    }
+  });
+}
+
+export function expectCompletePageInfo(value: unknown): void {
+  expectCompleteObject(value, {
+    totalCount: expectInteger,
+    limit: expectInteger,
+    page: expectInteger,
+    hasNext: expectBoolean,
+    hasPrevious: expectBoolean
+  });
+}
+
+export function expectCompleteError(value: unknown): void {
+  expectCompleteObject(value, {
+    message: expectString
+  });
+}
+
+export function expectCompleteDataResponse(
+  value: unknown,
+  expectData: SchemaAssertion
+): void {
+  expectCompleteObject(value, {
+    data: expectData
+  });
+}
+
+export function expectCompletePageResponse(
+  value: unknown,
+  expectItem: SchemaAssertion
+): void {
+  expectCompleteObject(value, {
+    data: (data) => {
+      expect(Array.isArray(data)).toBe(true);
+      (data as unknown[]).forEach(expectItem);
+    },
+    pageInfo: expectCompletePageInfo
+  });
+}
 
 export function expectAuthData(value: unknown): void {
   expect(value).toEqual(

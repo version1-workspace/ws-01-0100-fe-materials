@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { expectPageInfo } from "./support/assertions";
-import { Project, Task, expectProject, expectTask } from "./support/contracts";
+import {
+  Project,
+  Task,
+  expectCompleteDataResponse,
+  expectCompletePageResponse,
+  expectCompleteTask,
+  expectProject,
+  expectTask
+} from "./support/contracts";
 import { apiRequestWithToken, loginAsSeedUser } from "./support/http";
 import { missingProjectId, missingTaskId, seedProject } from "./testData";
 
@@ -133,6 +141,17 @@ describe("GET /users/tasks", () => {
       });
     });
 
+    it("レスポンスが OpenAPI スキーマに適合する", async () => {
+      const token = await loginAsSeedUser();
+      const response = await apiRequestWithToken(
+        "/users/tasks?limit=20&page=1&status=scheduled",
+        token
+      );
+
+      expect(response.status).toBe(200);
+      expectCompletePageResponse(response.body, expectCompleteTask);
+    });
+
     describe("ページネーション", () => {
       it("3 ページに分けて取得できる", async () => {
         const token = await loginAsSeedUser();
@@ -251,6 +270,21 @@ describe("GET /users/tasks/:id", () => {
         await deleteTask(token, task.id);
       }
     });
+
+    it("レスポンスが OpenAPI スキーマに適合する", async () => {
+      const token = await loginAsSeedUser();
+      const project = await getSeedProject(token);
+      const task = await createTask(token, project.id);
+
+      try {
+        const response = await apiRequestWithToken(`/users/tasks/${task.id}`, token);
+
+        expect(response.status).toBe(200);
+        expectCompleteDataResponse(response.body, expectCompleteTask);
+      } finally {
+        await deleteTask(token, task.id);
+      }
+    });
   });
 
   describe("異常系", () => {
@@ -299,6 +333,24 @@ describe("PATCH /users/tasks/:id", () => {
             status: "completed"
           })
         );
+      } finally {
+        await deleteTask(token, task.id);
+      }
+    });
+
+    it("レスポンスが OpenAPI スキーマに適合する", async () => {
+      const token = await loginAsSeedUser();
+      const project = await getSeedProject(token);
+      const task = await createTask(token, project.id);
+
+      try {
+        const response = await apiRequestWithToken(`/users/tasks/${task.id}`, token, {
+          method: "PATCH",
+          body: JSON.stringify(createTaskPayload(project.id, { status: "completed" }))
+        });
+
+        expect(response.status).toBe(200);
+        expectCompleteDataResponse(response.body, expectCompleteTask);
       } finally {
         await deleteTask(token, task.id);
       }
@@ -364,6 +416,18 @@ describe("DELETE /users/tasks/:id", () => {
           id: task.id
         })
       );
+    });
+
+    it("レスポンスが OpenAPI スキーマに適合する", async () => {
+      const token = await loginAsSeedUser();
+      const project = await getSeedProject(token);
+      const task = await createTask(token, project.id);
+      const response = await apiRequestWithToken(`/users/tasks/${task.id}`, token, {
+        method: "DELETE"
+      });
+
+      expect(response.status).toBe(200);
+      expectCompleteDataResponse(response.body, expectCompleteTask);
     });
   });
 

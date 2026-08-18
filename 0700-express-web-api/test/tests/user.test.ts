@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { expectUser } from "./support/contracts";
+import {
+  expectCompleteDataResponse,
+  expectCompleteUser,
+  expectUser
+} from "./support/contracts";
 import { apiRequest, apiRequestWithToken, loginAsSeedUser } from "./support/http";
 import { seedUser } from "./testData";
 
@@ -19,6 +23,14 @@ describe("GET /users/me", () => {
           status: seedUser.status
         })
       );
+    });
+
+    it("レスポンスが OpenAPI スキーマに適合する", async () => {
+      const token = await loginAsSeedUser();
+      const response = await apiRequestWithToken("/users/me", token);
+
+      expect(response.status).toBe(200);
+      expectCompleteDataResponse(response.body, expectCompleteUser);
     });
   });
 
